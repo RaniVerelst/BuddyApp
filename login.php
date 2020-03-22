@@ -2,14 +2,17 @@
 <?php
 ini_set('display_errors',1); ini_set('display_startup_errors',1); error_reporting(-1);
 error_reporting(E_ALL);
-ini_set('display_errors', '1');	include_once("classes/User.class.php");
+ini_set('display_errors', '1');	
+include_once("classes/User.class.php");
+include_once("classes/Db.class.php");
+
 
 	if ( !empty($_POST) ) {
 		// email en password opvragen
 		$email = $_POST['email'];
 		$password = $_POST['password'];
 		// hash opvragen op basis van email
-		$conn = new PDO("mysql:host=localhost;dbname=php2020;", "root", "root");
+		$conn = new PDO("mysql:host=localhost;dbname=php2020;", "root", "root", null);
 		// check of rehash van password gelijk is aan hash uit databank
 		$statement = $conn->prepare("SELECT * FROM users WHERE email= :email");
 		$statement->bindParam(":email", $email);
