@@ -3,7 +3,7 @@
 class User {
   private $firstname;
   private $lastname;
-  public $username;
+  private $username;
   private $email;
   private $password;
   private $password_confirm;
