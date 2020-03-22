@@ -94,7 +94,7 @@ if(!empty($_POST)){
 
     <!-- confirm password -->
     <div class="input_signup">
-      <input type="password"name="password_confirm"value="" placeholder="Retype Password">
+      <input type="password"name="password_confirm"value="" placeholder="Confirm Password">
     </div>
 
 
