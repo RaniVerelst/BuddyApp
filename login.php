@@ -1,33 +1,39 @@
 
 <?php
-ini_set('display_errors',1); ini_set('display_startup_errors',1); error_reporting(-1);
+ini_set('display_startup_errors',1); error_reporting(-1);
 error_reporting(E_ALL);
 ini_set('display_errors', '1');	
 include_once("classes/User.class.php");
 include_once("classes/Db.class.php");
 
 
-	if ( !empty($_POST) ) {
-		// email en password opvragen
-		$email = $_POST['email'];
-		$password = $_POST['password'];
-		// hash opvragen op basis van email
-		$conn = new PDO("mysql:host=localhost;dbname=php2020;", "root", "root", null);
-		// check of rehash van password gelijk is aan hash uit databank
-		$statement = $conn->prepare("SELECT * FROM users WHERE email= :email");
-		$statement->bindParam(":email", $email);
-		$result = $statement->execute();
-
-		$user = $statement->fetch(PDO::FETCH_ASSOC);
-		// ja -> login
-		if(password_verify($password, $user['password']) ){
-			session_start();
-			$_SESSION['user_name']= $user['id'];
-			header('Location: index.php');
-		} else {
-			echo "Sorry, we can't log you in with that email address and password. Can you try again?";
-		}
+if (!empty ($_POST) ){
+	$conn = @new mysqli("localhost", "root", "root", "php2020");
+	$email = $conn->real_escape_string($_POST['email']);
+	$password = $_POST['password'];
+	/* $options = [
+		"cost" => 12 // 2^12
+		];
+	$password_hash = password_hash($password,PASSWORD_DEFAULT,$options);
+	*/
+	$sql =  "SELECT * FROM `users` WHERE `email`= '$email' and `password`= '$password'";
+	$result = $conn->query($sql);
+	if($result->num_rows == 1 /* && password_verify($password, $password_hash) */){
+		header('Location: index.php');
+	} else {
+		echo "Sorry, we can't log you in with that email address and password. Can you try again?";
+		; 
 	}
+	/*
+	$hash = password_hash($_POST["password"],PASSWORD_DEFAULT);
+	if (password_verify($password, $hash)) {
+		header('Location: index.php');
+	} else {
+		echo "Sorry, we can't log you in with that email address and password. Can you try again?";
+	}
+	*/
+}
+
 
 ?><!DOCTYPE html>
 <html lang="en">
