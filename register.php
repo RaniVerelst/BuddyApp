@@ -83,7 +83,7 @@ if(!empty($_POST)){
 
   <!-- e-mail -->
   <div class="input_signup">
-    <input type="text"name="email" placeholder="email">
+    <input type="text"name="email" placeholder="Email @student.thomasmore.be">
   </div>
 
     <!-- password -->
