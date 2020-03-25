@@ -1,4 +1,4 @@
-/* ----------------Registreren---------------------- */
+/* ----------------Registreren + Login---------------------- */
 
 .input_signup p
 {
@@ -62,3 +62,57 @@
     margin-top: 75px;
     text-align: center;
 }
+
+/* -----------------Edit profile feature 3------------------ */
+.btn {
+  font-family: sans-serif;
+  margin-top: 15px;
+  background-color: #62CC35;
+  text-transform: uppercase;
+  width: 250px;
+  height: 45px;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  border-radius: 30px;
+}
+
+.btn:hover, .show-posts:hover, .submit_signup:hover, .follow_button:hover  {
+background-color: #fff; /*#1db954, #62CC35, #53B32B*/
+border-style: solid;
+border-color: #62CC35;
+color: #62CC35;
+}
+
+.edit_profile {
+  width: 380px;
+  margin-left: auto;
+  margin-right: auto;
+  /*padding-top: 50px;*/
+}
+
+.edit_profile input {
+  width: 380px;
+  height: 40px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+}
+
+.form__error p {
+  padding-bottom: 30px;
+  text-align: center;
+  padding-top: 30px;
+  color: red;
+  font-size: 0.9em;
+
+  margin-bottom: 30px;
+}
+/* --------------einde edit profile feature 3---------------- */
+
+
+
+
+
+
+
+
