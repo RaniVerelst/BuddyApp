@@ -122,7 +122,8 @@ public function register(){
 
 
     $result = $statement->execute();
-    //return $result;
+    // return $result;
+    $username = "";
     $_SESSION['username'] = $username;
     header("Location: index.php");
   }
