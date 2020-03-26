@@ -74,6 +74,7 @@ if(!empty($_POST["passwordedit"]) && !empty($_POST["password"]) && !empty($_POST
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="css/reset.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="startbootstrap/css/freelancer.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <title>Edit Profile</title>
 </head>
