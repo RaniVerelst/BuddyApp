@@ -67,7 +67,7 @@
 .btn {
   font-family: sans-serif;
   margin-top: 15px;
-  background-color: #62CC35;
+  background-color: #1ABC9C;
   text-transform: uppercase;
   width: 250px;
   height: 45px;
@@ -80,8 +80,8 @@
 .btn:hover, .show-posts:hover, .submit_signup:hover, .follow_button:hover  {
 background-color: #fff; /*#1db954, #62CC35, #53B32B*/
 border-style: solid;
-border-color: #62CC35;
-color: #62CC35;
+border-color: #1ABC9C;
+color: #1ABC9C;
 }
 
 .edit_profile {
