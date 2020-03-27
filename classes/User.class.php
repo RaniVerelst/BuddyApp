@@ -1,4 +1,5 @@
 <?php
+include_once('./db.class.php');
 
 class User {
   private $firstname;
