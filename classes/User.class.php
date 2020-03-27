@@ -1,5 +1,5 @@
 <?php
-include_once('./db.class.php');
+include_once("classes/db.class.php");
 
 class User {
   private $firstname;

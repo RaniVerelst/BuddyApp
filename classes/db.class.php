@@ -25,7 +25,7 @@
                 $password = $config['password'];
 
                 // echo "💥";
-                self::$conn = new PDO("mysql:host=localhost;dbname=php2020;", "root", "root", null);
+                self::$conn = new PDO("mysql:host=localhost;dbname=php2020;", "root", "", null);
                 return self::$conn;
             }
         }
