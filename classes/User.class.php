@@ -102,22 +102,34 @@ class User
   }
 
 
+  // form validation
 
   public function register()
   {
-    // form validation
+    $conn = Db::getInstance();
+    $email = $this->getEmail();
+    $result = $conn->query("SELECT * FROM users WHERE email='$email'");
+
     $endemail = "student.thomasmore.be";
-    $sql =  "SELECT * FROM users WHERE  users=" . $_POST['email'];
-    // $num_rows = mysqli_num_rows($result);
+
+    if (isset($_POST['email'])) {
+
+      if ($result->rowCount() > 0) {
+        $exist = true;
+      }
+    }
 
     if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
 
       throw new Exception("Invalid Email");
     } else if (!stristr($this->email, $endemail)) {
       throw new Exception("Email must end on @student.thomasmore.be");
-    } else if ($this->email == $sql) {
-      throw new Exception("Email already excist");
+    } else if ($exist == true) {
+      throw new Exception("Email already exist");
     }
+
+
+
     if (strlen($this->password) < 8) {
       throw new Exception("Your password needs at leats 8 characters");
     }
