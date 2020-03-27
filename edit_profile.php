@@ -11,6 +11,13 @@ $user = new User();
 /*$user->setUser_id($_SESSION["user_id"]);
 $profile = $user->getUserInfo();*/
 
+// test data 
+$user -> setUser_id(6);
+$profile = $user->getUserInfo();
+var_dump($profile);
+
+
+//$user->setUser_id($_SESSION["user_id"]
 
 if(!empty($_POST["edit"])) {
     //IMAGE UPLOAD profielfoto/avatar
@@ -24,7 +31,7 @@ if(!empty($_POST["edit"])) {
         $saveImage->SetImageTmpName($nameWithoutSpaceTMP);
         $destination = $saveImage->SaveProfileImg();
     } else {    
-        $destination = $profile['image'];
+        $destination = $profile[''];
     }
 
     // profiel aanpassen van user
@@ -32,6 +39,7 @@ if(!empty($_POST["edit"])) {
     $user_edit->setUser_id($_SESSION["user_id"]);
     $user_edit->setFirstname($_POST["firstname"]);
     $user_edit->setLastname($_POST["lastname"]);
+    
     if($profile['email'] == $_POST["email"]){
         $user_edit->setEmail($_POST["email"]);
     } elseif($user_edit->emailExists($_POST["email"])) {

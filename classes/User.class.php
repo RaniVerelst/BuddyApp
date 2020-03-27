@@ -9,6 +9,7 @@ class User {
   private $password;
   private $password_confirm;
   private $user_id; //is nodig om profiel aan te passen
+  private $profile_image;
 
   //temp voor IMAGE UPLOAD
   private $ImageName;
@@ -162,8 +163,11 @@ public function register(){
         //QUERY WHERE USER = $_SESSION
         $statement = $conn->prepare("SELECT * FROM users WHERE id = :user_id LIMIT 1");
         $statement->bindParam(":user_id", $this->user_id);
+        $secondStatement = $conn->prepare("SELECT * FROM profile_image WHERE user_id = :userid LIMIT 1");
+        $secondStatement->bindParam(":userid", $this->user_id); 
         $statement->execute();
-        $result = $statement->fetch();
+        $secondStatement->execute();
+        $result = [$statement->fetch(), $secondStatement->fetch()];
         return $result;
       }
 
