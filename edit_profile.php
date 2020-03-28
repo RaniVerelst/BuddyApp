@@ -15,16 +15,22 @@ $profile = $user->getUserInfo();*/
 $user->setUser_id(6);
 $profile = $user->getUserInfo();
 
-if(!empty($_FILES['profileImg']['name'])){
-    $img = $_FILES['profileImg']['name'];
-};
 
 
 if (!empty($_POST["uploadImg"])) {
     if (!empty($_FILES['profileImg']['name'])) {
-        echo $img;
+        $imgSize = $_FILES['profileImg']['size'];
+        if($imgSize < 100000 ){
+            $img = $_FILES['profileImg']['name'];
+            $imgName = $_FILES['profileImg']['tmp_name'];
+        } else {
+            echo "file is to big";
+        };
+        
+        echo $imgSize;
     } else {
         echo "please add image";
+        $img = "";
     };
 }; // end upload image
 
@@ -114,8 +120,7 @@ if (!empty($_POST["uploadImg"])) {
         <?php endif; ?>
 
         <!-- profielfoto -->
-        <img src="<?php echo "none"; //$profile[1]['image_name'] 
-                    ?>" alt="Profielfoto">
+        <img src="<?php echo "none"; //$profile[1]['image_name'] ?>" alt="Profielfoto">
         <input type="file" name="profileImg" id="profileImg" class="new_avatar" accept="image/gif, image/jpeg, image/png, image/jpg">
         <!--button-->
         <input type="submit" name="uploadImg" class="btn" value="Upload Image">
