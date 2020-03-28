@@ -12,33 +12,46 @@ $user = new User();
 $profile = $user->getUserInfo();*/
 
 // test data 
-$user -> setUser_id(6);
+$user->setUser_id(6);
 $profile = $user->getUserInfo();
-var_dump($profile);
+
+if(!empty($_FILES['profileImg']['name'])){
+    $img = $_FILES['profileImg']['name'];
+};
 
 
-//$user->setUser_id($_SESSION["user_id"]
+if (!empty($_POST["uploadImg"])) {
+    if (!empty($_FILES['profileImg']['name'])) {
+        echo $img;
+    } else {
+        echo "please add image";
+    };
+}; // end upload image
 
-if(!empty($_POST["edit"])) {
-    //IMAGE UPLOAD profielfoto/avatar
-    if(!empty($_FILES['profileImg']['name'])) {
-        $saveImage = new User();
-        $nameWithoutSpace = preg_replace('/\s+/','',$_FILES['profileImg']['name']);
-        $nameWithoutSpaceTMP = preg_replace('/\s+/','',$_FILES['profileImg']['tmp_name']);
-        $nameWithoutSpaceSize = preg_replace('/\s+/','',$_FILES['profileImg']['size']);
-        $saveImage->SetImageName($nameWithoutSpace);
-        $saveImage->SetImageSize($nameWithoutSpaceSize);
-        $saveImage->SetImageTmpName($nameWithoutSpaceTMP);
-        $destination = $saveImage->SaveProfileImg();
-    } else {    
-        $destination = $profile[''];
-    }
+//if(!empty($_POST["edit"])) {
+//IMAGE UPLOAD profielfoto/avatar
+// if(!empty($_FILES['profileImg']['name'])) {
+//   echo $_FILES['profileImg']['name'];
 
-    // profiel aanpassen van user
-    $user_edit = new User();
-    $user_edit->setUser_id($_SESSION["user_id"]);
-    $user_edit->setFirstname($_POST["firstname"]);
-    $user_edit->setLastname($_POST["lastname"]);
+///$nameWithoutSpace = preg_replace('/\s+/','',$_FILES['profileImg']['name']);
+//$nameWithoutSpaceTMP = preg_replace('/\s+/','',$_FILES['profileImg']['tmp_name']);
+//$nameWithoutSpaceSize = preg_replace('/\s+/','',$_FILES['profileImg']['size']);
+//$user->SetImageName($nameWithoutSpace);
+//$user->SetImageSize($nameWithoutSpaceSize);
+//$user->SetImageTmpName($nameWithoutSpaceTMP);
+//$destination = $user->SaveProfileImg();
+//echo '<pre>' . var_dump($profile[1]) . '</pre>';
+//} else {    
+//   $destination = $profile[0][''];
+//}
+
+// profiel aanpassen van user
+/*  $user_edit = new User();
+   // $user_edit->setUser_id($_SESSION["user_id"]);
+   //Test version
+   $user_edit->setUser_id(6);
+   // $user_edit->setFirstname($_POST["firstname"]);
+   // $user_edit->setLastname($_POST["lastname"]);
     
     if($profile['email'] == $_POST["email"]){
         $user_edit->setEmail($_POST["email"]);
@@ -58,7 +71,7 @@ if(!empty($_POST["edit"])) {
 } */
 
 
-if(!empty($_POST["passwordedit"]) && !empty($_POST["password"]) && !empty($_POST["repassword"])){
+/*if(!empty($_POST["passwordedit"]) && !empty($_POST["password"]) && !empty($_POST["repassword"])){
     if(strcmp($_POST['password'], $_POST["repassword"]) == 0){
         $user_pass = new User();
         $user_pass->setUser_id($_SESSION["user_id"]);
@@ -71,12 +84,13 @@ if(!empty($_POST["passwordedit"]) && !empty($_POST["password"]) && !empty($_POST
     }
 } else {
     $error = "Gelieve dit in te vullen aub"; */
-} 
-}
-}
+//} 
+//}
+//}
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -86,38 +100,43 @@ if(!empty($_POST["passwordedit"]) && !empty($_POST["password"]) && !empty($_POST
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <title>Edit Profile</title>
 </head>
+
 <body>
 
-    <form method="post" action="" class="edit_profile">
+<form method="post" action="" class="edit_profile" enctype="multipart/form-data">   
         <h1>Profiel bewerken</h1>
 
-         <!-- indien inloggegevens fout zijn = error -->
-         <?php if(isset($error)): ?>
+        <!-- indien inloggegevens fout zijn = error -->
+        <?php if (isset($error)) : ?>
             <div class="form__error">
                 <p>Dat wachtwoord was onjuist. Probeer het opnieuw!</p>
             </div>
-         <?php endif; ?>
+        <?php endif; ?>
 
         <!-- profielfoto -->
-            <img src="<?php echo $profile['image'] ?>" alt="Profielfoto">
-            <input type="file" name="profileImg" id="profileImg" class="new_avatar" accept="image/gif, image/jpeg, image/png, image/jpg">
+        <img src="<?php echo "none"; //$profile[1]['image_name'] 
+                    ?>" alt="Profielfoto">
+        <input type="file" name="profileImg" id="profileImg" class="new_avatar" accept="image/gif, image/jpeg, image/png, image/jpg">
+        <!--button-->
+        <input type="submit" name="uploadImg" class="btn" value="Upload Image">
 
         <!-- gegevens gebruiker -->
-            <h2>Change Profile</h2>
-            <input type="text" id="firstname" name="firstname" placeholder="Voornaam">
-            <input type="text" id="lastname" name="lastname" value="" placeholder="Achternaam">
-            <input type="email" id="email" name="email" value="" placeholder="E-mailadres of gebruikersnaam">
-            <!-- button -->
-            <input type="submit" name="edit" class="btn" value="Bewerk profiel">
+        <h2>Change Profile</h2>
+        <input type="text" id="firstname" name="firstname" placeholder="Voornaam">
+        <input type="text" id="lastname" name="lastname" value="" placeholder="Achternaam">
+        <input type="email" id="email" name="email" value="" placeholder="E-mailadres of gebruikersnaam">
+        <!-- button -->
+        <input type="submit" name="edit" class="btn" value="Bewerk profiel">
 
         <!-- wachtwoord aanpassen -->
-            <h2>Change Password</h2>
-            
-            <input type="password" id="password" name="password" placeholder="Nieuw wachtwoord">
-            <input type="password" name="repassword" id="repassword" placeholder="Bevestig nieuw wachtwoord">
-            
-            <input type="submit" name="passwordedit" class="btn" value="Bewerk wachtwoord">
+        <h2>Change Password</h2>
+
+        <input type="password" id="password" name="password" placeholder="Nieuw wachtwoord">
+        <input type="password" name="repassword" id="repassword" placeholder="Bevestig nieuw wachtwoord">
+
+        <input type="submit" name="passwordedit" class="btn" value="Bewerk wachtwoord">
     </form>
 
 </body>
+
 </html>

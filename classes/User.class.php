@@ -163,10 +163,12 @@ public function register(){
         //QUERY WHERE USER = $_SESSION
         $statement = $conn->prepare("SELECT * FROM users WHERE id = :user_id LIMIT 1");
         $statement->bindParam(":user_id", $this->user_id);
+        $statement->execute();
+
         $secondStatement = $conn->prepare("SELECT * FROM profile_image WHERE user_id = :userid LIMIT 1");
         $secondStatement->bindParam(":userid", $this->user_id); 
-        $statement->execute();
         $secondStatement->execute();
+        //concat 2 db
         $result = [$statement->fetch(), $secondStatement->fetch()];
         return $result;
       }
