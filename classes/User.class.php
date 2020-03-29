@@ -1,6 +1,9 @@
 <?php
 include_once("classes/db.class.php");
 
+include_once("classes/Db.class.php");
+
+
 class User
 {
   private $firstname;
@@ -61,6 +64,11 @@ class User
   public function setUsername($username)
   {
     $this->username = $username;
+
+
+  public function setUsername($username)
+  {
+    $this->username = $username;
     return $this;
   }
 
@@ -99,6 +107,53 @@ class User
     return $this;
   }
 
+  // krijg de waarde Email
+  public function getEmail()
+  {
+    return $this->email;
+  }
+
+
+  public function setEmail($email)
+  {
+    $this->email = $email;
+    return $this;
+  }
+
+  // krijgt de waarde van password
+  public function getPassword()
+  {
+    return $this->password;
+  }
+
+  public function setPassword($password)
+  {
+    $this->password = $password;
+    return $this;
+  }
+  // voor register2
+  public function getPassword_confirm()
+  {
+    return $this->password_confirm;
+  }
+
+  public function setPassword_confirm($password_confirm)
+  {
+    $this->password_confirm = $password_confirm;
+    return $this;
+  }
+  // form validation
+
+  public function register()
+  {
+    $conn = Db::getInstance();
+    $email = $this->getEmail();
+    $result = $conn->query("SELECT * FROM users WHERE email='$email'");
+
+    $endemail = "student.thomasmore.be";
+
+
+    if (isset($_POST['email'])) {
 
 
   public function register()
@@ -151,11 +206,27 @@ class User
     return $this->user_id;
   }
 
+      if ($result->rowCount() > 0) {
+        $exist = true;
+      }
+    }
+
+    if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+
+      throw new Exception("Invalid Email");
+    } else if (!stristr($this->email, $endemail)) {
+      throw new Exception("Email must end on @student.thomasmore.be");
+    } else if ($exist == true) {
+      throw new Exception("Email already exist");
+    }
+
+
   public function setUser_id($user_id)
   {
     $this->user_id = htmlspecialchars($user_id);
     return $this;
   }
+
 
 
   public function getUserInfo()
@@ -176,6 +247,50 @@ class User
     return $result;
   }
 
+    if (strlen($this->password) < 8) {
+      throw new Exception("Your password needs at leats 8 characters");
+    }
+    if ($this->password != $this->password_confirm) {
+      throw new Exception("Passwords don't match");
+    } else {
+      // voor register 2
+      $options = [
+        "cost" => 12 // 2^12
+      ];
+      $password = password_hash($this->password, PASSWORD_DEFAULT, $options);
+      try {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("insert into users(first_name, last_name, user_name, email, password) values(:firstname, :lastname, :username, :email, :password)");
+
+        $statement->bindValue(':firstname', $this->getFirstname());
+        $statement->bindValue(':lastname', $this->getLastname());
+        $statement->bindValue(':username', $this->getUsername());
+        $statement->bindValue(':email', $this->getEmail());
+        $statement->bindValue(':password', $password);
+
+
+        $result = $statement->execute();
+        // return $result;
+        $username = "";
+        $_SESSION['username'] = $username;
+        header("Location: index.php");
+      } catch (Throwable $t) {
+        echo "mislukt";
+        return false;
+      }
+    }
+  }
+
+
+  //////////////////////////////////////////////////
+  ///////////////// PROFIEL AANPASSEN ///////////// feature 3
+  ////////////////////////////////////////////////
+
+
+  public function getUser_id()
+  {
+    return $this->user_id;
+  }
 
   public function getImageName()
   {
@@ -318,6 +433,105 @@ return false;
      return $result;
   }
 
+
+  public function setUser_id($user_id)
+  {
+    $this->user_id = htmlspecialchars($user_id);
+    return $this;
+  }
+
+
+  public function getUserInfo()
+  {
+    //DB CONNECTIE
+    $conn = Db::getInstance();
+
+    //QUERY WHERE USER = $_SESSION
+    $statement = $conn->prepare("SELECT * FROM users WHERE id = :user_id LIMIT 1");
+    $statement->bindParam(":user_id", $this->user_id);
+    $statement->execute();
+    $result = $statement->fetch();
+    return $result;
+  }
+
+
+  public function getImageName()
+  {
+    return $this->ImageName;
+  }
+
+  public function setImageName($ImageName)
+  {
+    $this->ImageName = $ImageName;
+
+    return $this;
+  }
+
+  public function getImageSize()
+  {
+    return $this->ImageSize;
+  }
+
+  public function setImageSize($ImageSize)
+  {
+    $this->ImageSize = $ImageSize;
+
+    return $this;
+  }
+
+  public function getImageTmpName()
+  {
+    return $this->ImageTmpName;
+  }
+
+  public function setImageTmpName($ImageTmpName)
+  {
+    $this->ImageTmpName = $ImageTmpName;
+
+    return $this;
+  }
+
+  //sla profielafbeelding op in mapprofiel
+  public function SaveProfileImg()
+  {
+    $file_name = $_SESSION['user_id'] . "-" . time() . "-" . $this->ImageName;
+    $file_size = $this->ImageSize;
+    $file_tmp = $this->ImageTmpName;
+    $tmp = explode('.', $file_name);
+    $file_ext = end($tmp);
+    $expensions = array("jpeg", "jpg", "png", "gif");
+
+    if (in_array($file_ext, $expensions) === false) {
+      throw new Exception("extension not allowed, please choose a JPEG or PNG or GIF file.");
+    }
+
+    if ($file_size > 2097152) {
+      throw new Exception('File size must be excately 2 MB');
+    }
+
+    if (empty($errors) == true) {
+      move_uploaded_file($file_tmp, "data/profile/" . $file_name);
+      return "data/profile/" . $file_name;
+    } else {
+      echo "Error";
+    }
+  }
+
+  //check if email exists --> for update
+  public function emailExists($email)
+  {
+    $conn = Db::getInstance();
+    $statement = $conn->prepare("select * from users where email = :email");
+    $statement->bindParam(":email", $email);
+    $statement->execute();
+    $count = $statement->rowCount();
+    if ($count > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   ////// zoek een user
   public function searchUser($searchkey)
   {
@@ -352,5 +566,8 @@ return false;
     $result = $statement->fetchAll();
     return $result;
   }
+
  
 } // end class
+
+}

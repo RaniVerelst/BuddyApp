@@ -40,8 +40,8 @@ if (!empty ($_POST) ){
 <head>
   <meta charset="UTF-8">
   <title>Login</title>
-  <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="startbootstrap/css/freelancer.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 	<div class="Login">
@@ -68,11 +68,10 @@ if (!empty ($_POST) ){
 
 				<div class="form__field">
 					<input type="submit" value="Sign in" class="btn btn--primary">
-					<input type="checkbox" id="rememberMe"><label for="rememberMe" class="label__inline">Remember me</label>
 				</div>
-
 				<div>
-					<p>No account yet?<a href="register.php">Sign up here</a></p>
+					<input type="checkbox" id="rememberMe"><label for="rememberMe" class="label__inline">Remember me</label>
+					<p>No account yet?<a href="register.php"> Sign up here</a></p>
 				</div>
 			</form>
 		</div>
