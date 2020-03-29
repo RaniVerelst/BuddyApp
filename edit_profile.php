@@ -21,30 +21,28 @@ if (!empty($_POST["uploadImg"])) {
         //get size of file
         $imgSize = $_FILES['profileImg']['size'];
         if($imgSize < 100000 ){
-            //
-            $img = $_FILES['profileImg']['name'];
-            $imgName = file_get_contents($_FILES['profileImg']['tmp_name']);
+            //connect balues to User.class
+            $nameWithoutSpace = preg_replace('/\s+/','',$_FILES['profileImg']['name']);
+            $nameWithoutSpaceTMP = preg_replace('/\s+/','',$_FILES['profileImg']['tmp_name']);
+            
+            $user->setImageSize($imgSize);
+            $user->setImageTmpName($nameWithoutSpaceTMP);
+            $user->setImageName($nameWithoutSpace);
+
             //check if profile img was set
             if(isset($profile[1]['image_name'])){
-                echo"yess";
+                //set up query
                 $insert_img = 'UPDATE profile_image SET image_name = :imgName, image_size = :imgSize, image_temp_name = :imgTmp WHERE user_id = :userId ';
-                echo $insert_img;
             } else {
-                echo "nopee";
                 $insert_img= "INSERT INTO profile_image VALUES('', :imgName, :imgSize, :imgTmp, :userId)";
-            }
-            /*
-            $insert_img->bindParam(":imgName", $img);
-            $insert_img->bindParam(":imgSize", $imgSize);
-            $insert_img->bindParam(":imgTmp", $imgName);
-            $insert_img->bindParam(":userId", $user);*/
+            } 
             $user->SaveProfileImg($insert_img);
         } else {
             echo "file is to big";
             $imgError = "Bestand is te groot.";
         };
         
-        echo $imgSize;
+        //echo $imgSize;
     } else {
         $imgError = "Voeg afbeelding toe";
         $img = "";
@@ -56,11 +54,7 @@ if (!empty($_POST["uploadImg"])) {
 // if(!empty($_FILES['profileImg']['name'])) {
 //   echo $_FILES['profileImg']['name'];
 
-///$nameWithoutSpace = preg_replace('/\s+/','',$_FILES['profileImg']['name']);
-//$nameWithoutSpaceTMP = preg_replace('/\s+/','',$_FILES['profileImg']['tmp_name']);
-//$nameWithoutSpaceSize = preg_replace('/\s+/','',$_FILES['profileImg']['size']);
-//$user->SetImageName($nameWithoutSpace);
-//$user->SetImageSize($nameWithoutSpaceSize);
+
 //$user->SetImageTmpName($nameWithoutSpaceTMP);
 //$destination = $user->SaveProfileImg();
 //echo '<pre>' . var_dump($profile[1]) . '</pre>';

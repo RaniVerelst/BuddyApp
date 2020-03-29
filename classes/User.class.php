@@ -214,23 +214,24 @@ public function register(){
       public function SaveProfileImg($query) {
         //Connect to db
         $conn = Db::getInstance();
-        echo "It works!!! " . $query;
+        $sql = $conn->prepare($query);
         $expensions = array("jpeg", "jpg", "png", "gif");
+        $imgName = $this->getImageName();
+        $imgTmp = $this->getImageTmpName();
+        //bind
+            $sql->bindValue(":imgName", $this->getImageName());
+            $sql->bindValue(":imgSize", $this->getImageSize());
+            $sql->bindValue(":imgTmp", $this->getImageTmpName());
+            $sql->bindValue(":userId", $this->getUser_id());
 
-       /* if (in_array($file_ext, $expensions) === false) {
-                throw new Exception("extension not allowed, please choose a JPEG or PNG or GIF file.");
-        }
+            $sql->execute();
+            $result = $sql->fetchAll();
+        //save img in directory
+        $dir = "./../data/profile/" ;
+        //place img in de folder
+        move_uploaded_file($imgName, $dir.$imgName);
 
-        if ($file_size > 2097152) {
-                throw new Exception('File size must be excately 2 MB');
-        }
-
-        if (empty($errors) == true) {
-                move_uploaded_file($file_tmp, "data/profile/" . $file_name);
-                return "data/profile/" . $file_name;
-        } else {
-                echo "Error";
-        }*/
+        return $result;
 }
 
         //check if email exists --> for update
