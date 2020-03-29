@@ -227,9 +227,9 @@ public function register(){
             $sql->execute();
             $result = $sql->fetchAll();
         //save img in directory
-        $dir = "./../data/profile/" ;
+        $dir = "data/profile/";
         //place img in de folder
-        move_uploaded_file($imgName, $dir.$imgName);
+        move_uploaded_file($imgTmp, $dir.$imgName);
 
         return $result;
 }

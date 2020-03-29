@@ -38,10 +38,9 @@ if (!empty($_POST["uploadImg"])) {
             } 
             $user->SaveProfileImg($insert_img);
         } else {
-            echo "file is to big";
             $imgError = "Bestand is te groot.";
         };
-        
+        $imgSucces = "Geniet van je nieuwe profile photo";
         //echo $imgSize;
     } else {
         $imgError = "Voeg afbeelding toe";
@@ -50,17 +49,6 @@ if (!empty($_POST["uploadImg"])) {
 }; // end upload image
 
 //if(!empty($_POST["edit"])) {
-//IMAGE UPLOAD profielfoto/avatar
-// if(!empty($_FILES['profileImg']['name'])) {
-//   echo $_FILES['profileImg']['name'];
-
-
-//$user->SetImageTmpName($nameWithoutSpaceTMP);
-//$destination = $user->SaveProfileImg();
-//echo '<pre>' . var_dump($profile[1]) . '</pre>';
-//} else {    
-//   $destination = $profile[0][''];
-//}
 
 // profiel aanpassen van user
 /*  $user_edit = new User();
@@ -131,7 +119,7 @@ if (!empty($_POST["uploadImg"])) {
         <?php endif; ?>
 
         <!-- profielfoto -->
-        <img src="<?php echo "none"; //$profile[1]['image_name'] ?>" alt="Profielfoto">
+        <img src="<?php echo "data/profile/" . $profile[1]['image_name'] ?>" alt="Profielfoto">
         <input type="file" name="profileImg" id="profileImg" class="new_avatar" accept="image/gif, image/jpeg, image/png, image/jpg">
         <!-- indien bestaand te groot is = error  -->
         <?php if(isset($imgError)): ?>
