@@ -15,8 +15,6 @@ class User
   private $ImageName;
   private $ImageSize;
   private $ImageTmpName;
-  private $imgExtenssionError;
-
 
   // krijg de waarde van username
   public function getFirstname()
@@ -237,7 +235,6 @@ class User
       $dir = "data/profile/";
       move_uploaded_file($imgTmp, $dir . $imgName);
       return $result;
-    
   }
 
   //check if email exists --> for update
@@ -288,24 +285,5 @@ class User
     $result = $statement->fetchAll();
     return $result;
   }
-
-  /**
-   * Get the value of imgExtenssionError
-   */
-  public function getImgExtenssionError()
-  {
-    return $this->imgExtenssionError;
-  }
-
-  /**
-   * Set the value of imgExtenssionError
-   *
-   * @return  self
-   */
-  public function setImgExtenssionError($imgExtenssionError)
-  {
-    $this->imgExtenssionError = $imgExtenssionError;
-
-    return $this;
-  }
-}
+ 
+} // end class

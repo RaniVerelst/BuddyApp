@@ -14,38 +14,43 @@ $profile = $user->getUserInfo();*/
 $user->setUser_id(6);
 $profile = $user->getUserInfo();
 
-
 // UPLOAD PICTURE
 if (!empty($_POST["uploadImg"])) {
     if (!empty($_FILES['profileImg']['name'])) {
+        
         //get size of file
         $imgSize = $_FILES['profileImg']['size'];
+        
+        //check if file is nog too big
         if ($imgSize < 100000) {
+            
             //save name & temp
             $nameWithoutSpace = preg_replace('/\s+/', '', $_FILES['profileImg']['name']);
             $nameWithoutSpaceTMP = preg_replace('/\s+/', '', $_FILES['profileImg']['tmp_name']);
+            
             // check expensions
             $expensions = array("jpeg", "jpg", "png", "gif");
             $tmp = explode('.', $nameWithoutSpace);
             $imgExtension = end($tmp);
-            if (in_array($imgExtension, $expensions) === true) {
-            // send class
-            $user->setImageSize($imgSize);
-            $user->setImageTmpName($nameWithoutSpaceTMP);
-            $user->setImageName($nameWithoutSpace);
 
-        //check if profile img was set
-            if (isset($profile[1]['image_name'])) {
-                //set up query
-                $insert_img = 'UPDATE profile_image SET image_name = :imgName, image_size = :imgSize, image_temp_name = :imgTmp WHERE user_id = :userId ';
+            if (in_array(strtolower($imgExtension), $expensions) === true) {
+            
+                // save
+                $user->setImageSize($imgSize);
+                $user->setImageTmpName($nameWithoutSpaceTMP);
+                $user->setImageName($nameWithoutSpace);
+
+                //check if profile img was set - set up querry
+                if (isset($profile[1]['image_name'])) {
+                    $insert_img = 'UPDATE profile_image SET image_name = :imgName, image_size = :imgSize, image_temp_name = :imgTmp WHERE user_id = :userId ';
+                } else {
+                    $insert_img = "INSERT INTO profile_image VALUES('', :imgName, :imgSize, :imgTmp, :userId)";
+                };
+                //add to db
+                $user->SaveProfileImg($insert_img);
             } else {
-                $insert_img = "INSERT INTO profile_image VALUES('', :imgName, :imgSize, :imgTmp, :userId)";
+                $imgError = "Onjuiste format. Verwacht: jpeg, jpg, png, gif. <br> Gekregen " .  $imgExtension;
             };
-            $user->SaveProfileImg($insert_img);
-        } else {
-            $imgError = "Onjuiste format. Verwacht: jpeg, jpg, png, gif. <br> Gekregen " .  $imgExtension;
-        }
-
         } else {
             $imgError = "Bestand is te groot.";
         };
@@ -54,32 +59,16 @@ if (!empty($_POST["uploadImg"])) {
     };
 }; // end upload image
 
-//if(!empty($_POST["edit"])) {
+if(!empty($_POST["edit"])) {
 
-// profiel aanpassen van user
-/*  $user_edit = new User();
-   // $user_edit->setUser_id($_SESSION["user_id"]);
-   //Test version
-   $user_edit->setUser_id(6);
-   // $user_edit->setFirstname($_POST["firstname"]);
-   // $user_edit->setLastname($_POST["lastname"]);
-    
-    if($profile['email'] == $_POST["email"]){
-        $user_edit->setEmail($_POST["email"]);
-    } elseif($user_edit->emailExists($_POST["email"])) {
-        $user_edit->setEmail($profile["email"]); //Indien het profiel bestaat
-        $error = "Emailadres bestaat al";
-    } else {
-        $user_edit->setEmail($_POST["email"]);
-    }
-/*    $user_edit->setBio($_POST["bio"]);
-    $user_edit->setImage($destination);
-    if($user_edit->update()){
-        $message = "Your profile is updated.";
-    } else {
-        $error = "Something went wrong, profile isn't updated.";
-    }  
-} */
+echo "clicked";
+
+//check empty field for name
+if(!empty($_POST["firstname"])){
+    echo $_POST["firstname"];
+}
+
+} 
 
 
 /*if(!empty($_POST["passwordedit"]) && !empty($_POST["password"]) && !empty($_POST["repassword"])){
