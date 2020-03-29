@@ -11,7 +11,7 @@ $user = new User();
 $profile = $user->getUserInfo();*/
 
 // test data 
-$user->setUser_id(6);
+$user->setUser_id(7);
 $profile = $user->getUserInfo();
 
 // UPLOAD PICTURE
@@ -61,55 +61,87 @@ if (!empty($_POST["uploadImg"])) {
 
 //update firstname lastname
 if (!empty($_POST["edit"])) {
-
+    
     //if given update firstname
     if (!empty($_POST["firstname"])) {
-        $firstname = $_POST["firstname"];
-        $user->setFirstname($firstname);
+        $user->setFirstname($_POST["firstname"]);
         $user->saveFirstname();
+    
     };
+
     //if given update lastname
     if (!empty($_POST["lastname"])) {
         $lastname = $_POST["lastname"];
         $user->setLastname($lastname);
         $user->saveLastname();
-    }
+       
+    };
+
     //if given update email
     if (!empty($_POST["email"])) {
         $email = $_POST["email"];
         //check if email is valid
         if(filter_var($email, FILTER_VALIDATE_EMAIL)){
-        // check if old email used
-        
+
+            //check if email was used
         if ($user->emailExists($email) == false) {
             $user->setEmail($email);
-           
+            $user->saveEmail();
         } else {
             $emailError = "Voeg een nieuwe email toe";
         }
     } else {
-        $emailError = $email + "Is geen geldig email adress";
+        $emailError = $email + "Het is geen geldig email adress";
     }
-    }
+   
+    };
 } // end $_POST["edit"]; 
 
-
-/*if(!empty($_POST["passwordedit"]) && !empty($_POST["password"]) && !empty($_POST["repassword"])){
-    if(strcmp($_POST['password'], $_POST["repassword"]) == 0){
-        $user_pass = new User();
-        $user_pass->setUser_id($_SESSION["user_id"]);
-         $user_pass->setPassword($_POST['password']);
-  /*      if($user_pass->updatePassword()){
-            $message = "Password updated";
+if(!empty($_POST["passwordedit"]) ){
+    //validate current password
+    $oldPassword = $_POST['oldPassword'];
+    if($user->passwordExists($oldPassword)){
+        
+        $password = $_POST['password'];
+        // check if passwords are the same
+        if($_POST['password'] == $_POST['repassword']){
+            //check if password is long enough
+            if(strlen($password) > 7){
+                $user->setPassword($password);
+                echo $user->getPassword();
+                $user->savePassword();
+                echo "nieuwe wachtwoord!";
+            } else {
+                $error = "wachtwoord moet 8 tekens bewaten";
+            }
+        }else {
+            $error = "2 verschillende passwords gegeven";
         }
+
     } else {
-        $error = "wachtwoorden moeten overeen komen";
-    }
-} else {
-    $error = "Gelieve dit in te vullen aub"; */
+        $error = "wrong password";
+    };
+    
+    
+    /*if (password_verify('$oldPassword', $user->getPassword())) {
+        echo 'Password is valid!';
+    } else {
+        echo 'Invalid password.';
+    }*/
+   // if($_POST['password'] === $_POST["repassword"]){
+       
+      /*  $user->setPassword($_POST['password']);
+        echo $user->getPassword();
+        if($user->updatePassword()){
+            $message = "Password updated";*/
+  //  } else {
+    //    $error = "wachtwoorden moeten overeen komen";
+   // }
+//} else {
+  //  $error = "Gelieve dit in te vullen aub"; 
 //} 
-//}
-//}
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -132,7 +164,7 @@ if (!empty($_POST["edit"])) {
         <!-- indien inloggegevens fout zijn = error -->
         <?php if (isset($error)) : ?>
             <div class="form__error">
-                <p>Dat wachtwoord was onjuist. Probeer het opnieuw!</p>
+                <p>Dat wachtwoord was onjuist. Probeer het opnieuw! <?php echo $error; ?></p>
             </div>
         <?php endif; ?>
 
@@ -169,7 +201,10 @@ if (!empty($_POST["edit"])) {
 
         <!-- wachtwoord aanpassen -->
         <h2>Change Password</h2>
-
+        <br>
+            <h4>Old password</h4>
+            <input type="password" id="oldPassword" name="oldPassword" placeholder="Oude password">
+            <h4>New password</h4>
         <input type="password" id="password" name="password" placeholder="Nieuw wachtwoord">
         <input type="password" name="repassword" id="repassword" placeholder="Bevestig nieuw wachtwoord">
 

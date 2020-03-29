@@ -235,16 +235,17 @@ class User
       $dir = "data/profile/";
       move_uploaded_file($imgTmp, $dir . $imgName);
       return $result;
-  }
+  } // end SaveProfileImg
 
   //set up First name
 public function saveFirstname(){
   //connect to db
   $conn = Db::getInstance();
   //query
-  $statement = $conn->prepare("UPDATE users SET first_name = :firstname WHERE user_id :userId");
-  $statement->bindParam(":firstname",$this->getFirstname );
-  $statement->bindParam(":userId", $this->getUser_id());
+  //
+  $statement = $conn->prepare("UPDATE users SET first_name = :firstname WHERE id = :userId");
+  $statement->bindValue(":firstname",$this->getFirstname() );
+  $statement->bindValue(":userId", $this->getUser_id());
   $statement->execute();
   $result = $statement->fetchAll();
   return $result;
@@ -256,9 +257,9 @@ public function saveFirstname(){
     //connect to db
     $conn = Db::getInstance();
     //query
-    $statement = $conn->prepare("UPDATE users SET last_name = :lastname WHERE user_id :userId");
-    $statement->bindParam(":lastname",$this->getLastname());
-    $statement->bindParam(":userId", $this->getUser_id());
+    $statement = $conn->prepare("UPDATE users SET last_name = :lastname WHERE id = :userId");
+    $statement->bindValue(":lastname",$this->getLastname());
+    $statement->bindValue(":userId", $this->getUser_id());
     $statement->execute();
     $result = $statement->fetchAll();
     return $result;
@@ -267,9 +268,9 @@ public function saveFirstname(){
     //connect to db
     $conn = Db::getInstance();
     //query
-    $statement = $conn->prepare("UPDATE users SET email = :email WHERE user_id :userId");
-    $statement->bindParam(":email",$this->getEmail());
-    $statement->bindParam(":userId", $this->getUser_id());
+    $statement = $conn->prepare("UPDATE users SET email = :email WHERE id = :userId");
+    $statement->bindValue(":email",$this->getEmail());
+    $statement->bindValue(":userId", $this->getUser_id());
     $statement->execute();
     $result = $statement->fetchAll();
     return $result;
@@ -289,6 +290,35 @@ public function saveFirstname(){
       return false;
     }
   }
+
+public function passwordExists($password)
+{
+  $userProfile = $this->getUserInfo();
+  //var_dump($userProfile[0]['password']);
+  if(password_verify($password, $userProfile[0]['password'])){
+return true;
+  } else {
+return false;
+  }
+}
+  //udpate Password
+  function savePassword(){
+    $options = [
+      "cost" => 12 // 2^12
+    ];
+    $password = password_hash($this->getPassword(), PASSWORD_DEFAULT, $options);
+    //connect to db
+     $conn = Db::getInstance();
+     //query
+     $statement = $conn->prepare("UPDATE users SET password = :newpassword WHERE id = :userId");
+     echo $this->getPassword();
+     $statement->bindValue(":newpassword", $password);
+     $statement->bindValue(":userId", $this->getUser_id());
+     $statement->execute();
+     $result = $statement->fetchAll();
+     return $result;
+  }
+
   ////// zoek een user
   public function searchUser($searchkey)
   {
