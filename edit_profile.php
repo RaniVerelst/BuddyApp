@@ -24,23 +24,28 @@ if (!empty($_POST["uploadImg"])) {
             //save name & temp
             $nameWithoutSpace = preg_replace('/\s+/', '', $_FILES['profileImg']['name']);
             $nameWithoutSpaceTMP = preg_replace('/\s+/', '', $_FILES['profileImg']['tmp_name']);
-            // send to User.class.php
+            // check expensions
+            $expensions = array("jpeg", "jpg", "png", "gif");
+            $tmp = explode('.', $nameWithoutSpace);
+            $imgExtension = end($tmp);
+            if (in_array($imgExtension, $expensions) === true) {
+            // send class
             $user->setImageSize($imgSize);
             $user->setImageTmpName($nameWithoutSpaceTMP);
             $user->setImageName($nameWithoutSpace);
-            //check if profile img was set
+
+        //check if profile img was set
             if (isset($profile[1]['image_name'])) {
                 //set up query
                 $insert_img = 'UPDATE profile_image SET image_name = :imgName, image_size = :imgSize, image_temp_name = :imgTmp WHERE user_id = :userId ';
             } else {
                 $insert_img = "INSERT INTO profile_image VALUES('', :imgName, :imgSize, :imgTmp, :userId)";
-            }
-            
-            if($user->SaveProfileImg($insert_img) == false){
-                $imgError = $user->getImgExtenssionError();
-            } else {
-                $user->SaveProfileImg($insert_img);
-            }
+            };
+            $user->SaveProfileImg($insert_img);
+        } else {
+            $imgError = "Onjuiste format. Verwacht: jpeg, jpg, png, gif. <br> Gekregen " .  $imgExtension;
+        }
+
         } else {
             $imgError = "Bestand is te groot.";
         };

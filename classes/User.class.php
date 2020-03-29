@@ -225,19 +225,7 @@ class User
     // get img
     $imgName = $this->getImageName();
     $imgTmp = $this->getImageTmpName();
-    $tmp = explode('.', $imgName);
-
-    $imgExtension = end($tmp);
-    $dir = "data/profile/";
-    // check format
-    $expensions = array("jpeg", "jpg", "png", "gif");
-
-    if (in_array($imgExtension, $expensions) === false) {
-      //throw new Exception();
-      $m = "extension not allowed, please choose a JPEG or PNG or GIF file.";
-      $this->setImgExtenssionError($m);
-      return false;
-    } else {
+    
       //bind
       $sql->bindValue(":imgName", $this->getImageName());
       $sql->bindValue(":imgSize", $this->getImageSize());
@@ -246,10 +234,10 @@ class User
       $sql->execute();
       $result = $sql->fetchAll();
       //save img in directory
+      $dir = "data/profile/";
       move_uploaded_file($imgTmp, $dir . $imgName);
-
       return $result;
-    }
+    
   }
 
   //check if email exists --> for update
