@@ -311,7 +311,6 @@ return false;
      $conn = Db::getInstance();
      //query
      $statement = $conn->prepare("UPDATE users SET password = :newpassword WHERE id = :userId");
-     echo $this->getPassword();
      $statement->bindValue(":newpassword", $password);
      $statement->bindValue(":userId", $this->getUser_id());
      $statement->execute();

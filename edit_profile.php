@@ -108,38 +108,20 @@ if(!empty($_POST["passwordedit"]) ){
             //check if password is long enough
             if(strlen($password) > 7){
                 $user->setPassword($password);
-                echo $user->getPassword();
+            
                 $user->savePassword();
                 echo "nieuwe wachtwoord!";
             } else {
                 $error = "wachtwoord moet 8 tekens bewaten";
             }
         }else {
-            $error = "2 verschillende passwords gegeven";
+            $error = "wachtwoords moeten overeen komen";
         }
 
     } else {
         $error = "wrong password";
     };
     
-    
-    /*if (password_verify('$oldPassword', $user->getPassword())) {
-        echo 'Password is valid!';
-    } else {
-        echo 'Invalid password.';
-    }*/
-   // if($_POST['password'] === $_POST["repassword"]){
-       
-      /*  $user->setPassword($_POST['password']);
-        echo $user->getPassword();
-        if($user->updatePassword()){
-            $message = "Password updated";*/
-  //  } else {
-    //    $error = "wachtwoorden moeten overeen komen";
-   // }
-//} else {
-  //  $error = "Gelieve dit in te vullen aub"; 
-//} 
 }
 
 ?>
