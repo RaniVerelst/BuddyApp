@@ -218,23 +218,61 @@ class User
   {
     //Connect to db
     $conn = Db::getInstance();
-    $sql = $conn->prepare($query);
+    $statement = $conn->prepare($query);
 
     // get img
     $imgName = $this->getImageName();
     $imgTmp = $this->getImageTmpName();
     
       //bind
-      $sql->bindValue(":imgName", $this->getImageName());
-      $sql->bindValue(":imgSize", $this->getImageSize());
-      $sql->bindValue(":imgTmp", $this->getImageTmpName());
-      $sql->bindValue(":userId", $this->getUser_id());
-      $sql->execute();
-      $result = $sql->fetchAll();
+      $statement->bindValue(":imgName", $this->getImageName());
+      $statement->bindValue(":imgSize", $this->getImageSize());
+      $statement->bindValue(":imgTmp", $this->getImageTmpName());
+      $statement->bindValue(":userId", $this->getUser_id());
+      $statement->execute();
+      $result = $statement->fetchAll();
       //save img in directory
       $dir = "data/profile/";
       move_uploaded_file($imgTmp, $dir . $imgName);
       return $result;
+  }
+
+  //set up First name
+public function saveFirstname(){
+  //connect to db
+  $conn = Db::getInstance();
+  //query
+  $statement = $conn->prepare("UPDATE users SET first_name = :firstname WHERE user_id :userId");
+  $statement->bindParam(":firstname",$this->getFirstname );
+  $statement->bindParam(":userId", $this->getUser_id());
+  $statement->execute();
+  $result = $statement->fetchAll();
+  return $result;
+}
+
+//set up Lastname
+  //set up First name
+  public function saveLastname(){
+    //connect to db
+    $conn = Db::getInstance();
+    //query
+    $statement = $conn->prepare("UPDATE users SET last_name = :lastname WHERE user_id :userId");
+    $statement->bindParam(":lastname",$this->getLastname());
+    $statement->bindParam(":userId", $this->getUser_id());
+    $statement->execute();
+    $result = $statement->fetchAll();
+    return $result;
+  }
+  public function saveEmail(){
+    //connect to db
+    $conn = Db::getInstance();
+    //query
+    $statement = $conn->prepare("UPDATE users SET email = :email WHERE user_id :userId");
+    $statement->bindParam(":email",$this->getEmail());
+    $statement->bindParam(":userId", $this->getUser_id());
+    $statement->execute();
+    $result = $statement->fetchAll();
+    return $result;
   }
 
   //check if email exists --> for update

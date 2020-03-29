@@ -17,24 +17,24 @@ $profile = $user->getUserInfo();
 // UPLOAD PICTURE
 if (!empty($_POST["uploadImg"])) {
     if (!empty($_FILES['profileImg']['name'])) {
-        
+
         //get size of file
         $imgSize = $_FILES['profileImg']['size'];
-        
+
         //check if file is nog too big
         if ($imgSize < 100000) {
-            
+
             //save name & temp
             $nameWithoutSpace = preg_replace('/\s+/', '', $_FILES['profileImg']['name']);
             $nameWithoutSpaceTMP = preg_replace('/\s+/', '', $_FILES['profileImg']['tmp_name']);
-            
+
             // check expensions
             $expensions = array("jpeg", "jpg", "png", "gif");
             $tmp = explode('.', $nameWithoutSpace);
             $imgExtension = end($tmp);
 
             if (in_array(strtolower($imgExtension), $expensions) === true) {
-            
+
                 // save
                 $user->setImageSize($imgSize);
                 $user->setImageTmpName($nameWithoutSpaceTMP);
@@ -59,16 +59,39 @@ if (!empty($_POST["uploadImg"])) {
     };
 }; // end upload image
 
-if(!empty($_POST["edit"])) {
+//update firstname lastname
+if (!empty($_POST["edit"])) {
 
-echo "clicked";
-
-//check empty field for name
-if(!empty($_POST["firstname"])){
-    echo $_POST["firstname"];
-}
-
-} 
+    //if given update firstname
+    if (!empty($_POST["firstname"])) {
+        $firstname = $_POST["firstname"];
+        $user->setFirstname($firstname);
+        $user->saveFirstname();
+    };
+    //if given update lastname
+    if (!empty($_POST["lastname"])) {
+        $lastname = $_POST["lastname"];
+        $user->setLastname($lastname);
+        $user->saveLastname();
+    }
+    //if given update email
+    if (!empty($_POST["email"])) {
+        $email = $_POST["email"];
+        //check if email is valid
+        if(filter_var($email, FILTER_VALIDATE_EMAIL)){
+        // check if old email used
+        
+        if ($user->emailExists($email) == false) {
+            $user->setEmail($email);
+           
+        } else {
+            $emailError = "Voeg een nieuwe email toe";
+        }
+    } else {
+        $emailError = $email + "Is geen geldig email adress";
+    }
+    }
+} // end $_POST["edit"]; 
 
 
 /*if(!empty($_POST["passwordedit"]) && !empty($_POST["password"]) && !empty($_POST["repassword"])){
@@ -135,6 +158,11 @@ if(!empty($_POST["firstname"])){
         <h2>Change Profile</h2>
         <input type="text" id="firstname" name="firstname" placeholder="Voornaam">
         <input type="text" id="lastname" name="lastname" value="" placeholder="Achternaam">
+        <?php if (isset($emailError)) : ?>
+            <div class="form_success">
+                <p><?php echo $imgError; ?></p>
+            </div>
+        <?php endif; ?>
         <input type="email" id="email" name="email" value="" placeholder="E-mailadres of gebruikersnaam">
         <!-- button -->
         <input type="submit" name="edit" class="btn" value="Bewerk profiel">
