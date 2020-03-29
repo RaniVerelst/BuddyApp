@@ -6,7 +6,6 @@ error_reporting(E_ALL);
 session_start();
 include_once("classes/User.class.php");
 
-
 $user = new User();
 /*$user->setUser_id($_SESSION["user_id"]);
 $profile = $user->getUserInfo();*/
@@ -16,20 +15,38 @@ $user->setUser_id(6);
 $profile = $user->getUserInfo();
 
 
-
+// UPLOAD PICTURE
 if (!empty($_POST["uploadImg"])) {
     if (!empty($_FILES['profileImg']['name'])) {
+        //get size of file
         $imgSize = $_FILES['profileImg']['size'];
         if($imgSize < 100000 ){
+            //
             $img = $_FILES['profileImg']['name'];
-            $imgName = $_FILES['profileImg']['tmp_name'];
+            $imgName = file_get_contents($_FILES['profileImg']['tmp_name']);
+            //check if profile img was set
+            if(isset($profile[1]['image_name'])){
+                echo"yess";
+                $insert_img = 'UPDATE profile_image SET image_name = :imgName, image_size = :imgSize, image_temp_name = :imgTmp WHERE user_id = :userId ';
+                echo $insert_img;
+            } else {
+                echo "nopee";
+                $insert_img= "INSERT INTO profile_image VALUES('', :imgName, :imgSize, :imgTmp, :userId)";
+            }
+            /*
+            $insert_img->bindParam(":imgName", $img);
+            $insert_img->bindParam(":imgSize", $imgSize);
+            $insert_img->bindParam(":imgTmp", $imgName);
+            $insert_img->bindParam(":userId", $user);*/
+            $user->SaveProfileImg($insert_img);
         } else {
             echo "file is to big";
+            $imgError = "Bestand is te groot.";
         };
         
         echo $imgSize;
     } else {
-        echo "please add image";
+        $imgError = "Voeg afbeelding toe";
         $img = "";
     };
 }; // end upload image
@@ -122,6 +139,12 @@ if (!empty($_POST["uploadImg"])) {
         <!-- profielfoto -->
         <img src="<?php echo "none"; //$profile[1]['image_name'] ?>" alt="Profielfoto">
         <input type="file" name="profileImg" id="profileImg" class="new_avatar" accept="image/gif, image/jpeg, image/png, image/jpg">
+        <!-- indien bestaand te groot is = error  -->
+        <?php if(isset($imgError)): ?>
+        <div class="form_error">
+        <p><?php echo $imgError;?></p>
+        </div>
+        <?php endif; ?>
         <!--button-->
         <input type="submit" name="uploadImg" class="btn" value="Upload Image">
 

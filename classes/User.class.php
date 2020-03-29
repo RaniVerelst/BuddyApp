@@ -211,15 +211,13 @@ public function register(){
       }
 
       //sla profielafbeelding op in mapprofiel
-      public function SaveProfileImg() {
-        $file_name = $_SESSION['user_id'] . "-" . time() . "-" . $this->ImageName;
-        $file_size = $this->ImageSize;
-        $file_tmp = $this->ImageTmpName;
-        $tmp = explode('.', $file_name);
-        $file_ext = end($tmp);
+      public function SaveProfileImg($query) {
+        //Connect to db
+        $conn = Db::getInstance();
+        echo "It works!!! " . $query;
         $expensions = array("jpeg", "jpg", "png", "gif");
 
-        if (in_array($file_ext, $expensions) === false) {
+       /* if (in_array($file_ext, $expensions) === false) {
                 throw new Exception("extension not allowed, please choose a JPEG or PNG or GIF file.");
         }
 
@@ -232,7 +230,7 @@ public function register(){
                 return "data/profile/" . $file_name;
         } else {
                 echo "Error";
-        }
+        }*/
 }
 
         //check if email exists --> for update
