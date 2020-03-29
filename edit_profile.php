@@ -20,31 +20,32 @@ if (!empty($_POST["uploadImg"])) {
     if (!empty($_FILES['profileImg']['name'])) {
         //get size of file
         $imgSize = $_FILES['profileImg']['size'];
-        if($imgSize < 100000 ){
-            //connect balues to User.class
-            $nameWithoutSpace = preg_replace('/\s+/','',$_FILES['profileImg']['name']);
-            $nameWithoutSpaceTMP = preg_replace('/\s+/','',$_FILES['profileImg']['tmp_name']);
-            
+        if ($imgSize < 100000) {
+            //save name & temp
+            $nameWithoutSpace = preg_replace('/\s+/', '', $_FILES['profileImg']['name']);
+            $nameWithoutSpaceTMP = preg_replace('/\s+/', '', $_FILES['profileImg']['tmp_name']);
+            // send to User.class.php
             $user->setImageSize($imgSize);
             $user->setImageTmpName($nameWithoutSpaceTMP);
             $user->setImageName($nameWithoutSpace);
-
             //check if profile img was set
-            if(isset($profile[1]['image_name'])){
+            if (isset($profile[1]['image_name'])) {
                 //set up query
                 $insert_img = 'UPDATE profile_image SET image_name = :imgName, image_size = :imgSize, image_temp_name = :imgTmp WHERE user_id = :userId ';
             } else {
-                $insert_img= "INSERT INTO profile_image VALUES('', :imgName, :imgSize, :imgTmp, :userId)";
-            } 
-            $user->SaveProfileImg($insert_img);
+                $insert_img = "INSERT INTO profile_image VALUES('', :imgName, :imgSize, :imgTmp, :userId)";
+            }
+            
+            if($user->SaveProfileImg($insert_img) == false){
+                $imgError = $user->getImgExtenssionError();
+            } else {
+                $user->SaveProfileImg($insert_img);
+            }
         } else {
             $imgError = "Bestand is te groot.";
         };
-        $imgSucces = "Geniet van je nieuwe profile photo";
-        //echo $imgSize;
     } else {
         $imgError = "Voeg afbeelding toe";
-        $img = "";
     };
 }; // end upload image
 
@@ -108,7 +109,7 @@ if (!empty($_POST["uploadImg"])) {
 
 <body>
 
-<form method="post" action="" class="edit_profile" enctype="multipart/form-data">   
+    <form method="post" action="" class="edit_profile" enctype="multipart/form-data">
         <h1>Profiel bewerken</h1>
 
         <!-- indien inloggegevens fout zijn = error -->
@@ -122,10 +123,16 @@ if (!empty($_POST["uploadImg"])) {
         <img src="<?php echo "data/profile/" . $profile[1]['image_name'] ?>" alt="Profielfoto">
         <input type="file" name="profileImg" id="profileImg" class="new_avatar" accept="image/gif, image/jpeg, image/png, image/jpg">
         <!-- indien bestaand te groot is = error  -->
-        <?php if(isset($imgError)): ?>
-        <div class="form_error">
-        <p><?php echo $imgError;?></p>
-        </div>
+        <?php if (isset($imgError)) : ?>
+            <div class="form_error">
+                <p><?php echo $imgError; ?></p>
+            </div>
+        <?php endif; ?>
+        <!-- indien alles goed verliep  -->
+        <?php if (isset($imgSucces)) : ?>
+            <div class="form_success">
+                <p><?php echo $imgSuccess; ?></p>
+            </div>
         <?php endif; ?>
         <!--button-->
         <input type="submit" name="uploadImg" class="btn" value="Upload Image">
