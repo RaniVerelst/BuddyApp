@@ -27,7 +27,7 @@ class User
   public function setFirstname($firstname)
   {
     if (empty($firstname)) {
-      throw new Exception("Firstname cannot be empty");
+      throw new Exception("Firstname can not be empty");
     } else {
       $this->firstname = htmlspecialchars($firstname);
       return $this;
@@ -44,7 +44,7 @@ class User
   public function setLastname($lastname)
   {
     if (empty($lastname)) {
-      throw new Exception("Lastname cannot be empty");
+      throw new Exception("Lastname can not be empty");
     } else {
       $this->lastname = htmlspecialchars($lastname);
       return $this;
@@ -131,10 +131,10 @@ class User
 
 
     if (strlen($this->password) < 8) {
-      throw new Exception("Your password needs at leats 8 characters");
+      throw new Exception("Your password needs to be atleast 8 characters long.");
     }
     if ($this->password != $this->password_confirm) {
-      throw new Exception("Passwords don't match");
+      throw new Exception("Oops, passwords don't match.");
     } else {
       // voor confirm register
       $options = [
@@ -240,7 +240,7 @@ class User
     $expensions = array("jpeg", "jpg", "png", "gif");
 
     if (in_array($file_ext, $expensions) === false) {
-      throw new Exception("extension not allowed, please choose a JPEG or PNG or GIF file.");
+      throw new Exception("Extension is not allowed, please choose a JPEG or PNG or GIF file.");
     }
 
     if ($file_size > 2097152) {
