@@ -9,7 +9,7 @@ class User
   private $email;
   private $password;
   private $password_confirm;
-  private $user_id; //is nodig om profiel aan te passen
+  private $user_id; // om profiel aan te passen
 
   //temp voor IMAGE UPLOAD
   private $ImageName;
@@ -18,7 +18,7 @@ class User
 
 
 
-  // krijg de waarde van username
+  // vraag de waarde van username
   public function getFirstname()
   {
     return $this->firstname;
@@ -54,7 +54,7 @@ class User
   }
 
 
-  // krijg de waarde van username
+  // vraag de waarde van username
   public function getUsername()
   {
     return $this->username;
@@ -78,7 +78,7 @@ class User
     return $this;
   }
 
-  // krijgt de waarde van password
+  // vraag de waarde van password
   public function getPassword()
   {
     return $this->password;
@@ -89,7 +89,7 @@ class User
     $this->password = $password;
     return $this;
   }
-  // voor register2
+  // confirm register2
   public function getPassword_confirm()
   {
     return $this->password_confirm;
@@ -102,7 +102,7 @@ class User
   }
 
 
-  // form validation
+  // formulier validatie
 
   public function register()
   {
@@ -136,7 +136,7 @@ class User
     if ($this->password != $this->password_confirm) {
       throw new Exception("Passwords don't match");
     } else {
-      // voor register 2
+      // voor confirm register
       $options = [
         "cost" => 12 // 2^12
       ];
@@ -165,9 +165,7 @@ class User
   }
 
 
-  //////////////////////////////////////////////////
-  ///////////////// PROFIEL AANPASSEN ///////////// feature 3
-  ////////////////////////////////////////////////
+  //--------------- PROFIEL AANPASSEN --------------- feature 3
 
   public function getUser_id()
   {
@@ -183,7 +181,7 @@ class User
 
   public function getUserInfo()
   {
-    //DB CONNECTIE
+    //DB 
     $conn = Db::getInstance();
 
     //QUERY WHERE USER = $_SESSION
@@ -257,7 +255,7 @@ class User
     }
   }
 
-  //check if email exists --> for update
+  //bestaat email?
   public function emailExists($email)
   {
     $conn = Db::getInstance();
@@ -271,7 +269,7 @@ class User
       return false;
     }
   }
-  ////// zoek een user
+  // zoek user
   public function searchUser($searchkey)
   {
     $conn = Db::getInstance();
@@ -280,28 +278,6 @@ class User
           union select * from users where user_name like '$searchkey%'");
     $statement->bindValue(1, '$searchkey%', PDO::PARAM_STR);
     $statement->execute();
-    $result = $statement->fetchAll();
-    return $result;
-  }
-
-
-  ////// detailpagina van een user
-
-  public function showUser($id)
-  {
-    $conn = Db::getInstance();
-    $statement = $conn->prepare("select * from users where users.id like '$id'");
-    //$statement = $conn->prepare("select * from users, posts where posts.user_id = users.id and users.id like '$id'");
-    $statement->execute(array($id));
-    $result = $statement->fetch(PDO::FETCH_ASSOC);
-    return $result;
-  }
-
-  public function showPostsFromUser($id)
-  {
-    $conn = Db::getInstance();
-    $statement = $conn->prepare("select * from users, posts where posts.user_id = users.id and users.id like '$id'");
-    $statement->execute(array($id));
     $result = $statement->fetchAll();
     return $result;
   }
