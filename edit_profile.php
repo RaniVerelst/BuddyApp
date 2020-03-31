@@ -4,6 +4,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 session_start();
+include_once("classes/Db.class.php");
 include_once("classes/User.class.php");
 
 $user = new User();
@@ -49,13 +50,13 @@ if (!empty($_POST["uploadImg"])) {
                 //add to db
                 $user->SaveProfileImg($insert_img);
             } else {
-                $imgError = "Onjuiste format. Verwacht: jpeg, jpg, png, gif. <br> Gekregen " .  $imgExtension;
+                $imgError = "Wrong format. Expected: jpeg, jpg, png, gif. <br> Gekregen " .  $imgExtension;
             };
         } else {
-            $imgError = "Bestand is te groot.";
+            $imgError = "File is too big.";
         };
     } else {
-        $imgError = "Voeg afbeelding toe";
+        $imgError = "Add a picture";
     };
 }; // end upload image
 
@@ -88,10 +89,10 @@ if (!empty($_POST["edit"])) {
             $user->setEmail($email);
             $user->saveEmail();
         } else {
-            $emailError = "Voeg een nieuwe email toe";
+            $emailError = "Add your email";
         }
     } else {
-        $emailError = $email + "Het is geen geldig email adress";
+        $emailError = $email + "This email isn't valid.";
     }
    
     };
@@ -110,16 +111,16 @@ if(!empty($_POST["passwordedit"]) ){
                 $user->setPassword($password);
             
                 $user->savePassword();
-                echo "nieuwe wachtwoord!";
+                echo "New password!";
             } else {
-                $error = "wachtwoord moet 8 tekens bewaten";
+                $error = "Password needs at least 8 characters.";
             }
         }else {
-            $error = "wachtwoords moeten overeen komen";
+            $error = "Passwords don't match.";
         }
 
     } else {
-        $error = "wrong password";
+        $error = "Wrong password!";
     };
     
 }
@@ -141,12 +142,12 @@ if(!empty($_POST["passwordedit"]) ){
 <body>
 
     <form method="post" action="" class="edit_profile" enctype="multipart/form-data">
-        <h1>Profiel bewerken</h1>
+        <h1>Change Profile</h1>
 
         <!-- indien inloggegevens fout zijn = error -->
         <?php if (isset($error)) : ?>
             <div class="form__error">
-                <p>Dat wachtwoord was onjuist. Probeer het opnieuw! <?php echo $error; ?></p>
+                <p>That password wasn't right. Try Again! <?php echo $error; ?></p>
             </div>
         <?php endif; ?>
 
@@ -170,27 +171,27 @@ if(!empty($_POST["passwordedit"]) ){
 
         <!-- gegevens gebruiker -->
         <h2>Change Profile</h2>
-        <input type="text" id="firstname" name="firstname" placeholder="Voornaam">
-        <input type="text" id="lastname" name="lastname" value="" placeholder="Achternaam">
+        <input type="text" id="firstname" name="firstname" placeholder="First name">
+        <input type="text" id="lastname" name="lastname" value="" placeholder="Last name">
         <?php if (isset($emailError)) : ?>
             <div class="form_success">
                 <p><?php echo $imgError; ?></p>
             </div>
         <?php endif; ?>
-        <input type="email" id="email" name="email" value="" placeholder="E-mailadres of gebruikersnaam">
+        <input type="email" id="email" name="email" value="" placeholder="E-mail or username">
         <!-- button -->
-        <input type="submit" name="edit" class="btn" value="Bewerk profiel">
+        <input type="submit" name="edit" class="btn" value="Change profile">
 
         <!-- wachtwoord aanpassen -->
         <h2>Change Password</h2>
         <br>
             <h4>Old password</h4>
-            <input type="password" id="oldPassword" name="oldPassword" placeholder="Oude password">
+            <input type="password" id="oldPassword" name="oldPassword" placeholder="Old password">
             <h4>New password</h4>
-        <input type="password" id="password" name="password" placeholder="Nieuw wachtwoord">
-        <input type="password" name="repassword" id="repassword" placeholder="Bevestig nieuw wachtwoord">
+        <input type="password" id="password" name="password" placeholder="New password">
+        <input type="password" name="repassword" id="repassword" placeholder="Confirm new password">
 
-        <input type="submit" name="passwordedit" class="btn" value="Bewerk wachtwoord">
+        <input type="submit" name="passwordedit" class="btn" value="Change password">
     </form>
 
 </body>
