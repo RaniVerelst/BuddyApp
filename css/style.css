@@ -116,12 +116,12 @@ color: #1ABC9C;
   margin-top: 40px;
 }
 
-#input_search {
+.input_search {
   width: 450px;
   height: 35px;
 }
 
-#btn_search {
+.btn_search {
   cursor: pointer;
   background-color: #1ABC9C;
   background-image: url("../images/search.png");
