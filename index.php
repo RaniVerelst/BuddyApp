@@ -25,7 +25,7 @@ include_once("classes/Db.class.php");
 
   <!-- Theme CSS -->
   <link href="startbootstrap/css/freelancer.min.css" type="text/css" rel="stylesheet">
-  <link href="css/style.css" type="text/css" rel="stylesheet">
+  <link href="../css/style.css" type="text/css" rel="stylesheet">
 
 </head>
 
@@ -60,8 +60,8 @@ include_once("classes/Db.class.php");
       </div>
     </div>
     <form class="search" method="get" action="search.php">
-      <input id="input_search" type="text" name="search" placeholder ="Search a user">
-      <input id="btn_search" type="submit" value="">
+      <input class="input_search" type="text" name="search" placeholder ="Search a user">
+      <input class="btn_search" type="submit" value="">
   </form>
   </nav>
 
