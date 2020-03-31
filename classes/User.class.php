@@ -16,7 +16,7 @@ class User {
 
 
 
-  // ontvang de waarde van username
+  // ontvang de firstname
   public function getFirstname(){
     return $this->firstname;
   }
@@ -33,6 +33,7 @@ class User {
     return $this;*/
   }
 
+  // ontvang de lastname
   public function getLastname(){
     return $this->lastname;
   }
@@ -109,7 +110,7 @@ public function register(){
     throw new Exception("Oops, passwords don't match.");
   }
   else{
-  // voor register te confirme
+  // voor register te confirmen
   $options = [
     "cost" => 12 // 2^12
     ];
