@@ -12,7 +12,7 @@ class User
   private $email;
   private $password;
   private $password_confirm;
-  private $user_id; //is nodig om profiel aan te passen
+  private $user_id; // om profiel aan te passen
 
   //temp voor IMAGE UPLOAD
   private $ImageName;
@@ -20,6 +20,10 @@ class User
   private $ImageTmpName;
 
   // krijg de waarde van username
+
+
+  // vraag de waarde van username
+
   public function getFirstname()
   {
     return $this->firstname;
@@ -28,7 +32,7 @@ class User
   public function setFirstname($firstname)
   {
     if (empty($firstname)) {
-      throw new Exception("Firstname cannot be empty");
+      throw new Exception("Firstname can not be empty");
     } else {
       $this->firstname = htmlspecialchars($firstname);
       return $this;
@@ -45,7 +49,7 @@ class User
   public function setLastname($lastname)
   {
     if (empty($lastname)) {
-      throw new Exception("Lastname cannot be empty");
+      throw new Exception("Lastname can not be empty");
     } else {
       $this->lastname = htmlspecialchars($lastname);
       return $this;
@@ -55,7 +59,7 @@ class User
   }
 
 
-  // krijg de waarde van username
+  // vraag de waarde van username
   public function getUsername()
   {
     return $this->username;
@@ -84,7 +88,7 @@ class User
     return $this;
   }
 
-  // krijgt de waarde van password
+  // vraag de waarde van password
   public function getPassword()
   {
     return $this->password;
@@ -95,7 +99,7 @@ class User
     $this->password = $password;
     return $this;
   }
-  // voor register2
+  // confirm register2
   public function getPassword_confirm()
   {
     return $this->password_confirm;
@@ -143,6 +147,9 @@ class User
     return $this;
   }
   // form validation
+
+  // formulier validatie
+
 
   public function register()
   {
@@ -248,12 +255,12 @@ class User
   }
 
     if (strlen($this->password) < 8) {
-      throw new Exception("Your password needs at leats 8 characters");
+      throw new Exception("Your password needs to be atleast 8 characters long.");
     }
     if ($this->password != $this->password_confirm) {
-      throw new Exception("Passwords don't match");
+      throw new Exception("Oops, passwords don't match.");
     } else {
-      // voor register 2
+      // voor confirm register
       $options = [
         "cost" => 12 // 2^12
       ];
@@ -282,9 +289,7 @@ class User
   }
 
 
-  //////////////////////////////////////////////////
-  ///////////////// PROFIEL AANPASSEN ///////////// feature 3
-  ////////////////////////////////////////////////
+  //--------------- PROFIEL AANPASSEN --------------- feature 3
 
 
   public function getUser_id()
@@ -443,7 +448,7 @@ return false;
 
   public function getUserInfo()
   {
-    //DB CONNECTIE
+    //DB 
     $conn = Db::getInstance();
 
     //QUERY WHERE USER = $_SESSION
@@ -502,7 +507,7 @@ return false;
     $expensions = array("jpeg", "jpg", "png", "gif");
 
     if (in_array($file_ext, $expensions) === false) {
-      throw new Exception("extension not allowed, please choose a JPEG or PNG or GIF file.");
+      throw new Exception("Extension is not allowed, please choose a JPEG or PNG or GIF file.");
     }
 
     if ($file_size > 2097152) {
@@ -517,7 +522,7 @@ return false;
     }
   }
 
-  //check if email exists --> for update
+  //bestaat email?
   public function emailExists($email)
   {
     $conn = Db::getInstance();
@@ -569,5 +574,7 @@ return false;
 
  
 } // end class
+
+}
 
 }
