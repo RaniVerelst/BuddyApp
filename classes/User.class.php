@@ -109,7 +109,7 @@ class User
     $conn = Db::getInstance();
     $email = $this->getEmail();
     $result = $conn->query("SELECT * FROM users WHERE email='$email'");
-
+    //prepare statement
     $endemail = "student.thomasmore.be";
 
     if (isset($_POST['email'])) {
@@ -156,8 +156,10 @@ class User
         // return $result;
         $username = "";
         $_SESSION['username'] = $username;
+        //hoort thuis in frontend (je wordt verplicht om te redirecten naar index.php)
         header("Location: index.php");
       } catch (Throwable $t) {
+        //geen echo in classe
         echo "mislukt";
         return false;
       }
@@ -231,6 +233,10 @@ class User
 
   //sla profielafbeelding op in mapprofiel
   public function SaveProfileImg()
+
+  //upload classe gebruiken
+  //niet herbruikbaar
+
   {
     $file_name = $_SESSION['user_id'] . "-" . time() . "-" . $this->ImageName;
     $file_size = $this->ImageSize;
