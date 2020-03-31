@@ -26,9 +26,16 @@ abstract class Db
             $user = $config['user'];
             $password = $config['password'];
 
+
+                // echo "💥";
+                self::$conn = new PDO("mysql:host=localhost;dbname=php2020;", "root", "", null);
+                return self::$conn;
+            }
+
             // echo "💥";
             self::$conn = new PDO("mysql:host=localhost;dbname=php2020;", "root", "", null);
             return self::$conn;
+
         }
     }
 }
