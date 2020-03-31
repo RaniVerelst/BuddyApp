@@ -28,12 +28,12 @@ abstract class Db
 
 
                 // echo "💥";
-                self::$conn = new PDO("mysql:host=localhost;dbname=php2020;", "root", "", null);
+                self::$conn = new PDO("mysql:host=localhost;dbname=php2020;", "root", ""/*root*/, null);
                 return self::$conn;
             }
 
             // echo "💥";
-            self::$conn = new PDO("mysql:host=localhost;dbname=php2020;", "root", "", null);
+            self::$conn = new PDO("mysql:host=localhost;dbname=php2020;", "root", ""/*root*/, null);
             return self::$conn;
 
         }
