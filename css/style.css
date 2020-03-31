@@ -109,10 +109,28 @@ color: #1ABC9C;
 }
 /* --------------einde edit profile feature 3---------------- */
 
+/* ----------------Search ----------------- */
+.search {
+  display: flex;
+  flex-direction: row;
+  margin-top: 40px;
+}
 
+#input_search {
+  width: 450px;
+  height: 35px;
+}
 
-
-
-
-
-
+#btn_search {
+  cursor: pointer;
+  background-color: #1ABC9C;
+  background-image: url("../images/search.png");
+  background-repeat: no-repeat;
+  background-size: 20px;
+  background-position: center;
+  width: 50px;
+  height: 40px;
+  color: #fff;
+  border: none;
+}
+/*-------------Einde Search ----------------------*/

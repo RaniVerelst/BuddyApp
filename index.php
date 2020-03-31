@@ -24,8 +24,8 @@ include_once("classes/Db.class.php");
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
   <!-- Theme CSS -->
-  <link href="startbootstrap/css/freelancer.min.css" rel="stylesheet">
-  <link href="css/style.css" rel="stylesheet">
+  <link href="startbootstrap/css/freelancer.min.css" type="text/css" rel="stylesheet">
+  <link href="css/style.css" type="text/css" rel="stylesheet">
 
 </head>
 
@@ -59,6 +59,10 @@ include_once("classes/Db.class.php");
         </ul>
       </div>
     </div>
+    <form class="search" method="get" action="search.php">
+      <input id="input_search" type="text" name="search" placeholder ="Search a user">
+      <input id="btn_search" type="submit" value="">
+  </form>
   </nav>
 
   <!-- Masthead -->
