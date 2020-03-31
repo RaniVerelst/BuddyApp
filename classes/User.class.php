@@ -94,17 +94,16 @@ class User
   {
     return $this->password_confirm;
   }
-<<<<<<< HEAD
 }
-}
-=======
-
-  public function setPassword_confirm($password_confirm)
-  {
-    $this->password_confirm = $password_confirm;
     return $this;
-  }
 
+
+
+  // ontvang password
+  public function getPassword()
+  {
+    return $this->password;
+  }
 
   public function register()
   {
@@ -114,66 +113,15 @@ class User
     $result = $conn->query("SELECT * FROM users WHERE email='$email'");
     $endemail = "student.thomasmore.be";
     // $num_rows = mysqli_num_rows($result);
->>>>>>> 60e86e4bd807f9a46cfb6c75546827a0ad456cd4
+  }
 
     if (isset($_POST['email'])) {
-
-<<<<<<< HEAD
-//  ----------- PROFIEL AANPASSEN ----------- f3
-=======
-      if ($result->rowCount() > 0) {
-        $exist = true;
-      }
-    }
-    //prepare statement
-    $endemail = "student.thomasmore.be";
-    if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-      throw new Exception("Invalid Email!");
-    }
-    if (strlen($this->password) < 8) {
-      throw new Exception("Your password needs to be 8 characters long.");
-    }
-    if ($this->password != $this->password_confirm) {
-      throw new Exception("Oops, passwords don't match.");
-    }
-    if (!stristr($this->email, $endemail)) {
-      throw new Exception("Email must end on @student.thomasmore.be");
-    }
-    if ($exist == true) {
-      throw new Exception("Email already exist");
-      // voor register te confirmen
-      $options = [
-        "cost" => 12 // 2^12
-      ];
-      $password = password_hash($this->password, PASSWORD_DEFAULT, $options);
-      try {
-        $conn = Db::getInstance();
-        $statement = $conn->prepare("insert into users(first_name, last_name, user_name, email, password) values(:firstname, :lastname, :username, :email, :password)");
-
-        $statement->bindValue(':firstname', $this->getFirstname());
-        $statement->bindValue(':lastname', $this->getLastname());
-        $statement->bindValue(':username', $this->getUsername());
-        $statement->bindValue(':email', $this->getEmail());
-        $statement->bindValue(':password', $password);
-
-
-        $result = $statement->execute();
-        //return $result;
-        $username = "";
-        $_SESSION['username'] = $username;
-        header("Location: index.php");
-      } catch (Throwable $t) {
-        echo "Niet gelukt";
-        return false;
-      }
     }
   }
->>>>>>> 60e86e4bd807f9a46cfb6c75546827a0ad456cd4
+}
+//  ----------- PROFIEL AANPASSEN ----------- f3
 
 
-  //////////////////////////////////////////////////
-  ///////////////// PROFIEL AANPASSEN ///////////// feature 3
-  ////////////////////////////////////////////////
 
   public function getUser_id()
   {
@@ -311,4 +259,5 @@ class User
     $result = $statement->fetchAll();
     return $result;
   }
+
 }
