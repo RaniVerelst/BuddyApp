@@ -2,8 +2,19 @@
 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
-require_once("classes/db.class.php");
+require_once("classes/Db.class.php");
 include_once("classes/User.class.php");
+
+if(isset($_GET['search'])){
+  $searchkey = $_GET['search'];
+  $search_users = new User();
+  $result_users = $search_users->searchUser($searchkey);
+
+  $conn = Db::getInstance();
+  $statement = $conn->prepare("select * from users");
+  $statement->execute();
+  $users = $statement->fetchAll();
+}
 
 ?>
 <!DOCTYPE html>
@@ -19,17 +30,16 @@ include_once("classes/User.class.php");
 <body>
 
     <div class="search_results">
-      <h1>No results found</h1>
+      <?php if(count($result_users) > 0 ): ?>
+        <h1> <?php echo count($result_users) . " Search Result(s) found for " . "<span style = 'font-weight: bold'> &quot" . $searchkey . "&quot </span>"; ?></h1>
+    <?php else: ?>
+      <h1>No results found </h1>
+      <?php endif; ?>
       <nav>
-        <a href="#" id="href_post">X (<?php  ?>)</a>
-        <a href="#" id="href_user">Users (<?php  ?>)</a>
+      <br>
+      <p><span style="font-weight: bold">Username:</span> <?php echo $users['user_name']; ?></p>
+      <p><span style="font-weight: bold">Full name:</span> <?php echo $users['first_name'] . " " . $users['last_name']; ?></p>
       </nav>
-      <!--Toont de zoekresultaten van de posts -->
-        <div id="post_results">
-          </div>
-        </div>
-        <div id="user_results">
-        </div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
