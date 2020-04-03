@@ -12,7 +12,7 @@ $user = new User();
 $profile = $user->getUserInfo();*/
 
 // test data 
-$user->setUser_id(7);
+$user->setuserId(7);
 $profile = $user->getUserInfo();
 
 // UPLOAD PICTURE
@@ -62,12 +62,11 @@ if (!empty($_POST["uploadImg"])) {
 
 //update firstname lastname
 if (!empty($_POST["edit"])) {
-    
+
     //if given update firstname
     if (!empty($_POST["firstname"])) {
         $user->setFirstname($_POST["firstname"]);
         $user->saveFirstname();
-    
     };
 
     //if given update lastname
@@ -75,54 +74,50 @@ if (!empty($_POST["edit"])) {
         $lastname = $_POST["lastname"];
         $user->setLastname($lastname);
         $user->saveLastname();
-       
     };
 
     //if given update email
     if (!empty($_POST["email"])) {
         $email = $_POST["email"];
         //check if email is valid
-        if(filter_var($email, FILTER_VALIDATE_EMAIL)){
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
             //check if email was used
-        if ($user->emailExists($email) == false) {
-            $user->setEmail($email);
-            $user->saveEmail();
+            if ($user->emailExists($email) == false) {
+                $user->setEmail($email);
+                $user->saveEmail();
+            } else {
+                $emailError = "Add your email";
+            }
         } else {
-            $emailError = "Add your email";
+            $emailError = $email + "This email isn't valid.";
         }
-    } else {
-        $emailError = $email + "This email isn't valid.";
-    }
-   
     };
 } // end $_POST["edit"]; 
 
-if(!empty($_POST["passwordedit"]) ){
+if (!empty($_POST["passwordedit"])) {
     //validate current password
     $oldPassword = $_POST['oldPassword'];
-    if($user->passwordExists($oldPassword)){
-        
+    if ($user->passwordExists($oldPassword)) {
+
         $password = $_POST['password'];
         // check if passwords are the same
-        if($_POST['password'] == $_POST['repassword']){
+        if ($_POST['password'] == $_POST['repassword']) {
             //check if password is long enough
-            if(strlen($password) > 7){
+            if (strlen($password) > 7) {
                 $user->setPassword($password);
-            
+
                 $user->savePassword();
                 echo "New password!";
             } else {
                 $error = "Password needs at least 8 characters.";
             }
-        }else {
+        } else {
             $error = "Passwords don't match.";
         }
-
     } else {
         $error = "Wrong password!";
     };
-    
 }
 
 ?>
@@ -185,9 +180,9 @@ if(!empty($_POST["passwordedit"]) ){
         <!-- wachtwoord aanpassen -->
         <h2>Change Password</h2>
         <br>
-            <h4>Old password</h4>
-            <input type="password" id="oldPassword" name="oldPassword" placeholder="Old password">
-            <h4>New password</h4>
+        <h4>Old password</h4>
+        <input type="password" id="oldPassword" name="oldPassword" placeholder="Old password">
+        <h4>New password</h4>
         <input type="password" id="password" name="password" placeholder="New password">
         <input type="password" name="repassword" id="repassword" placeholder="Confirm new password">
 
