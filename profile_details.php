@@ -4,9 +4,8 @@ ini_set('display_startup_errors', 1);
 error_reporting(-1);
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
-require_once("classes/userprofile.class.php");
+require_once("classes/Userprofile.class.php");
 require_once("classes/Db.class.php");
-require_once("classes/userprofileprofile.class.php");
 
 // valideren of alle velden zijn ingevuld
 if (!empty($_POST)) {
@@ -19,30 +18,26 @@ if (!empty($_POST)) {
     $cookie = $_POST['cookie'];
     $hangout = $_POST['hangout'];
 
-    $userprofile = new userprofile();
-    $userprofile->setMovie($movie);
-    $userprofile->getMovie();
-    $userprofile->setDestination($destination);
-    $userprofile->getDestination();
-    $userprofile->setSerie($serie);
-    $userprofile->getSerie();
-    $userprofile->setcookie($cookie);
-    $userprofile->getCookie();
-    $userprofile->setHangout($hangout);
-    $userprofile->getHangout();
+    $UserDetails = new Userprofile();
+    $UserDetails->setMovie($movie);
+    $UserDetails->getMovie();
+    $UserDetails->setDestination($destination);
+    $UserDetails->getDestination();
+    $UserDetails->setSerie($serie);
+    $UserDetails->getSerie();
+    $UserDetails->setcookie($cookie);
+    $UserDetails->getCookie();
+    $UserDetails->setHangout($hangout);
+    $UserDetails->getHangout();
 
-    var_dump($userprofile);
     try {
-        $result = $userprofile->profileDetails();
+        $result = $UserDetails->details();
     } catch (Exception $t) {
         $error =  $t->getMessage();
     }
-} else {
-    // foutboodschap tonen
-    $empty_field_error = "Please, fill in all the fields";
 }
 
-// alles in orde? dan zullen we werken met getters en setters binnen userprofile.class.php
+// alles in orde? dan zullen we werken met getters en setters binnen UserDetails.class.php
 
 ?>
 
