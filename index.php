@@ -25,7 +25,7 @@ include_once("classes/Db.class.php");
 
   <!-- Theme CSS -->
   <link href="startbootstrap/css/freelancer.min.css" type="text/css" rel="stylesheet">
-  <link href="../css/style.css" type="text/css" rel="stylesheet">
+  <link href="css/style.css" type="text/css" rel="stylesheet">
 
 </head>
 
