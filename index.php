@@ -6,7 +6,8 @@ ini_set('display_errors', '1');
 include_once("classes/User.class.php");
 include_once("classes/Db.class.php");
 
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -48,7 +49,7 @@ include_once("classes/Db.class.php");
             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="">Q&A-Forum</a>
           </li>
           <li class="nav-item mx-0 mx-lg-1">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="">Lokaal- & Campus-wegwijzer</a>
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href=""><!-- Lokaal- & Campus-wegwijzer--> Find Your Way </a>
           </li>
           <li class="nav-item mx-0 mx-lg-1">
             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="edit_profile.php">Edit Profile</a>
