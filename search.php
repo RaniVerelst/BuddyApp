@@ -14,10 +14,13 @@ if(isset($_GET['search'])){
   $statement = $conn->prepare("select * from users");
   $statement->execute();
   $users = $statement->fetchAll();
+/*
+  $u = new User();
+  $users = $u->showUser($id);
+*/
 }
 
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -37,9 +40,9 @@ if(isset($_GET['search'])){
       <?php endif; ?>
       <nav>
       <br>
-      <p><span style="font-weight: bold">Username:</span> <?php echo $users['user_name']; ?></p>
-      <p><span style="font-weight: bold">Full name:</span> <?php echo $users['first_name'] . " " . $users['last_name']; ?></p>
-      </nav>
+     <p><span style="font-weight: bold">Username:</span> <?php echo $users['user_name']; ?></p>
+     <p><span style="font-weight: bold">Full name:</span> <?php echo $users['first_name'] . " " . $users['last_name']; ?></p>
+     </nav>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
