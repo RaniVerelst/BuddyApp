@@ -7,13 +7,13 @@ class User
   private $username;
   private $email;
   private $password;
-  private $password_confirm;
-  private $user_id; // om profiel aan te passen
+  private $passwordConfirm;
+  private $userId; // om profiel aan te passen
 
   //temp voor IMAGE UPLOAD
-  private $ImageName;
-  private $ImageSize;
-  private $ImageTmpName;
+  private $imageName;
+  private $imageSize;
+  private $imageTmpName;
 
 
 
@@ -90,14 +90,14 @@ class User
     return $this;
   }
   // voor register te confirmen
-  public function getPassword_confirm()
+  public function getpasswordConfirm()
   {
-    return $this->password_confirm;
+    return $this->passwordConfirm;
   }
 
-  public function setPassword_confirm($password_confirm)
+  public function setpasswordConfirm($passwordConfirm)
   {
-    $this->password_confirm = $password_confirm;
+    $this->passwordConfirm = $passwordConfirm;
     return $this;
   }
 
@@ -107,7 +107,7 @@ class User
     // formulier
     $conn = Db::getInstance();
     $email = $this->getEmail();
-    $result = $conn->query("SELECT * FROM users WHERE email='$email'");
+    $result = $conn->prepare("SELECT * FROM users WHERE email='$email'");
     $endemail = "student.thomasmore.be";
     // $num_rows = mysqli_num_rows($result);
 
@@ -125,7 +125,7 @@ class User
     if (strlen($this->password) < 8) {
       throw new Exception("Your password needs to be 8 characters long.");
     }
-    if ($this->password != $this->password_confirm) {
+    if ($this->password != $this->passwordConfirm) {
       throw new Exception("Oops, passwords don't match.");
     }
     if (!stristr($this->email, $endemail)) {
@@ -166,14 +166,14 @@ class User
   ///////////////// PROFIEL AANPASSEN ///////////// feature 3
   ////////////////////////////////////////////////
 
-  public function getUser_id()
+  public function getuserId()
   {
-    return $this->user_id;
+    return $this->userId;
   }
 
-  public function setUser_id($user_id)
+  public function setuserId($userId)
   {
-    $this->user_id = htmlspecialchars($user_id);
+    $this->userId = htmlspecialchars($userId);
     return $this;
   }
 
@@ -184,46 +184,46 @@ class User
     $conn = Db::getInstance();
 
     //QUERY WHERE USER = $_SESSION
-    $statement = $conn->prepare("SELECT * FROM users WHERE id = :user_id LIMIT 1");
-    $statement->bindParam(":user_id", $this->user_id);
+    $statement = $conn->prepare("SELECT * FROM users WHERE id = :userId LIMIT 1");
+    $statement->bindParam(":userId", $this->userId);
     $statement->execute();
     $result = $statement->fetch();
     return $result;
   }
 
 
-  public function getImageName()
+  public function getimageName()
   {
-    return $this->ImageName;
+    return $this->imageName;
   }
 
-  public function setImageName($ImageName)
+  public function setimageName($imageName)
   {
-    $this->ImageName = $ImageName;
+    $this->imageName = $imageName;
 
     return $this;
   }
 
-  public function getImageSize()
+  public function getimageSize()
   {
-    return $this->ImageSize;
+    return $this->imageSize;
   }
 
-  public function setImageSize($ImageSize)
+  public function setimageSize($imageSize)
   {
-    $this->ImageSize = $ImageSize;
+    $this->imageSize = $imageSize;
 
     return $this;
   }
 
-  public function getImageTmpName()
+  public function getimageTmpName()
   {
-    return $this->ImageTmpName;
+    return $this->imageTmpName;
   }
 
-  public function setImageTmpName($ImageTmpName)
+  public function setimageTmpName($imageTmpName)
   {
-    $this->ImageTmpName = $ImageTmpName;
+    $this->imageTmpName = $imageTmpName;
 
     return $this;
   }
@@ -231,9 +231,9 @@ class User
   //sla profielafbeelding op in mapprofiel
   public function SaveProfileImg()
   {
-    $file_name = $_SESSION['user_id'] . "-" . time() . "-" . $this->ImageName;
-    $file_size = $this->ImageSize;
-    $file_tmp = $this->ImageTmpName;
+    $file_name = $_SESSION['userId'] . "-" . time() . "-" . $this->imageName;
+    $file_size = $this->imageSize;
+    $file_tmp = $this->imageTmpName;
     $tmp = explode('.', $file_name);
     $file_ext = end($tmp);
     $expensions = array("jpeg", "jpg", "png", "gif");
@@ -288,7 +288,7 @@ class User
   {
     $conn = Db::getInstance();
     $statement = $conn->prepare("select * from users where users.id like '$id'");
-    //$statement = $conn->prepare("select * from users, posts where posts.user_id = users.id and users.id like '$id'");
+    //$statement = $conn->prepare("select * from users, posts where posts.userId = users.id and users.id like '$id'");
     $statement->execute(array($id));
     $result = $statement->fetch(PDO::FETCH_ASSOC);
     return $result;
@@ -297,7 +297,7 @@ class User
   public function showPostsFromUser($id)
   {
     $conn = Db::getInstance();
-    $statement = $conn->prepare("select * from users, posts where posts.user_id = users.id and users.id like '$id'");
+    $statement = $conn->prepare("select * from users, posts where posts.userId = users.id and users.id like '$id'");
     $statement->execute(array($id));
     $result = $statement->fetchAll();
     return $result;
