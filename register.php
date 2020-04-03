@@ -30,8 +30,8 @@ if (!empty($_POST)) {
   $user->getEmail();
   $user->setPassword($password);
   $user->getPassword();
-  $user->setPassword_confirm($password_confirm);
-  $user->getPassword_confirm();
+  $user->setPasswordconfirm($password_confirm);
+  $user->getPasswordconfirm();
   try {
     $result = $user->register();
   } catch (Exception $t) {

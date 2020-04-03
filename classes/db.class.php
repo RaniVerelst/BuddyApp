@@ -4,37 +4,17 @@ abstract class Db
 {
     private static $conn;
 
-    private static function getConfig()
-    {
-        // get the config file
-        return parse_ini_file("config.ini");
-    }
 
 
     public static function getInstance()
     {
-        if (self::$conn != null) {
-            // REUSE our connection
-            // echo "🚀";
+        include_once(__DIR__ . "/../settings/settings.php");
+
+        if (self::$conn == null) {
+            self::$conn = new PDO('mysql:host=' . SETTINGS['db']['host'] . ';dbname=' . SETTINGS['db']['db'], SETTINGS['db']['user'], SETTINGS['db']['password']);
             return self::$conn;
         } else {
-            // CREATE a new connection
-
-            // get the configuration for our connection from one central settings file
-            $config = self::getConfig();
-            $database = $config['database'];
-            $user = $config['user'];
-            $password = $config['password'];
-
-
-                // echo "💥";
-                self::$conn = new PDO("mysql:host=localhost;dbname=php2020;", "root", ""/*root*/, null);
-                return self::$conn;
-            }
-
-            // echo "💥";
-            self::$conn = new PDO("mysql:host=localhost;dbname=php2020;", "root", ""/*root*/, null);
             return self::$conn;
-
         }
     }
+}

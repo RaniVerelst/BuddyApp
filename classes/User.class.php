@@ -133,33 +133,36 @@ class User
     }
     if ($exist == true) {
       throw new Exception("Email already exist");
-      // voor register te confirmen
-      $options = [
-        "cost" => 12 // 2^12
-      ];
-      $password = password_hash($this->password, PASSWORD_DEFAULT, $options);
-      try {
-        $conn = Db::getInstance();
-        $statement = $conn->prepare("insert into users(first_name, last_name, user_name, email, password) values(:firstname, :lastname, :username, :email, :password)");
-
-        $statement->bindValue(':firstname', $this->getFirstname());
-        $statement->bindValue(':lastname', $this->getLastname());
-        $statement->bindValue(':username', $this->getUsername());
-        $statement->bindValue(':email', $this->getEmail());
-        $statement->bindValue(':password', $password);
+    }
 
 
-        $result = $statement->execute();
-        //return $result;
-        $username = "";
-        $_SESSION['username'] = $username;
-        header("Location: index.php");
-      } catch (Throwable $t) {
-        echo "Niet gelukt";
-        return false;
-      }
+    // voor register te confirmen
+    $options = [
+      "cost" => 12 // 2^12
+    ];
+    $password = password_hash($this->password, PASSWORD_DEFAULT, $options);
+    try {
+      $conn = Db::getInstance();
+      $statement = $conn->prepare("insert into users(first_name, last_name, user_name, email, password) values(:firstname, :lastname, :username, :email, :password)");
+
+      $statement->bindValue(':firstname', $this->getFirstname());
+      $statement->bindValue(':lastname', $this->getLastname());
+      $statement->bindValue(':username', $this->getUsername());
+      $statement->bindValue(':email', $this->getEmail());
+      $statement->bindValue(':password', $password);
+
+
+      $result = $statement->execute();
+      //return $result;
+      $username = "";
+      $_SESSION['username'] = $username;
+      header("Location: index.php");
+    } catch (Throwable $t) {
+      echo "Niet gelukt";
+      return false;
     }
   }
+
 
 
   //////////////////////////////////////////////////
