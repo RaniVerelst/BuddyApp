@@ -283,4 +283,16 @@ class User
     $result = $statement->fetchAll();
     return $result;
   }
+  
+/*  ////// detailpagina van een user
+
+  public function showUser($id){
+    $conn = Db::getInstance();
+    $statement = $conn->prepare("select * from users where users.id like '$id'");
+    //$statement = $conn->prepare("select * from users, posts where posts.user_id = users.id and users.id like '$id'");
+    $statement->execute(array($id));
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
+    return $result;
+      }
+*/
 }
