@@ -29,12 +29,6 @@ if (!empty($_POST)) {
     $UserDetails->getCookie();
     $UserDetails->setHangout($hangout);
     $UserDetails->getHangout();
-
-    try {
-        $result = $UserDetails->details();
-    } catch (Exception $t) {
-        $error =  $t->getMessage();
-    }
 }
 
 // alles in orde? dan zullen we werken met getters en setters binnen UserDetails.class.php

@@ -9,30 +9,31 @@ require_once("classes/Db.class.php");
 
 // valideren of alle velden zijn ingevuld
 if (!empty($_POST)) {
-  //return true;
-  // sessie opstarten
-  session_start();
-  $firstname = $_POST['firstname'];
-  $lastname = $_POST['lastname'];
-  $username = $_POST['username'];
-  $email = $_POST['email'];
-  $password = $_POST['password'];
-  $password_confirm = $_POST['password_confirm'];
-
-  $user = new User();
-  $user->setFirstname($firstname);
-  $user->getFirstname();
-  $user->setLastname($lastname);
-  $user->getLastname();
-  $user->setUsername($username);
-  $user->getUsername();
-  $user->setEmail($email);
-  $user->getEmail();
-  $user->setPassword($password);
-  $user->getPassword();
-  $user->setPasswordconfirm($password_confirm);
-  $user->getPasswordconfirm();
   try {
+    //return true;
+    // sessie opstarten
+    session_start();
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $password_confirm = $_POST['password_confirm'];
+
+    $user = new User();
+    $user->setFirstname($firstname);
+    $user->getFirstname();
+    $user->setLastname($lastname);
+    $user->getLastname();
+    $user->setUsername($username);
+    $user->getUsername();
+    $user->setEmail($email);
+    $user->getEmail();
+    $user->setPassword($password);
+    $user->getPassword();
+    $user->setPasswordconfirm($password_confirm);
+    $user->getPasswordconfirm();
+
     $result = $user->register();
   } catch (Exception $t) {
     $error =  $t->getMessage();

@@ -15,6 +15,13 @@ class User
   private $imageSize;
   private $imageTmpName;
 
+  //userdetails
+  private $movie;
+  private $destination;
+  private $serie;
+  private $cookie;
+  private $hangout;
+
 
 
   // ontvang de firstname
@@ -44,6 +51,7 @@ class User
   public function setLastname($lastname)
   {
     if (empty($lastname)) {
+      var_dump($lastname);
       throw new Exception("Lastname can't be empty");
     } else {
       $this->lastname = htmlspecialchars($lastname);
@@ -115,6 +123,7 @@ class User
 
       if ($result->rowCount() > 0) {
         $exist = true;
+        var_dump($result);
       }
     }
     //prepare statement
@@ -134,13 +143,12 @@ class User
     if ($exist == true) {
       throw new Exception("Email already exist");
     }
-
-
     // voor register te confirmen
     $options = [
       "cost" => 12 // 2^12
     ];
     $password = password_hash($this->password, PASSWORD_DEFAULT, $options);
+
     try {
       $conn = Db::getInstance();
       $statement = $conn->prepare("insert into users(first_name, last_name, user_name, email, password) values(:firstname, :lastname, :username, :email, :password)");
@@ -156,12 +164,13 @@ class User
       //return $result;
       $username = "";
       $_SESSION['username'] = $username;
-      header("Location: index.php");
-    } catch (Throwable $t) {
+      header("Location: profile_details.php");
+    } catch (Throwable $e) {
       echo "Niet gelukt";
       return false;
     }
   }
+
 
 
 
@@ -232,6 +241,7 @@ class User
   }
 
   //sla profielafbeelding op in mapprofiel
+
   public function SaveProfileImg()
   {
     $file_name = $_SESSION['userId'] . "-" . time() . "-" . $this->imageName;
@@ -283,8 +293,8 @@ class User
     $result = $statement->fetchAll();
     return $result;
   }
-  
-/*  ////// detailpagina van een user
+
+  /*  ////// detailpagina van een user
 
   public function showUser($id){
     $conn = Db::getInstance();
@@ -295,4 +305,127 @@ class User
     return $result;
       }
 */
+
+
+  /**
+   * Get the value of movie
+   */
+  public function getMovie()
+  {
+    return $this->movie;
+  }
+
+  /**
+   * Set the value of movie
+   *
+   * @return  self
+   */
+  public function setMovie($movie)
+  {
+    $this->movie = $movie;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of destination
+   */
+  public function getDestination()
+  {
+    return $this->destination;
+  }
+
+  /**
+   * Set the value of destination
+   *
+   * @return  self
+   */
+  public function setDestination($destination)
+  {
+    $this->destination = $destination;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of serie
+   */
+  public function getSerie()
+  {
+    return $this->serie;
+  }
+
+  /**
+   * Set the value of serie
+   *
+   * @return  self
+   */
+  public function setSerie($serie)
+  {
+    $this->serie = $serie;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of cookie
+   */
+  public function getCookie()
+  {
+    return $this->cookie;
+  }
+
+  /**
+   * Set the value of cookie
+   *
+   * @return  self
+   */
+  public function setCookie($cookie)
+  {
+    $this->cookie = $cookie;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of hangout
+   */
+  public function getHangout()
+  {
+    return $this->hangout;
+  }
+
+  /**
+   * Set the value of hangout
+   *
+   * @return  self
+   */
+  public function setHangout($hangout)
+  {
+    $this->hangout = $hangout;
+
+    return $this;
+  }
+
+  public function details()
+  {
+
+
+    try {
+      $conn = Db::getInstance();
+      $statement = $conn->prepare("insert into profile_details(user_id, movie, destination, cookie, serie, hangout) values(:userid, :movie, :destination, :cookie, :serie, :hangout)");
+      $statement->bindValue(':userid', $this->getuserId());
+      $statement->bindValue(':movie', $this->getMovie());
+      $statement->bindValue(':destination', $this->getDestination());
+      $statement->bindValue(':cookie', $this->getCookie());
+      $statement->bindValue(':serie', $this->getSerie());
+      $statement->bindValue(':hangout', $this->getHangout());
+      header("Location: index.php");
+
+      $result = $statement->execute();
+      return $result;
+    } catch (Throwable $t) {
+      return false;
+    }
+  }
 }
