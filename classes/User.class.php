@@ -271,7 +271,7 @@ class User
 
   //check if email exists --> for update
 
-  ////// zoek een user
+  // ---------------zoek een user------------
   public function searchUser($searchkey)
   {
     $conn = Db::getInstance();
@@ -284,7 +284,7 @@ class User
     return $result;
   }
 
-    ////// detailpagina van een user
+    // details van user
 
   public function showUser($id){
     $conn = Db::getInstance();
@@ -295,7 +295,35 @@ class User
     return $result;
       }
 
+  // ---------------einde zoek een user------------
+  // ---------------zoek een kenmerk------------
 
+  public function searchKenmerk($searchkey)
+  {
+    $conn = Db::getInstance();
+    $statement = $conn->prepare("select * from profile_details where movie like '$searchkey%'
+          union select * from profile_details where destination like '$searchkey%'
+          union select * from profile_details where cookie like '$searchkey%'
+          union select * from profile_details where serie like '$searchkey%'
+          union select * from profile_details where hangout like '$searchkey%'"
+    );
+    $statement->bindValue(1, '$searchkey%', PDO::PARAM_STR);
+    $statement->execute();
+    $result = $statement->fetchAll();
+    return $result;
+  }
+
+    // details van kenmerk
+
+  public function showKenmerk($id){
+    $conn = Db::getInstance();
+    $statement = $conn->prepare("select * from profile_details");
+    $statement->execute(array($id));
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
+    return $result;
+    }
+
+// ---------------einde zoek een kenmerk------------
 
   /**
    * Get the value of movie
