@@ -115,15 +115,17 @@ class User
     // formulier
     $conn = Db::getInstance();
     $email = $this->getEmail();
-    $result = $conn->prepare("SELECT * FROM users WHERE email='$email'");
+    $result = $conn->prepare("SELECT * FROM users WHERE email= :email");
+    $result->bindParam(":email", $email);
+    $result->execute();
+    $count = $result->rowCount();
     $endemail = "student.thomasmore.be";
     // $num_rows = mysqli_num_rows($result);
 
     if (isset($_POST['email'])) {
 
-      if ($result->rowCount() > 0) {
+      if ($count > 0) {
         $exist = true;
-        var_dump($result);
       }
     }
     //prepare statement
@@ -268,19 +270,7 @@ class User
   }
 
   //check if email exists --> for update
-  public function emailExists($email)
-  {
-    $conn = Db::getInstance();
-    $statement = $conn->prepare("select * from users where email = :email");
-    $statement->bindParam(":email", $email);
-    $statement->execute();
-    $count = $statement->rowCount();
-    if ($count > 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+
   ////// zoek een user
   public function searchUser($searchkey)
   {
