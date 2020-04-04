@@ -14,10 +14,10 @@ if(isset($_GET['search'])){
   $statement = $conn->prepare("select * from users");
   $statement->execute();
   $users = $statement->fetchAll();
-/*
+    
   $u = new User();
+  $id = "";
   $users = $u->showUser($id);
-*/
 }
 
 ?><!DOCTYPE html>
