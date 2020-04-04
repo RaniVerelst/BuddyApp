@@ -82,8 +82,12 @@ class User
 
   public function setEmail($email)
   {
-    $this->email = $email;
-    return $this;
+    if (empty($email)) {
+      throw new Exception("email can't be empty");
+    } else {
+      $this->email = $email;
+      return $this;
+    }
   }
 
   // ontvang password
@@ -284,16 +288,17 @@ class User
     return $result;
   }
 
-    // details van user
+  // details van user
 
-  public function showUser($id){
+  public function showUser($id)
+  {
     $conn = Db::getInstance();
     $statement = $conn->prepare("select * from users");
     //$statement = $conn->prepare("select * from users, posts where posts.user_id = users.id and users.id like '$id'");
     $statement->execute(array($id));
     $result = $statement->fetch(PDO::FETCH_ASSOC);
     return $result;
-      }
+  }
 
   // ---------------einde zoek een user------------
   // ---------------zoek een kenmerk------------
@@ -301,7 +306,8 @@ class User
   public function searchKenmerk($searchkey)
   {
     $conn = Db::getInstance();
-    $statement = $conn->prepare("select * from profile_details where movie like '$searchkey%'
+    $statement = $conn->prepare(
+      "select * from profile_details where movie like '$searchkey%'
           union select * from profile_details where destination like '$searchkey%'
           union select * from profile_details where cookie like '$searchkey%'
           union select * from profile_details where serie like '$searchkey%'
@@ -313,17 +319,18 @@ class User
     return $result;
   }
 
-    // details van kenmerk
+  // details van kenmerk
 
-  public function showKenmerk($id){
+  public function showKenmerk($id)
+  {
     $conn = Db::getInstance();
     $statement = $conn->prepare("select * from profile_details");
     $statement->execute(array($id));
     $result = $statement->fetch(PDO::FETCH_ASSOC);
     return $result;
-    }
+  }
 
-// ---------------einde zoek een kenmerk------------
+  // ---------------einde zoek een kenmerk------------
 
   /**
    * Get the value of movie
