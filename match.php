@@ -29,6 +29,34 @@ $matchesArr = createOneArray($movie, $destination, $cookie, $serie, $hangouts);
 
 $idFrequencies = vindUserIdFrequency($matchesArr);
 $matched = findBestMatches($idFrequencies);
+$buddy1 = getBuddieInfo($matched[0]);
+$buddy2 = getBuddieInfo($matched[1]);
+$buddy3 = getBuddieInfo($matched[2]);
+// get list of common interests
+$buddy1Characteristics = getCommonInterest($buddy1, $movie, $destination, $cookie, $serie, $hangouts);
+$buddy2Characteristics = getCommonInterest($buddy1, $movie, $destination, $cookie, $serie, $hangouts);
+$buddy3Characteristics = getCommonInterest($buddy1, $movie, $destination, $cookie, $serie, $hangouts);
+
+
+function getCommonInterest($buddy, $m, $d, $c, $s, $h){
+    $arr =[];
+    if($buddy[1]['movie'] == $m){
+        array_push($arr, $m);
+    };
+    if($buddy[1]['destination'] == $d){
+        array_push($arr, $d);
+    };
+    if($buddy[1]['cookie'] == $c){
+        array_push($arr, $c);
+    };
+    if($buddy[1]['serie'] == $s){
+        array_push($arr, $s);
+    };
+    if($buddy[1]['hangout'] == $h){
+        array_push($arr, $h);
+    };
+    return $arr;
+}
 
 //get info about matches
 function getBuddieInfo($buddyId){
@@ -133,15 +161,34 @@ function cleanArray($arr)
 ?>
 <div>
     <div class="">
-        <img src="" alt="">
-        <p>Things you have in common:</p>
+        <h2><?php echo $buddy1[0]['first_name'] . " " . $buddy1[0]['last_name'] ?></h2>
+        <img src="<?php echo "data/profile/" . $buddy1[0]['image_name'] ?>" alt="">
+        <p>Things you have in common: <?php 
+        foreach($buddy1Characteristics as $characteristic){
+            echo $characteristic . ' ';
+        };
+        ?> </p>
     </div>
     <div>
-        <img src="" alt="">
-        <p>Things you have in common:</p>
+        <h2><?php echo $buddy2[0]['first_name'] . " " . $buddy2[0]['last_name'] ?></h2>
+        <img src="<?php echo "data/profile/" . $buddy2[0]['image_name'] ?>" alt="">
+        <p>Things you have in common:
+        <?php 
+        foreach($buddy2Characteristics as $characteristic){
+            echo $characteristic . ' ';
+        };
+        ?> 
+        </p>
     </div>
     <div>
-        <img src="" alt="">
-        <p>Things you have in common:</p>
+        <h2><?php echo $buddy3[0]['first_name'] . " " . $buddy3[0]['last_name'] ?></h2>
+        <img src="<?php  echo "data/profile/" . $buddy[3]['image_name'] ?>" alt="">
+        <p>Things you have in common: 
+        <?php 
+        foreach($buddy3Characteristics as $characteristic){
+            echo $characteristic . ' ';
+        };
+        ?> 
+        </p>
     </div>
 </div>
