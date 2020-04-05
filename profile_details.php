@@ -18,7 +18,7 @@ if (!empty($_POST)) {
     $cookie = $_POST['cookie'];
     $hangout = $_POST['hangout'];
 
-    $UserDetails = new Userprofile();
+    $UserDetails = new UserDetails();
     $UserDetails->setMovie($movie);
     $UserDetails->getMovie();
     $UserDetails->setDestination($destination);

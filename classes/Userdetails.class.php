@@ -1,13 +1,13 @@
 <?php
 
-class Userprofile
+class UserDetails
 {
     private $movie;
     private $destination;
     private $serie;
     private $cookie;
     private $hangout;
-
+    private $userId;
     /**
      * Get the value of movie
      */
@@ -107,13 +107,40 @@ class Userprofile
 
         return $this;
     }
+    /**
+     * Get the value of userId
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
 
-    public function details()
+    /**
+     * Set the value of userId
+     *
+     * @return  self
+     */
+
+    /**
+     * Set the value of userId
+     *
+     * @return  self
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+
+        return $this;
+    }
+
+
+    public function saveUserDetails()
     {
         try {
             $conn = Db::getInstance();
-            $statement = $conn->prepare("insert into profile_details(movie, destination, cookie, serie, hangout) values(:movie, :destination, :cookie, :serie, :hangout)");
+            $statement = $conn->prepare("insert into profile_details(user_id, movie, destination, cookie, serie, hangout) values(:userId, :movie, :destination, :cookie, :serie, :hangout)");
 
+            $statement->bindValue(':userId', $this->getUserId());
             $statement->bindValue(':movie', $this->getMovie());
             $statement->bindValue(':destination', $this->getDestination());
             $statement->bindValue(':cookie', $this->getCookie());
@@ -126,5 +153,20 @@ class Userprofile
             echo "Niet gelukt";
             return false;
         }
+    }
+
+    //Get all characteristics
+    public function getAllCharacteristics()
+    {
+
+        //DB connection
+        $conn = Db::getInstance();
+
+        //query
+        $statement = $conn->prepare("SELECT * FROM profile_details WHERE user_id = :userId");
+        $statement->bindParam(":userId", $this->userId);
+        $statement->execute();
+        $result = $statement->fetch();
+        return $result;
     }
 }
