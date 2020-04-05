@@ -29,17 +29,40 @@ $arrDestination = $user->searchKenmerk($destination);
 $arrCookie = $user->searchKenmerk($cookie);
 $arrSerie = $user->searchKenmerk($serie);
 $arrHangouts = $user->searchKenmerk($hangouts);    
-var_dump($arrMovie);
+//var_dump($arrMovie);
 echo '<br> time <br> <br>';
-//delete current user
-for($i =0; $i < sizeof($arrMovie); $i++){
-    if($arrMovie[$i]['user_id'] == $userId ){
-        unset($arrMovie[$i]);
+//delete current user from array
+// Set array
+function setUpArray($characteristic){
+    $user = new User();
+    $arr = $user->searchKenmerk($characteristic);
+    return $arr;
+}
+function arrayOfUsers($arr){
+    $newArr = [];
+    foreach($arr as $value => $key){
+    array_push($newArr,  $arr[$value]['user_id']);
     }
+    return $newArr;
 }
 
-var_dump($arrMovie);
+$arrTest = setUpArray($movie);
+$show = arrayOfUsers($arrTest);
+var_dump($show); 
 
+
+function cleanArray($arr ,$userId){
+    for($i =0; $i < sizeof($arr); $i++){
+        if($arr[$i]['user_id'] == $userId ){
+           unset($arr[$i]);
+        }
+    }
+    return $arr;
+};
+//compare arrays
+
+$cleanArrMovie = cleanArray($arrMovie, $userId);
+//var_dump($cleanArrMovie);
 ?>
 <div>
 <div class="">
