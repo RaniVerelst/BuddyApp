@@ -29,17 +29,28 @@ $matchesArr = createOneArray($movie, $destination, $cookie, $serie, $hangouts);
 
 $idFrequencies = vindUserIdFrequency($matchesArr);
 $matched = findBestMatches($idFrequencies);
-echo '<pre>' . print_r($matched) . '</pre>';
+
+//get info about matches
+function getBuddieInfo($buddyId){
+    $user = new User();
+    $user->setUserId($buddyId);
+    $profile = $user->getUserInfo();
+    $characteristics = new Userprofile();
+    $characteristics->setUserId($buddyId);
+    $profileChar = $characteristics->getAllCharacteristics();
+
+    $arr = [$profile, $profileChar];
+    return $arr;
+}
+
 //compare
 function findBestMatches($arr)
 {
-   // print_r($arr);
     $buddyOne = "";
     $buddyTwo = "";
     $buddyThree = "";
     $buddyOneFrequency = 0;
     $buddyTwoFrequency = 0;
-    //find best match 
 
     foreach ($arr as $id => $v) {
         if ($arr[$id] > $buddyOneFrequency) {
