@@ -166,7 +166,7 @@ class User
       //return $result;
       $username = "";
       $_SESSION['username'] = $username;
-      header("Location: login.php");
+      header("Location: profile_details.php");
     } catch (Throwable $e) {
       echo "Niet gelukt";
       return false;
@@ -270,6 +270,36 @@ class User
   }
 
   //check if email exists --> for update
+  public function emailExists($email)
+  {
+  $conn = Db::getInstance();
+  $statement = $conn->prepare("select * from users where email = :email");
+  $statement->bindParam(":email", $email);
+  $statement->execute();
+  $count = $statement->rowCount();
+  if ($count > 0) {
+  return true;
+  }
+  else {
+  return false;
+  }
+  }
+
+    //check if email exists --> for update
+    public function passwordExists($email)
+    {
+    $conn = Db::getInstance();
+    $statement = $conn->prepare("select * from users where password = :password");
+    $statement->bindParam(":email", $email);
+    $statement->execute();
+    $count = $statement->rowCount();
+    if ($count > 0) {
+    return true;
+    }
+    else {
+    return false;
+    }
+    }
 
   // ---------------zoek een user------------
   public function searchUser($searchkey)
@@ -324,10 +354,6 @@ class User
     }
 
 // ---------------einde zoek een kenmerk------------
-
-
-
-  //---------------begin aanmaken user details ------------
 
   /**
    * Get the value of movie
@@ -429,8 +455,7 @@ class User
     return $this;
   }
 
-
-  public function saveUserDetails()
+  public function details()
   {
 
 
@@ -443,6 +468,7 @@ class User
       $statement->bindValue(':cookie', $this->getCookie());
       $statement->bindValue(':serie', $this->getSerie());
       $statement->bindValue(':hangout', $this->getHangout());
+      header("Location: index.php");
 
       $result = $statement->execute();
       return $result;

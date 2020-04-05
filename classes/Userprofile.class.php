@@ -1,6 +1,6 @@
 <?php
 
-class UserDetailss
+class Userprofile
 {
     private $movie;
     private $destination;
@@ -108,18 +108,23 @@ class UserDetailss
         return $this;
     }
 
-    public function saveUserDetails()
+    public function details()
     {
+        try {
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("insert into profile_details(movie, destination, cookie, serie, hangout) values(:movie, :destination, :cookie, :serie, :hangout)");
 
-        $conn = Db::getInstance();
-        $statement = $conn->prepare("insert into profile_details(movie, destination, cookie, serie, hangout) values(:movie, :destination, :cookie, :serie, :hangout)");
-        $statement->bindValue(':movie', $this->getMovie());
-        $statement->bindValue(':destination', $this->getDestination());
-        $statement->bindValue(':cookie', $this->getCookie());
-        $statement->bindValue(':serie', $this->getSerie());
-        $statement->bindValue(':hangout', $this->getHangout());
+            $statement->bindValue(':movie', $this->getMovie());
+            $statement->bindValue(':destination', $this->getDestination());
+            $statement->bindValue(':cookie', $this->getCookie());
+            $statement->bindValue(':serie', $this->getSerie());
+            $statement->bindValue(':hangout', $this->getHangout());
 
-        $result = $statement->execute();
-        return $result;
+            $result = $statement->execute();
+            return $result;
+        } catch (Throwable $t) {
+            echo "Niet gelukt";
+            return false;
+        }
     }
 }

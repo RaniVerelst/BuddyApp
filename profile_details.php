@@ -4,42 +4,31 @@ ini_set('display_startup_errors', 1);
 error_reporting(-1);
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
-require_once("classes/User.class.php");
+require_once("classes/Userprofile.class.php");
 require_once("classes/Db.class.php");
-require_once("classes/Userdetails.class.php");
 
 // valideren of alle velden zijn ingevuld
 if (!empty($_POST)) {
-
-    try {
-        session_start();
-
-        $UserDetails = new User();
-
-        $movie = $_POST['movie'];
-        $destination = $_POST['destination'];
-        $serie = $_POST['serie'];
-        $cookie = $_POST['cookie'];
-        $hangout = $_POST['hangout'];
-
-        $UserDetails->setMovie($movie);
-        $UserDetails->getMovie();
-        $UserDetails->setDestination($destination);
-        $UserDetails->getDestination();
-        $UserDetails->setSerie($serie);
-        $UserDetails->getSerie();
-        $UserDetails->setcookie($cookie);
-        $UserDetails->getCookie();
-        $UserDetails->setHangout($hangout);
-        $UserDetails->getHangout();
-
-        $UserDetails->saveUserDetails();
-    } catch (\Throwable $th) {
-        $error = $th->getMessage();
-    }
     //return true;
     // sessie opstarten
+    session_start();
+    $movie = $_POST['movie'];
+    $destination = $_POST['destination'];
+    $serie = $_POST['serie'];
+    $cookie = $_POST['cookie'];
+    $hangout = $_POST['hangout'];
 
+    $UserDetails = new Userprofile();
+    $UserDetails->setMovie($movie);
+    $UserDetails->getMovie();
+    $UserDetails->setDestination($destination);
+    $UserDetails->getDestination();
+    $UserDetails->setSerie($serie);
+    $UserDetails->getSerie();
+    $UserDetails->setcookie($cookie);
+    $UserDetails->getCookie();
+    $UserDetails->setHangout($hangout);
+    $UserDetails->getHangout();
 }
 
 // alles in orde? dan zullen we werken met getters en setters binnen UserDetails.class.php
