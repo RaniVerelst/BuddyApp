@@ -8,7 +8,7 @@ include_once("classes/User.class.php");
 
 
 if (!empty($_POST)) {
-	$conn = Db::getInstance();
+	$conn = @new mysqli("localhost", "root", "", "php2020");
 	$email = $conn->real_escape_string($_POST['email']);
 	$password = $_POST['password'];
 	/* $options = [
@@ -19,6 +19,7 @@ if (!empty($_POST)) {
 	$sql =  "SELECT * FROM `users` WHERE `email`= '$email' and `password`= '$password'";
 	$result = $conn->query($sql);
 	if ($result->num_rows == 1 /* && password_verify($password, $password_hash) */) {
+
 		header('Location: index.php');
 	} else {
 		echo "Sorry, we can't log you in with that email address and password. Can you try again?";;
