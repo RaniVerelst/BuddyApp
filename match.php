@@ -3,7 +3,7 @@ include_once("classes/Db.class.php");
 include_once("classes/User.class.php");
 include_once("classes/Userprofile.class.php");
 
-$userId= 1;
+$userId = 1;
 // $userid = $_SESSION["user_id"]);*/
 
 $user = new User();
@@ -23,34 +23,63 @@ $cookie = $profileChar['cookie'];
 $serie = $profileChar['serie'];
 $hangouts = $profileChar['hangout'];
 
-//get other users based on characteristics
-/*$arrMovie = $user->searchKenmerk($movie);
-$arrDestination = $user->searchKenmerk($destination);
-$arrCookie = $user->searchKenmerk($cookie);
-$arrSerie = $user->searchKenmerk($serie);
-$arrHangouts = $user->searchKenmerk($hangouts);    */
 
-// Set array
 
-$arrTest = setUpArray($movie);
-$show = arrayOfUsers($arrTest);
+$matchesArr = createOneArray($movie, $destination, $cookie, $serie, $hangouts);
 
-$cleanerArr = cleanArray($show, $userId);
-var_dump(createOneArray($movie, $destination, $cookie, $serie,$hangouts)); 
-//compare users
-function createOneArray($m, $d, $c, $s, $h){
-$movieArr = createArr($m);
-$destinationArr = createArr($d);
-$cookieArr = createArr($c);
-$serieArr = createArr($s);
-$hangoutsArr = createArr($h);
+$idFrequencies = vindUserIdFrequency($matchesArr);
+$matched = findBestMatches($idFrequencies);
+echo '<pre>' . print_r($matched) . '</pre>';
+//compare
+function findBestMatches($arr)
+{
+   // print_r($arr);
+    $buddyOne = "";
+    $buddyTwo = "";
+    $buddyThree = "";
+    $buddyOneFrequency = 0;
+    $buddyTwoFrequency = 0;
+    //find best match 
 
-$arr = array_merge($movieArr, $destinationArr, $cookieArr, $serieArr, $hangoutsArr);
-return $arr;
+    foreach ($arr as $id => $v) {
+        if ($arr[$id] > $buddyOneFrequency) {
+            $buddyOneFrequency = $arr[$id];
+            $buddyOne = array_search($buddyOneFrequency, $arr);
+        } else if ($arr[$id] > $buddyTwoFrequency) {
+            $buddyThree = $buddyTwo;
+            $buddyTwoFrequency = $arr[$id];
+            if ($buddyOneFrequency === $buddyTwoFrequency) {
+                unset($arr[$buddyOne]);
+            }
+                $buddyTwo = array_search($buddyTwoFrequency, $arr);
+        } 
+    }; //end finding 3 best matches
+    return [$buddyOne, $buddyTwo, $buddyThree];
+};
+//count how much characteristics other users have in common with active user 
+function vindUserIdFrequency($arr)
+{
+    sort($arr);
+    $newArr = array_count_values($arr);
+    return $newArr;
+}
+
+//create one array
+function createOneArray($m, $d, $c, $s, $h)
+{
+    $movieArr = createArr($m);
+    $destinationArr = createArr($d);
+    $cookieArr = createArr($c);
+    $serieArr = createArr($s);
+    $hangoutsArr = createArr($h);
+
+    $arr = array_merge($movieArr, $destinationArr, $cookieArr, $serieArr, $hangoutsArr);
+    return $arr;
 }
 
 //create array of users with the same characteristic
-function createArr($value){
+function createArr($value)
+{
     $arrUsers = setUpArray($value);
     $arrUsersId = arrayOfUsers($arrUsers);
     $arrCleanedUsersId = cleanArray($arrUsersId);
@@ -58,28 +87,32 @@ function createArr($value){
 }
 
 //get all users with the same characteristic as active user
-function setUpArray($characteristic){
+function setUpArray($characteristic)
+{
     $user = new User();
     $arr = $user->searchKenmerk($characteristic);
     return $arr;
 }
 //create array of users id
-function arrayOfUsers($arr){
+function arrayOfUsers($arr)
+{
     $newArr = [];
-    foreach($arr as $value => $key){
-    array_push($newArr,  $arr[$value]['user_id']);
+    foreach ($arr as $value => $key) {
+        array_push($newArr,  $arr[$value]['user_id']);
     }
     return $newArr;
 }
 // delete active user from array
-function cleanArray($arr){
-$user = new User();
-// $userid = $_SESSION["user_id"]);*/
-//test
-$userId = 1;
-    for($i =0; $i < sizeof($arr); $i++){
-        if($arr[$i] == $userId ){
-           unset($arr[$i]);
+function cleanArray($arr)
+{
+    /*$user = new User();
+  $userid = $_SESSION["user_id"]);*/
+
+    //test userId
+    $userId = 1;
+    for ($i = 0; $i < sizeof($arr); $i++) {
+        if ($arr[$i] == $userId) {
+            unset($arr[$i]);
         }
     }
     return $arr;
@@ -88,16 +121,16 @@ $userId = 1;
 
 ?>
 <div>
-<div class="">
-<img src="" alt="">
-<p>Things you have in common:</p>
-</div>
-<div>
-<img src="" alt="">
-<p>Things you have in common:</p>
-</div>
-<div>
-<img src="" alt="">
-<p>Things you have in common:</p>
-</div>
+    <div class="">
+        <img src="" alt="">
+        <p>Things you have in common:</p>
+    </div>
+    <div>
+        <img src="" alt="">
+        <p>Things you have in common:</p>
+    </div>
+    <div>
+        <img src="" alt="">
+        <p>Things you have in common:</p>
+    </div>
 </div>
