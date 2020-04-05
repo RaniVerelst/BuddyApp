@@ -34,8 +34,8 @@ $buddy2 = getBuddieInfo($matched[1]);
 $buddy3 = getBuddieInfo($matched[2]);
 // get list of common interests
 $buddy1Characteristics = getCommonInterest($buddy1, $movie, $destination, $cookie, $serie, $hangouts);
-$buddy2Characteristics = getCommonInterest($buddy1, $movie, $destination, $cookie, $serie, $hangouts);
-$buddy3Characteristics = getCommonInterest($buddy1, $movie, $destination, $cookie, $serie, $hangouts);
+$buddy2Characteristics = getCommonInterest($buddy2, $movie, $destination, $cookie, $serie, $hangouts);
+$buddy3Characteristics = getCommonInterest($buddy3, $movie, $destination, $cookie, $serie, $hangouts);
 
 
 function getCommonInterest($buddy, $m, $d, $c, $s, $h){
