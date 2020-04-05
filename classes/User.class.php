@@ -270,6 +270,36 @@ class User
   }
 
   //check if email exists --> for update
+  public function emailExists($email)
+  {
+  $conn = Db::getInstance();
+  $statement = $conn->prepare("select * from users where email = :email");
+  $statement->bindParam(":email", $email);
+  $statement->execute();
+  $count = $statement->rowCount();
+  if ($count > 0) {
+  return true;
+  }
+  else {
+  return false;
+  }
+  }
+
+    //check if email exists --> for update
+    public function passwordExists($email)
+    {
+    $conn = Db::getInstance();
+    $statement = $conn->prepare("select * from users where password = :password");
+    $statement->bindParam(":email", $email);
+    $statement->execute();
+    $count = $statement->rowCount();
+    if ($count > 0) {
+    return true;
+    }
+    else {
+    return false;
+    }
+    }
 
   // ---------------zoek een user------------
   public function searchUser($searchkey)
