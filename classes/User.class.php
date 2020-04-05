@@ -170,7 +170,7 @@ class User
       //return $result;
       $username = "";
       $_SESSION['username'] = $username;
-      header("Location: profile_details.php");
+      header("Location: login.php");
     } catch (Throwable $e) {
       echo "Niet gelukt";
       return false;
@@ -332,6 +332,10 @@ class User
 
   // ---------------einde zoek een kenmerk------------
 
+
+
+  //---------------begin aanmaken user details ------------
+
   /**
    * Get the value of movie
    */
@@ -432,7 +436,8 @@ class User
     return $this;
   }
 
-  public function details()
+
+  public function saveUserDetails()
   {
 
 
@@ -445,7 +450,6 @@ class User
       $statement->bindValue(':cookie', $this->getCookie());
       $statement->bindValue(':serie', $this->getSerie());
       $statement->bindValue(':hangout', $this->getHangout());
-      header("Location: index.php");
 
       $result = $statement->execute();
       return $result;
