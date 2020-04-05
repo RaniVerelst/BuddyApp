@@ -24,20 +24,46 @@ $serie = $profileChar['serie'];
 $hangouts = $profileChar['hangout'];
 
 //get other users based on characteristics
-$arrMovie = $user->searchKenmerk($movie);
+/*$arrMovie = $user->searchKenmerk($movie);
 $arrDestination = $user->searchKenmerk($destination);
 $arrCookie = $user->searchKenmerk($cookie);
 $arrSerie = $user->searchKenmerk($serie);
-$arrHangouts = $user->searchKenmerk($hangouts);    
-//var_dump($arrMovie);
-echo '<br> time <br> <br>';
-//delete current user from array
+$arrHangouts = $user->searchKenmerk($hangouts);    */
+
 // Set array
+
+$arrTest = setUpArray($movie);
+$show = arrayOfUsers($arrTest);
+
+$cleanerArr = cleanArray($show, $userId);
+var_dump(createOneArray($movie, $destination, $cookie, $serie,$hangouts)); 
+//compare users
+function createOneArray($m, $d, $c, $s, $h){
+$movieArr = createArr($m);
+$destinationArr = createArr($d);
+$cookieArr = createArr($c);
+$serieArr = createArr($s);
+$hangoutsArr = createArr($h);
+
+$arr = array_merge($movieArr, $destinationArr, $cookieArr, $serieArr, $hangoutsArr);
+return $arr;
+}
+
+//create array of users with the same characteristic
+function createArr($value){
+    $arrUsers = setUpArray($value);
+    $arrUsersId = arrayOfUsers($arrUsers);
+    $arrCleanedUsersId = cleanArray($arrUsersId);
+    return $arrCleanedUsersId;
+}
+
+//get all users with the same characteristic as active user
 function setUpArray($characteristic){
     $user = new User();
     $arr = $user->searchKenmerk($characteristic);
     return $arr;
 }
+//create array of users id
 function arrayOfUsers($arr){
     $newArr = [];
     foreach($arr as $value => $key){
@@ -45,24 +71,21 @@ function arrayOfUsers($arr){
     }
     return $newArr;
 }
-
-$arrTest = setUpArray($movie);
-$show = arrayOfUsers($arrTest);
-var_dump($show); 
-
-
-function cleanArray($arr ,$userId){
+// delete active user from array
+function cleanArray($arr){
+$user = new User();
+// $userid = $_SESSION["user_id"]);*/
+//test
+$userId = 1;
     for($i =0; $i < sizeof($arr); $i++){
-        if($arr[$i]['user_id'] == $userId ){
+        if($arr[$i] == $userId ){
            unset($arr[$i]);
         }
     }
     return $arr;
 };
-//compare arrays
 
-$cleanArrMovie = cleanArray($arrMovie, $userId);
-//var_dump($cleanArrMovie);
+
 ?>
 <div>
 <div class="">
