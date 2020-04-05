@@ -66,14 +66,12 @@ if (!empty($_POST["edit"])) {
     //if given update firstname
     if (!empty($_POST["firstname"])) {
         $user->setFirstname($_POST["firstname"]);
-        $user->saveFirstname();
     };
 
     //if given update lastname
     if (!empty($_POST["lastname"])) {
         $lastname = $_POST["lastname"];
         $user->setLastname($lastname);
-        $user->saveLastname();
     };
 
     //if given update email
@@ -85,7 +83,6 @@ if (!empty($_POST["edit"])) {
             //check if email was used
             if ($user->emailExists($email) == false) {
                 $user->setEmail($email);
-                $user->saveEmail();
             } else {
                 $emailError = "Add your email";
             }
@@ -106,8 +103,6 @@ if (!empty($_POST["passwordedit"])) {
             //check if password is long enough
             if (strlen($password) > 7) {
                 $user->setPassword($password);
-
-                $user->savePassword();
                 echo "New password!";
             } else {
                 $error = "Password needs at least 8 characters.";
