@@ -149,5 +149,19 @@ class Userprofile
         }
     }
 
+    //Get all characteristics
+    public function getAllCharacteristics(){
+    
+    //DB connection
+    $conn = Db::getInstance();
+
+    //query
+    $statement = $conn->prepare("SELECT * FROM profile_details WHERE user_id = :userId");
+    $statement->bindParam(":userId", $this->userId);
+    $statement->execute();
+    $result = $statement->fetch();
+    return $result;
+    }
+
 
 }
