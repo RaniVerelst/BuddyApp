@@ -138,9 +138,8 @@ class UserDetails
     {
         try {
             $conn = Db::getInstance();
-            $statement = $conn->prepare("insert into profile_details(user_id, movie, destination, cookie, serie, hangout) values(:userId, :movie, :destination, :cookie, :serie, :hangout)");
+            $statement = $conn->prepare("insert into profile_details(movie, destination, cookie, serie, hangout) values(:movie, :destination, :cookie, :serie, :hangout)");
 
-            $statement->bindValue(':userId', $this->getUserId());
             $statement->bindValue(':movie', $this->getMovie());
             $statement->bindValue(':destination', $this->getDestination());
             $statement->bindValue(':cookie', $this->getCookie());
@@ -148,11 +147,14 @@ class UserDetails
             $statement->bindValue(':hangout', $this->getHangout());
 
             $result = $statement->execute();
-            return $result;
+            header("Location: index.php");
         } catch (Throwable $t) {
-            echo "Niet gelukt";
             return false;
         }
+    }
+
+    public function getMessage()
+    {
     }
 
     //Get all characteristics

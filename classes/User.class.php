@@ -15,15 +15,6 @@ class User
   private $imageSize;
   private $imageTmpName;
 
-  //userdetails
-  private $movie;
-  private $destination;
-  private $serie;
-  private $cookie;
-  private $hangout;
-
-
-
   // ontvang de firstname
   public function getFirstname()
   {
@@ -51,7 +42,6 @@ class User
   public function setLastname($lastname)
   {
     if (empty($lastname)) {
-      var_dump($lastname);
       throw new Exception("Lastname can't be empty");
     } else {
       $this->lastname = htmlspecialchars($lastname);
@@ -163,7 +153,6 @@ class User
 
 
       $result = $statement->execute();
-      //return $result;
       $username = "";
       $_SESSION['username'] = $username;
       header("Location: profile_details.php");
@@ -179,7 +168,6 @@ class User
   //////////////////////////////////////////////////
   ///////////////// PROFIEL AANPASSEN ///////////// feature 3
   ////////////////////////////////////////////////
-
   public function getuserId()
   {
     return $this->userId;
@@ -190,6 +178,12 @@ class User
     $this->userId = htmlspecialchars($userId);
     return $this;
   }
+
+  function __toString()
+  {
+    return $this->getuserId();
+  }
+
 
 
   public function getUserInfo()
@@ -272,34 +266,32 @@ class User
   //check if email exists --> for update
   public function emailExists($email)
   {
-  $conn = Db::getInstance();
-  $statement = $conn->prepare("select * from users where email = :email");
-  $statement->bindParam(":email", $email);
-  $statement->execute();
-  $count = $statement->rowCount();
-  if ($count > 0) {
-  return true;
-  }
-  else {
-  return false;
-  }
+    $conn = Db::getInstance();
+    $statement = $conn->prepare("select * from users where email = :email");
+    $statement->bindParam(":email", $email);
+    $statement->execute();
+    $count = $statement->rowCount();
+    if ($count > 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
-    //check if email exists --> for update
-    public function passwordExists($email)
-    {
+  //check if email exists --> for update
+  public function passwordExists($email)
+  {
     $conn = Db::getInstance();
     $statement = $conn->prepare("select * from users where password = :password");
     $statement->bindParam(":email", $email);
     $statement->execute();
     $count = $statement->rowCount();
     if ($count > 0) {
-    return true;
+      return true;
+    } else {
+      return false;
     }
-    else {
-    return false;
-    }
-    }
+  }
 
   // ---------------zoek een user------------
   public function searchUser($searchkey)
@@ -314,16 +306,17 @@ class User
     return $result;
   }
 
-    // details van user
+  // details van user
 
-  public function showUser($id){
+  public function showUser($id)
+  {
     $conn = Db::getInstance();
     $statement = $conn->prepare("select * from users");
     //$statement = $conn->prepare("select * from users, posts where posts.user_id = users.id and users.id like '$id'");
     $statement->execute(array($id));
     $result = $statement->fetch(PDO::FETCH_ASSOC);
     return $result;
-      }
+  }
 
   // ---------------einde zoek een user------------
   // ---------------zoek een kenmerk------------
@@ -331,7 +324,8 @@ class User
   public function searchKenmerk($searchkey)
   {
     $conn = Db::getInstance();
-    $statement = $conn->prepare("select * from profile_details where movie like '$searchkey%'
+    $statement = $conn->prepare(
+      "select * from profile_details where movie like '$searchkey%'
           union select * from profile_details where destination like '$searchkey%'
           union select * from profile_details where cookie like '$searchkey%'
           union select * from profile_details where serie like '$searchkey%'
@@ -343,137 +337,18 @@ class User
     return $result;
   }
 
-    // details van kenmerk
+  // details van kenmerk
 
-  public function showKenmerk($id){
+  public function showKenmerk($id)
+  {
     $conn = Db::getInstance();
     $statement = $conn->prepare("select * from profile_details");
     $statement->execute(array($id));
     $result = $statement->fetch(PDO::FETCH_ASSOC);
     return $result;
-    }
-
-// ---------------einde zoek een kenmerk------------
-
-  /**
-   * Get the value of movie
-   */
-  public function getMovie()
-  {
-    return $this->movie;
   }
 
-  /**
-   * Set the value of movie
-   *
-   * @return  self
-   */
-  public function setMovie($movie)
-  {
-    $this->movie = $movie;
-
-    return $this;
-  }
-
-  /**
-   * Get the value of destination
-   */
-  public function getDestination()
-  {
-    return $this->destination;
-  }
-
-  /**
-   * Set the value of destination
-   *
-   * @return  self
-   */
-  public function setDestination($destination)
-  {
-    $this->destination = $destination;
-
-    return $this;
-  }
-
-  /**
-   * Get the value of serie
-   */
-  public function getSerie()
-  {
-    return $this->serie;
-  }
-
-  /**
-   * Set the value of serie
-   *
-   * @return  self
-   */
-  public function setSerie($serie)
-  {
-    $this->serie = $serie;
-
-    return $this;
-  }
-
-  /**
-   * Get the value of cookie
-   */
-  public function getCookie()
-  {
-    return $this->cookie;
-  }
-
-  /**
-   * Set the value of cookie
-   *
-   * @return  self
-   */
-  public function setCookie($cookie)
-  {
-    $this->cookie = $cookie;
-
-    return $this;
-  }
-
-  /**
-   * Get the value of hangout
-   */
-  public function getHangout()
-  {
-    return $this->hangout;
-  }
-
-  /**
-   * Set the value of hangout
-   *
-   * @return  self
-   */
-  public function setHangout($hangout)
-  {
-    $this->hangout = $hangout;
-
-    return $this;
-  }
-
-  public function details()
-  {
+  // ---------------einde zoek een kenmerk------------
 
 
-    try {
-      $conn = Db::getInstance();
-      $statement = $conn->prepare("insert into profile_details(user_id, movie, destination, cookie, serie, hangout) values(:userid, :movie, :destination, :cookie, :serie, :hangout)");
-      $statement->bindValue(':userid', $this->getuserId());
-      $statement->bindValue(':movie', $this->getMovie());
-      $statement->bindValue(':destination', $this->getDestination());
-      $statement->bindValue(':cookie', $this->getCookie());
-      $statement->bindValue(':serie', $this->getSerie());
-      $statement->bindValue(':hangout', $this->getHangout());
-      header("Location: index.php");
-
-      $result = $statement->execute();
-      return $result;
-    } catch (Throwable $t) {
-      return false;
-    }
-  }
 }

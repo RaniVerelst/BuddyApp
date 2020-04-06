@@ -8,7 +8,7 @@ include_once("classes/User.class.php");
 
 
 if (!empty($_POST)) {
-	$conn = Db::getInstance();
+	$conn = @new mysqli("localhost", "root", "", "php2020");
 	$email = $conn->real_escape_string($_POST['email']);
 	$password = $_POST['password'];
 	/* $options = [
