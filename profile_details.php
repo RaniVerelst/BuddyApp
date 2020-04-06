@@ -4,8 +4,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(-1);
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
-require_once("classes/User.class.php");
-require_once("classes/Userdetails.class.php");
+include("classes/Userdetails.class.php");
 require_once("classes/Db.class.php");
 
 // valideren of alle velden zijn ingevuld
@@ -14,13 +13,13 @@ if (!empty($_POST)) {
     try {
         session_start();
 
-        $UserDetails = new UserDetails();
-
         $movie = $_POST['movie'];
         $destination = $_POST['destination'];
         $serie = $_POST['serie'];
         $cookie = $_POST['cookie'];
         $hangout = $_POST['hangout'];
+
+        $UserDetails = new UserDetails();
 
         $UserDetails->setMovie($movie);
         $UserDetails->getMovie();
@@ -32,6 +31,7 @@ if (!empty($_POST)) {
         $UserDetails->getCookie();
         $UserDetails->setHangout($hangout);
         $UserDetails->getHangout();
+
 
         $UserDetails->saveUserDetails();
     } catch (\Throwable $th) {
@@ -59,15 +59,6 @@ if (!empty($_POST)) {
     <form name="register_form" class="form_signup" method="post" action="">
         <h1>Complete your account</h1>
         <h2>so we can match you with the perfect buddy.</h2>
-        <!-- foutboodschap wanneer niet alle velden zijn ingevuld -->
-        <?php if (isset($error)) : ?>
-            <div class="error_signup"><?php echo $error; ?></div>
-        <?php endif; ?>
-
-        <?php if (isset($success)) : ?>
-            <div class="error_signup"><?php echo $success; ?></div>
-        <?php endif; ?>
-        <!-- movie genre -->
         <div class="input_signup dropdown">
             <label for="movies">Favorite movie genre</label>
             <select name="movie">
@@ -80,7 +71,6 @@ if (!empty($_POST)) {
                 <option>Western</option>
             </select>
         </div>
-
         <div class="input_signup dropdown">
             <label for="destination">Favorite destination</label>
             <select name="destination">
@@ -93,7 +83,6 @@ if (!empty($_POST)) {
                 <option>South Africa</option>
             </select>
         </div>
-
         <div class="input_signup dropdown">
             <label for="serie">Favorite KETNET serie</label>
             <select name="serie">
@@ -106,7 +95,6 @@ if (!empty($_POST)) {
                 <option>De smurfen</option>
             </select>
         </div>
-
         <div class="input_signup dropdown">
             <label for="cookie">Favorite cookie</label>
             <select name="cookie">
@@ -118,7 +106,6 @@ if (!empty($_POST)) {
                 <option>Dino cookies</option>
             </select>
         </div>
-
         <div class="input_signup dropdown">
             <label for="hangout">Favorite hangout spot</label>
             <select name="hangout">
@@ -133,11 +120,8 @@ if (!empty($_POST)) {
         </div>
 
 
-
-
         <!-- submit button -->
         <input class="submit_signup" type="submit" value="Complete profile">
-
     </form>
 
 </body>

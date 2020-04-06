@@ -15,6 +15,8 @@ class User
   private $imageSize;
   private $imageTmpName;
 
+
+
   // ontvang de firstname
   public function getFirstname()
   {
@@ -349,6 +351,7 @@ class User
   }
 
   // ---------------einde zoek een kenmerk------------
+
 
 
 }

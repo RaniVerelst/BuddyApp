@@ -2,12 +2,12 @@
 
 class UserDetails
 {
+
     private $movie;
     private $destination;
     private $serie;
     private $cookie;
     private $hangout;
-    private $userId;
     /**
      * Get the value of movie
      */
@@ -28,9 +28,6 @@ class UserDetails
         return $this;
     }
 
-    /**
-     * Get the value of destination
-     */
     public function getDestination()
     {
         return $this->destination;
@@ -47,7 +44,6 @@ class UserDetails
 
         return $this;
     }
-
     /**
      * Get the value of serie
      */
@@ -107,55 +103,27 @@ class UserDetails
 
         return $this;
     }
-    /**
-     * Get the value of userId
-     */
-    public function getUserId()
-    {
-        return $this->userId;
-    }
-
-    /**
-     * Set the value of userId
-     *
-     * @return  self
-     */
-
-    /**
-     * Set the value of userId
-     *
-     * @return  self
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-
-        return $this;
-    }
-
-
     public function saveUserDetails()
     {
         try {
             $conn = Db::getInstance();
-            $statement = $conn->prepare("insert into profile_details(movie, destination, cookie, serie, hangout) values(:movie, :destination, :cookie, :serie, :hangout)");
+            $statement = $conn->prepare("insert into profile_details(movie, destination, serie, cookie, hangout) values(:movie, :destination, :serie, :cookie, :hangout)");
 
             $statement->bindValue(':movie', $this->getMovie());
-            $statement->bindValue(':destination', $this->getDestination());
-            $statement->bindValue(':cookie', $this->getCookie());
+            $statement->bindValue(':destination', $this->getdestination());
             $statement->bindValue(':serie', $this->getSerie());
+            $statement->bindValue(':cookie', $this->getCookie());
             $statement->bindValue(':hangout', $this->getHangout());
-
             $result = $statement->execute();
-            header("Location: index.php");
-        } catch (Throwable $t) {
+            $movie = "";
+            $_SESSION['movie'] = $movie;
+        } catch (Throwable $e) {
+            echo "Niet gelukt";
             return false;
         }
     }
 
-    public function getMessage()
-    {
-    }
+
 
     //Get all characteristics
     public function getAllCharacteristics()
