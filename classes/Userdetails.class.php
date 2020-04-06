@@ -105,6 +105,7 @@ class UserDetails
     }
     public function saveUserDetails()
     {
+
         try {
             $conn = Db::getInstance();
             $statement = $conn->prepare("insert into profile_details(movie, destination, serie, cookie, hangout) values(:movie, :destination, :serie, :cookie, :hangout)");
@@ -115,13 +116,14 @@ class UserDetails
             $statement->bindValue(':cookie', $this->getCookie());
             $statement->bindValue(':hangout', $this->getHangout());
             $result = $statement->execute();
-            $movie = "";
-            $_SESSION['movie'] = $movie;
+
+            header("Location: index.php");
         } catch (Throwable $e) {
             echo "Niet gelukt";
             return false;
         }
     }
+
 
 
 

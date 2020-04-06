@@ -4,15 +4,16 @@ ini_set('display_startup_errors', 1);
 error_reporting(-1);
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
-include("classes/Userdetails.class.php");
+require_once("classes/Userdetails.class.php");
 require_once("classes/Db.class.php");
+require_once("classes/User.class.php");
 
 // valideren of alle velden zijn ingevuld
 if (!empty($_POST)) {
 
+
     try {
         session_start();
-
         $movie = $_POST['movie'];
         $destination = $_POST['destination'];
         $serie = $_POST['serie'];

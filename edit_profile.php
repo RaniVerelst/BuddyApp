@@ -11,6 +11,12 @@ $user = new User();
 /*$user->setUser_id($_SESSION["user_id"]);
 $profile = $user->getUserInfo();*/
 
+if (!empty($_POST["profiletext"])) {
+    $text = $_POST["profiletext"];
+    echo $text;
+} else {
+}
+
 // test data 
 $user->setuserId(7);
 $profile = $user->getUserInfo();
@@ -130,6 +136,11 @@ if (!empty($_POST["passwordedit"])) {
 </head>
 
 <body>
+    <form action="" method="post">
+        <input type="text" id="profile_text" name="profiletext" placeholder="profile text">
+        <input type="submit" name="profiletext" class="btn" value="Add or change profile text">
+    </form>
+
 
     <form method="post" action="" class="edit_profile" enctype="multipart/form-data">
         <h1>Change Profile</h1>
@@ -140,6 +151,7 @@ if (!empty($_POST["passwordedit"])) {
                 <p>That password wasn't right. Try Again! <?php echo $error; ?></p>
             </div>
         <?php endif; ?>
+        <!--profieltekst-->
 
         <!-- profielfoto -->
         <img src="<?php echo "data/profile/" . $profile[1]['image_name'] ?>" alt="Profielfoto">
