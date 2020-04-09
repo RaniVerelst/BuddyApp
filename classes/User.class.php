@@ -310,12 +310,14 @@ class User
 
   // details van user
 
-  public function showUser($id)
+  public function showUser($searchkey)
   {
     $conn = Db::getInstance();
-    $statement = $conn->prepare("select * from users");
-    //$statement = $conn->prepare("select * from users, posts where posts.user_id = users.id and users.id like '$id'");
-    $statement->execute(array($id));
+    $statement = $conn->prepare("select * from users where first_name like '$searchkey%'
+          union select * from users where last_name like '$searchkey%'
+          union select * from users where user_name like '$searchkey%'"); 
+//    $statement = $conn->prepare("SELECT * FROM users, profile_details WHERE users.id = profile_details.ID");
+    $statement->execute();
     $result = $statement->fetch(PDO::FETCH_ASSOC);
     return $result;
   }
@@ -341,11 +343,17 @@ class User
 
   // details van kenmerk
 
-  public function showKenmerk($id)
+  public function showKenmerk($searchkey)
   {
     $conn = Db::getInstance();
-    $statement = $conn->prepare("select * from profile_details");
-    $statement->execute(array($id));
+    $statement = $conn->prepare(
+      "select * from profile_details where movie like '$searchkey%'
+          union select * from profile_details where destination like '$searchkey%'
+          union select * from profile_details where cookie like '$searchkey%'
+          union select * from profile_details where serie like '$searchkey%'
+          union select * from profile_details where hangout like '$searchkey%'"
+    );    
+    $statement->execute();
     $result = $statement->fetch(PDO::FETCH_ASSOC);
     return $result;
   }
@@ -353,5 +361,46 @@ class User
   // ---------------einde zoek een kenmerk------------
 
 
+/*
+  // ---------------zoek een user of kenmerk------------
+  public function searchAll($searchkey)
+  {
+    $conn = Db::getInstance();
+    $statement = $conn->prepare(
+          "select * from users, profile_details like '$searchkey%'
+          union select * from users where first_name like '$searchkey%'
+          union select * from users where last_name like '$searchkey%'
+          union select * from users where user_name like '$searchkey%'
+          union select * from profile_details where movie like '$searchkey%'
+          union select * from profile_details where destination like '$searchkey%'
+          union select * from profile_details where cookie like '$searchkey%'
+          union select * from profile_details where serie like '$searchkey%'
+          union select * from profile_details where hangout like '$searchkey%'");
+    $statement->bindValue(1, '$searchkey%', PDO::PARAM_STR);
+    $statement->execute();
+    $result = $statement->fetchAll();
+    return $result;
+  }
+
+  // details van user of kenmerk
+
+  public function showAll($searchkey)
+  {
+    $conn = Db::getInstance();
+    $statement = $conn->prepare("select * from users, profile_details where first_name like '$searchkey%'
+    union select * from users where last_name like '$searchkey%'
+    union select * from users where user_name like '$searchkey%'
+    union select * from profile_details where movie like '$searchkey%'
+    union select * from profile_details where destination like '$searchkey%'
+    union select * from profile_details where cookie like '$searchkey%'
+    union select * from profile_details where serie like '$searchkey%'
+    union select * from profile_details where hangout like '$searchkey%'");    
+    $statement->execute();
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
+    return $result;
+  }
+
+  // ---------------einde zoek een user of kenmerk------------
+*/
 
 }
