@@ -5,6 +5,7 @@ ini_set('display_errors', '1');
 require_once("classes/Db.class.php");
 include_once("classes/User.class.php");
 
+
 // _____________Naam_______________ //
 
 if(isset($_GET['search'])){
@@ -12,14 +13,9 @@ if(isset($_GET['search'])){
   $search_users = new User();
   $result_users = $search_users->searchUser($searchkey);
 
-  $conn = Db::getInstance();
-  $statement = $conn->prepare("select * from users");
-  $statement->execute();
-  $users = $statement->fetchAll();
-    
   $u = new User();
-  $id = "";
-  $users = $u->showUser($id);
+  $users = $u->showUser($searchkey);
+  var_dump($users);
 }
 
 
@@ -30,16 +26,24 @@ if(isset($_GET['search'])){
   $search_kenmerken = new User();
   $result_kenmerken = $search_kenmerken->searchKenmerk($searchkey);
 
-  $conn = Db::getInstance();
-  $statement = $conn->prepare("select * from profile_details");
-  $statement->execute();
-  $kenmerken = $statement->fetchAll();
-    
   $k = new User();
-  $id = "";
-  $kenmerken = $k->showKenmerk($id);
+  $kenmerken = $k->showKenmerk($searchkey);
+  var_dump($kenmerken);
 }
+/*
+// ________________IN 1 ________________ //
 
+if(isset($_GET['search'])){
+  $searchkey = $_GET['search'];
+  $search_all = new User();
+  $result_all = $search_all->searchAll($searchkey);
+  var_dump($result_all);
+
+  $a = new User();
+  $all = $a->showAll($searchkey);
+  var_dump($all);
+}
+*/
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -52,7 +56,6 @@ if(isset($_GET['search'])){
     <title>Search</title>
 </head>
 <body>
-
     <div class="search_results">
       <?php if(count($result_users) || ($result_kenmerken)  > 0 ): ?>
         <h1> <?php echo count($result_users) + count($result_kenmerken) . " Search Result(s) found for " . "<span style = 'font-weight: bold'> &quot" . $searchkey . "&quot </span>"; ?></h1>
@@ -71,6 +74,27 @@ if(isset($_GET['search'])){
      <p><span style="font-weight: bold">Hangout:</span> <?php echo $kenmerken['hangout']; ?></p>
      </nav>
 </div>
+
+<!--
+    <div class="search_results">
+    <?php if(count($result_all) > 0 ): ?>
+        <h1> <?php echo count($result_all) . " Search Result(s) found for " . "<span style = 'font-weight: bold'> &quot" . $searchkey . "&quot </span>"; ?></h1>
+    <?php else: ?>
+      <h1>No results found </h1>
+      <?php endif; ?>
+      <nav>
+      <br>
+     <p><span style="font-weight: bold">Username:</span> <?php echo $all['user_name']; ?></p>
+     <p><span style="font-weight: bold">Full name:</span> <?php echo $all['first_name'] . " " . $all['last_name']; ?></p>
+    <br>
+     <p><span style="font-weight: bold">Movie:</span> <?php echo $all['movie']; ?></p>
+     <p><span style="font-weight: bold">Destination:</span> <?php echo $all['destination']; ?></p>
+     <p><span style="font-weight: bold">Cookie:</span> <?php echo $all['cookie']; ?></p>
+     <p><span style="font-weight: bold">Serie:</span> <?php echo $all['serie']; ?></p>
+     <p><span style="font-weight: bold">Hangout:</span> <?php echo $all['hangout']; ?></p>
+     </nav>
+</div>
+-->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="js/script.js"></script>
