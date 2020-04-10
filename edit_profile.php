@@ -137,8 +137,7 @@ if (!empty($_POST["passwordedit"])) {
 
 <body>
     <form action="" method="post">
-        <input type="text" id="profile_text" name="profiletext" placeholder="profile text">
-        <input type="submit" name="profiletext" class="btn" value="Add or change profile text">
+       
     </form>
 
 
@@ -181,6 +180,8 @@ if (!empty($_POST["passwordedit"])) {
             </div>
         <?php endif; ?>
         <input type="email" id="email" name="email" value="" placeholder="E-mail or username">
+        <input type="text" id="profile_text" name="profiletext" placeholder="Profile Text">
+        <input type="submit" name="profiletext" class="btn" value="Add or change profile text">
         <!-- button -->
         <input type="submit" name="edit" class="btn" value="Change profile">
 
