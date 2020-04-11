@@ -107,13 +107,15 @@ if (!empty($_POST["edit"])) {
 if(!empty($_POST["addBio"])){
     $text = htmlspecialchars($_POST['bioText']);
     if(strlen($text) < 255){
-        echo $text;
+        $user->setBio($text);
+        $user->saveBio();
     } else {
         $bioError = "Bio can contain up to 255 characters"; 
         echo $bioError;
     }
 
 }
+
   // ---------------CHANGE PASSWORD------------
 if (!empty($_POST["passwordedit"])) {
     //validate current password

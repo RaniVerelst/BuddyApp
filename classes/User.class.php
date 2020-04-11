@@ -286,7 +286,7 @@ class User
      $conn = Db::getInstance();
      //query
      $statement = $conn->prepare("UPDATE users SET bio = :bio WHERE id = :userId");
-     $statement->bindValue(":bio",$this->getBio());
+     $statement->bindValue(":bio", $this->getBio());
      $statement->bindValue(":userId", $this->userId);
      $statement->execute();
      $result = $statement->fetchAll();
