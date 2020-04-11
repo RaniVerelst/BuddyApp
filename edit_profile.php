@@ -11,17 +11,10 @@ include_once("classes/EditProfile.class.php");
 //$user = new User();
 $user = new EditProfile();
 //$user->setuserId($_SESSION["user_id"]);
-//$user->setuserId(1);
-//$profile = $user->getUserInfo();
 
-/*if (!empty($_POST["profiletext"])) {
-    $text = $_POST["profiletext"];
-    echo $text;
-} else {
-}*/
 
 // test data 
-$user->setuserId(1);
+$user->setuserId(5);
 $profile = $user->getUserInfo();
 
   // ---------------UPLOAD PICTURE------------
@@ -79,12 +72,14 @@ if (!empty($_POST["edit"])) {
     if (!empty($_POST["firstname"])) {
         $user->setFirstname($_POST["firstname"]);
         $user->saveFirstname();
+        $firstnameSucces = "firstname changed";
     };
 
     //if given update lastname
     if (!empty($_POST["lastname"])) {
         $user->setLastname( $_POST["lastname"]);
         $user->saveLastname();
+        $lastnameSucces = "lastname changed";
     };
 
     //if given update email
@@ -97,6 +92,7 @@ if (!empty($_POST["edit"])) {
             if ($user->emailExists($email) == false) {
                 $user->setEmail($email);
                 $user->saveEmail();
+                $emailSucces = "email changed";
             } else {
                 $emailError = "Add your email";
             }
@@ -104,6 +100,10 @@ if (!empty($_POST["edit"])) {
             $emailError = $email + "This email isn't valid.";
         }
     };
+    // create Successfull message
+        if(isset($firstnameSucces)) { $messageArr[0] =  $firstnameSucces; } 
+        if(isset($lastnameSucces)){ $messageArr[1] = $lastnameSucces; }
+        if(isset($emailSucces)){ $messageArr[2] = $emailSucces; }
 } // end $_POST["edit"]; 
   // ---------------ADD/CHANGE BIO------------
 if(!empty($_POST["addBio"])){
@@ -190,6 +190,15 @@ if (!empty($_POST["passwordedit"])) {
 
         <!-- gegevens gebruiker -->
         <h2>Change Profile</h2>
+        <!-- SUCCESS fistname lastname email -->
+        
+<?php if(isset($messageArr)): ?>
+            <div class="form__success">
+                <?php foreach($messageArr as $m): ?>
+                <p><?php echo $m ?></p>
+            </div>
+                <?php endforeach; ?>
+<?php endif; ?>
         <input type="text" id="firstname" name="firstname" placeholder="First name">
         <input type="text" id="lastname" name="lastname" value="" placeholder="Last name">
         <?php if (isset($emailError)) : ?>
