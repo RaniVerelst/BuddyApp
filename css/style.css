@@ -98,7 +98,7 @@ color: #1ABC9C;
   padding-left: 10px;
 }
 
-.form__error p {
+.form__error p, .form__success p {
   padding-bottom: 30px;
   text-align: center;
   padding-top: 30px;
@@ -108,13 +108,7 @@ color: #1ABC9C;
 .form__error p {
   color: red;
 }
-
 .form__success p {
-  padding-bottom: 30px;
-  text-align: center;
-  padding-top: 30px;
-  font-size: 2em;
-  margin-bottom: 30px;
   color: green;
 }
 /* --------------einde edit profile feature 3---------------- */

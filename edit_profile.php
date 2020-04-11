@@ -132,13 +132,13 @@ if (!empty($_POST["passwordedit"])) {
                 $user->setPassword($password);
                 echo "New password!";
             } else {
-                $error = "Password needs at least 8 characters.";
+                $passwordError = "Password needs at least 8 characters.";
             }
         } else {
-            $error = "Passwords don't match.";
+            $passwordError = "Passwords don't match.";
         }
     } else {
-        $error = "Wrong password!";
+        $passwordError = "Wrong password!";
     };
 }
 
@@ -219,6 +219,11 @@ if (!empty($_POST["passwordedit"])) {
         <!-- wachtwoord aanpassen -->
         <h2>Change Password</h2>
         <br>
+        <?php if (isset($passwordError)) : ?>
+            <div class="form__error">
+                <p><?php echo $passwordError; ?></p>
+            </div>
+        <?php endif; ?>
         <h4>Old password</h4>
         <input type="password" id="oldPassword" name="oldPassword" placeholder="Old password">
         <h4>New password</h4>
