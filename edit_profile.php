@@ -8,20 +8,21 @@ include_once("classes/Db.class.php");
 include_once("classes/User.class.php");
 
 $user = new User();
-/*$user->setUser_id($_SESSION["user_id"]);
-$profile = $user->getUserInfo();*/
+//$user->setuserId($_SESSION["user_id"]);
+//$user->setuserId(1);
+//$profile = $user->getUserInfo();
 
-if (!empty($_POST["profiletext"])) {
+/*if (!empty($_POST["profiletext"])) {
     $text = $_POST["profiletext"];
     echo $text;
 } else {
-}
+}*/
 
 // test data 
-$user->setuserId(7);
+$user->setuserId(1);
 $profile = $user->getUserInfo();
 
-// UPLOAD PICTURE
+  // ---------------UPLOAD PICTURE------------
 if (!empty($_POST["uploadImg"])) {
     if (!empty($_FILES['profileImg']['name'])) {
 
@@ -55,6 +56,8 @@ if (!empty($_POST["uploadImg"])) {
                 };
                 //add to db
                 $user->SaveProfileImg($insert_img);
+                //give feedback
+                $imgError = "File successful uploaded!";
             } else {
                 $imgError = "Wrong format. Expected: jpeg, jpg, png, gif. <br> Gekregen " .  $imgExtension;
             };
@@ -66,18 +69,20 @@ if (!empty($_POST["uploadImg"])) {
     };
 }; // end upload image
 
-//update firstname lastname
+
+  // ---------------UPLOAD FIRSTNAME/LASTNAME/EMAIL------------
 if (!empty($_POST["edit"])) {
 
     //if given update firstname
     if (!empty($_POST["firstname"])) {
         $user->setFirstname($_POST["firstname"]);
+        $user->saveFirstname();
     };
 
     //if given update lastname
     if (!empty($_POST["lastname"])) {
-        $lastname = $_POST["lastname"];
-        $user->setLastname($lastname);
+        $user->setLastname( $_POST["lastname"]);
+        $user->saveLastname();
     };
 
     //if given update email
@@ -89,6 +94,7 @@ if (!empty($_POST["edit"])) {
             //check if email was used
             if ($user->emailExists($email) == false) {
                 $user->setEmail($email);
+                $user->saveEmail();
             } else {
                 $emailError = "Add your email";
             }
@@ -120,7 +126,7 @@ if (!empty($_POST["passwordedit"])) {
         $error = "Wrong password!";
     };
 }
-
+var_dump($profile[1]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -137,23 +143,20 @@ if (!empty($_POST["passwordedit"])) {
 
 <body>
     <form action="" method="post">
-       
+
     </form>
 
 
     <form method="post" action="" class="edit_profile" enctype="multipart/form-data">
         <h1>Change Profile</h1>
-
         <!-- indien inloggegevens fout zijn = error -->
         <?php if (isset($error)) : ?>
             <div class="form__error">
                 <p>That password wasn't right. Try Again! <?php echo $error; ?></p>
             </div>
         <?php endif; ?>
-        <!--profieltekst-->
-
         <!-- profielfoto -->
-        <img src="<?php echo "data/profile/" . $profile[1]['image_name'] ?>" alt="Profielfoto">
+        <img src="<?php echo "data/profile/" . $profile[1]['image_name']; ?>" alt="Profielfoto">
         <input type="file" name="profileImg" id="profileImg" class="new_avatar" accept="image/gif, image/jpeg, image/png, image/jpg">
         <!-- indien bestaand te groot is = error  -->
         <?php if (isset($imgError)) : ?>
@@ -180,10 +183,14 @@ if (!empty($_POST["passwordedit"])) {
             </div>
         <?php endif; ?>
         <input type="email" id="email" name="email" value="" placeholder="E-mail or username">
-        <input type="text" id="profile_text" name="profiletext" placeholder="Profile Text">
-        <input type="submit" name="profiletext" class="btn" value="Add or change profile text">
         <!-- button -->
         <input type="submit" name="edit" class="btn" value="Change profile">
+
+        <!-- bio toevoegen -->
+        <h2>Bio</h2>
+        <input type="text" id="profile_text" name="profiletext" placeholder="Profile Text">
+        <!-- button -->
+        <input type="submit" name="profiletext" class="btn" value="Add or change profile text">
 
         <!-- wachtwoord aanpassen -->
         <h2>Change Password</h2>

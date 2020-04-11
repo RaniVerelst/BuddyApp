@@ -1,6 +1,6 @@
 <?php
-
-class UserDetails
+require_once "User.class.php";
+class UserDetails extends User
 {
 
     private $movie;

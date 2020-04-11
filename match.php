@@ -1,10 +1,10 @@
 <?php
 include_once("classes/Db.class.php");
 include_once("classes/User.class.php");
-include_once("classes/Userprofile.class.php");
+include_once("classes/Userdetails.class.php");
 
-$userId = 1;
-// $userid = $_SESSION["user_id"]);*/
+//$userId = 1;
+$userId = $_SESSION["user_id"];
 
 $user = new User();
 $characteristics = new UserDetails();
