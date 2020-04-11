@@ -8,13 +8,13 @@ class User
   private $email;
   private $password;
   private $passwordConfirm;
-  private $userId; // om profiel aan te passen
-  private $bio;
+  // private $userId; // om profiel aan te passen
+ // private $bio;
 
   //temp voor IMAGE UPLOAD
-  private $imageName;
+  /*private $imageName;
   private $imageSize;
-  private $imageTmpName;
+  private $imageTmpName;*/
 
 
 
@@ -167,7 +167,7 @@ class User
 
 
 
-
+/*
   //////////////////////////////////////////////////
   ///////////////// PROFIEL AANPASSEN ///////////// feature 3
   ////////////////////////////////////////////////
@@ -324,7 +324,7 @@ class User
   }
 
 //-------------------GETTERS & SETTERS 
-
+*/
 // getters and setters USERID
   public function getuserId()
   {
@@ -341,7 +341,7 @@ class User
   {
     return $this->getuserId();
   }
-
+/*
 // getters and settters img
 public function getimageName()
 {
@@ -381,7 +381,7 @@ public function setimageTmpName($imageTmpName)
 // getters & setters bio
 /**
    * Get the value of bio
-   */ 
+   */ /*
   public function getBio()
   {
     return $this->bio;
@@ -391,13 +391,13 @@ public function setimageTmpName($imageTmpName)
    * Set the value of bio
    *
    * @return  self
-   */ 
+   */ /*
   public function setBio($bio)
   {
     $this->bio = $bio;
 
     return $this;
-  }
+  }*/
 
 
   // ---------------zoek een user------------

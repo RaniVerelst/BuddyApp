@@ -5,9 +5,11 @@ error_reporting(E_ALL);
 
 session_start();
 include_once("classes/Db.class.php");
-include_once("classes/User.class.php");
+//include_once("classes/User.class.php");
+include_once("classes/EditProfile.class.php");
 
-$user = new User();
+//$user = new User();
+$user = new EditProfile();
 //$user->setuserId($_SESSION["user_id"]);
 //$user->setuserId(1);
 //$profile = $user->getUserInfo();
@@ -57,9 +59,9 @@ if (!empty($_POST["uploadImg"])) {
                 //add to db
                 $user->SaveProfileImg($insert_img);
                 //give feedback
-                $imgError = "File successful uploaded!";
+                $imgSuccess = "File successful uploaded!";
             } else {
-                $imgError = "Wrong format. Expected: jpeg, jpg, png, gif. <br> Gekregen " .  $imgExtension;
+                $imgError = "Wrong format. Expected: jpeg, jpg, png, gif. <br> Got: " .  $imgExtension;
             };
         } else {
             $imgError = "File is too big.";
@@ -173,13 +175,13 @@ if (!empty($_POST["passwordedit"])) {
         <input type="file" name="profileImg" id="profileImg" class="new_avatar" accept="image/gif, image/jpeg, image/png, image/jpg">
         <!--ERROR = bestand is te groot  -->
         <?php if (isset($imgError)) : ?>
-            <div class="form_error">
+            <div class="form__error">
                 <p><?php echo $imgError; ?></p>
             </div>
         <?php endif; ?>
         <!-- SUCCESS = bestand is upgeload  -->
-        <?php if (isset($imgSucces)) : ?>
-            <div class="form_success">
+        <?php if (isset($imgSuccess)) : ?>
+            <div class="form__success">
                 <p><?php echo $imgSuccess; ?></p>
             </div>
         <?php endif; ?>
@@ -191,7 +193,7 @@ if (!empty($_POST["passwordedit"])) {
         <input type="text" id="firstname" name="firstname" placeholder="First name">
         <input type="text" id="lastname" name="lastname" value="" placeholder="Last name">
         <?php if (isset($emailError)) : ?>
-            <div class="form_success">
+            <div class="form__error">
                 <p><?php echo $emailError; ?></p>
             </div>
         <?php endif; ?>
