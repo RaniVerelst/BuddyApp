@@ -126,7 +126,7 @@ if (!empty($_POST["passwordedit"])) {
         $error = "Wrong password!";
     };
 }
-var_dump($profile[1]);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -188,7 +188,7 @@ var_dump($profile[1]);
 
         <!-- bio toevoegen -->
         <h2>Bio</h2>
-        <input type="text" id="profile_text" name="profiletext" placeholder="Profile Text">
+        <textarea name="profiletext" rows="4" cols="44" placeholder="Profile Text"></textarea>
         <!-- button -->
         <input type="submit" name="profiletext" class="btn" value="Add or change profile text">
 

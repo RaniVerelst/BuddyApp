@@ -253,7 +253,7 @@ class User
     $statement = $conn->prepare($query);
 
     // get img
-    $imgName = $this->getImageName();
+    $imgName = $this->userId . '-' . $this->getImageName();
     $imgTmp = $this->getImageTmpName();
     
       //bind
