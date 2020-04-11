@@ -103,7 +103,18 @@ if (!empty($_POST["edit"])) {
         }
     };
 } // end $_POST["edit"]; 
+  // ---------------ADD/CHANGE BIO------------
+if(!empty($_POST["addBio"])){
+    $text = htmlspecialchars($_POST['bioText']);
+    if(strlen($text) < 255){
+        echo $text;
+    } else {
+        $bioError = "Bio can contain up to 255 characters"; 
+        echo $bioError;
+    }
 
+}
+  // ---------------CHANGE PASSWORD------------
 if (!empty($_POST["passwordedit"])) {
     //validate current password
     $oldPassword = $_POST['oldPassword'];
@@ -149,22 +160,22 @@ if (!empty($_POST["passwordedit"])) {
 
     <form method="post" action="" class="edit_profile" enctype="multipart/form-data">
         <h1>Change Profile</h1>
-        <!-- indien inloggegevens fout zijn = error -->
+        <!-- ERROR = inloggegevens fout! -->
         <?php if (isset($error)) : ?>
             <div class="form__error">
                 <p>That password wasn't right. Try Again! <?php echo $error; ?></p>
             </div>
         <?php endif; ?>
         <!-- profielfoto -->
-        <img src="<?php echo "data/profile/" . $profile[1]['image_name']; ?>" alt="Profielfoto">
+        <img src="<?php echo "data/profile/" . $profile[1]['user_id'] ."-". $profile[1]['image_name']; ?>" alt="Profielfoto">
         <input type="file" name="profileImg" id="profileImg" class="new_avatar" accept="image/gif, image/jpeg, image/png, image/jpg">
-        <!-- indien bestaand te groot is = error  -->
+        <!--ERROR = bestand is te groot  -->
         <?php if (isset($imgError)) : ?>
             <div class="form_error">
                 <p><?php echo $imgError; ?></p>
             </div>
         <?php endif; ?>
-        <!-- indien alles goed verliep  -->
+        <!-- SUCCESS = bestand is upgeload  -->
         <?php if (isset($imgSucces)) : ?>
             <div class="form_success">
                 <p><?php echo $imgSuccess; ?></p>
@@ -179,7 +190,7 @@ if (!empty($_POST["passwordedit"])) {
         <input type="text" id="lastname" name="lastname" value="" placeholder="Last name">
         <?php if (isset($emailError)) : ?>
             <div class="form_success">
-                <p><?php echo $imgError; ?></p>
+                <p><?php echo $emailError; ?></p>
             </div>
         <?php endif; ?>
         <input type="email" id="email" name="email" value="" placeholder="E-mail or username">
@@ -188,9 +199,9 @@ if (!empty($_POST["passwordedit"])) {
 
         <!-- bio toevoegen -->
         <h2>Bio</h2>
-        <textarea name="profiletext" rows="4" cols="44" placeholder="Profile Text"></textarea>
+        <textarea name="bioText" rows="4" cols="44" placeholder="Profile Text"></textarea>
         <!-- button -->
-        <input type="submit" name="profiletext" class="btn" value="Add or change profile text">
+        <input type="submit" name="addBio" class="btn" value="Add or change profile text">
 
         <!-- wachtwoord aanpassen -->
         <h2>Change Password</h2>
@@ -200,7 +211,7 @@ if (!empty($_POST["passwordedit"])) {
         <h4>New password</h4>
         <input type="password" id="password" name="password" placeholder="New password">
         <input type="password" name="repassword" id="repassword" placeholder="Confirm new password">
-
+        <!-- button -->
         <input type="submit" name="passwordedit" class="btn" value="Change password">
     </form>
 

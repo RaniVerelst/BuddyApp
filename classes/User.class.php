@@ -9,6 +9,7 @@ class User
   private $password;
   private $passwordConfirm;
   private $userId; // om profiel aan te passen
+  private $bio;
 
   //temp voor IMAGE UPLOAD
   private $imageName;
@@ -170,23 +171,6 @@ class User
   //////////////////////////////////////////////////
   ///////////////// PROFIEL AANPASSEN ///////////// feature 3
   ////////////////////////////////////////////////
-  public function getuserId()
-  {
-    return $this->userId;
-  }
-
-  public function setuserId($userId)
-  {
-    $this->userId = htmlspecialchars($userId);
-    return $this;
-  }
-
-  function __toString()
-  {
-    return $this->getuserId();
-  }
-
-
 
   public function getUserInfo()
   {
@@ -204,43 +188,6 @@ class User
        //concat 2 db
        $result = [$statement->fetch(), $secondStatement->fetch()];
        return $result;
-  }
-
-
-  public function getimageName()
-  {
-    return $this->imageName;
-  }
-
-  public function setimageName($imageName)
-  {
-    $this->imageName = $imageName;
-
-    return $this;
-  }
-
-  public function getimageSize()
-  {
-    return $this->imageSize;
-  }
-
-  public function setimageSize($imageSize)
-  {
-    $this->imageSize = $imageSize;
-
-    return $this;
-  }
-
-  public function getimageTmpName()
-  {
-    return $this->imageTmpName;
-  }
-
-  public function setimageTmpName($imageTmpName)
-  {
-    $this->imageTmpName = $imageTmpName;
-
-    return $this;
   }
 
 
@@ -269,7 +216,9 @@ class User
       return $result;
   } // end SaveProfileImg
 
+
   // ---------------CHANGE FIRSTNAME------------
+
   public function saveFirstname(){
     //connect to db
     $conn = Db::getInstance();
@@ -283,7 +232,9 @@ class User
     return $result;
   }
   
+
  // ---------------CHANGE LASTNAME ------------
+
     //set up First name
     public function saveLastname(){
       //connect to db
@@ -297,7 +248,9 @@ class User
       return $result;
     }
 
+
     // ---------------CHANGE EMAIL------------
+
     public function saveEmail(){
       //connect to db
       $conn = Db::getInstance();
@@ -324,7 +277,25 @@ class User
         return false;
       }
     }
+
+
+  // ---------------ADD/CHANGE BIO ------------
+
+  function saveBio(){
+     //connect to db
+     $conn = Db::getInstance();
+     //query
+     $statement = $conn->prepare("UPDATE users SET bio = :bio WHERE id = :userId");
+     $statement->bindValue(":bio",$this->getBio());
+     $statement->bindValue(":userId", $this->userId);
+     $statement->execute();
+     $result = $statement->fetchAll();
+     return $result;
+  }
+
+
   // ---------------CHANGE PASSWORD ------------
+
   function savePassword(){
     $options = [
       "cost" => 12 // 2^12
@@ -351,6 +322,83 @@ class User
   return false;
     }
   }
+
+//-------------------GETTERS & SETTERS 
+
+// getters and setters USERID
+  public function getuserId()
+  {
+    return $this->userId;
+  }
+
+  public function setuserId($userId)
+  {
+    $this->userId = htmlspecialchars($userId);
+    return $this;
+  }
+
+  function __toString()
+  {
+    return $this->getuserId();
+  }
+
+// getters and settters img
+public function getimageName()
+{
+  return $this->imageName;
+}
+
+public function setimageName($imageName)
+{
+  $this->imageName = $imageName;
+
+  return $this;
+}
+
+public function getimageSize()
+{
+  return $this->imageSize;
+}
+
+public function setimageSize($imageSize)
+{
+  $this->imageSize = $imageSize;
+
+  return $this;
+}
+
+public function getimageTmpName()
+{
+  return $this->imageTmpName;
+}
+
+public function setimageTmpName($imageTmpName)
+{
+  $this->imageTmpName = $imageTmpName;
+
+  return $this;
+}
+// getters & setters bio
+/**
+   * Get the value of bio
+   */ 
+  public function getBio()
+  {
+    return $this->bio;
+  }
+
+  /**
+   * Set the value of bio
+   *
+   * @return  self
+   */ 
+  public function setBio($bio)
+  {
+    $this->bio = $bio;
+
+    return $this;
+  }
+
 
   // ---------------zoek een user------------
   public function searchUser($searchkey)
@@ -460,4 +508,6 @@ class User
   // ---------------einde zoek een user of kenmerk------------
 */
 
+
+  
 }
