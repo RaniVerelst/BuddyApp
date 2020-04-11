@@ -167,7 +167,7 @@ class User
 
 
 
-/*
+
   //////////////////////////////////////////////////
   ///////////////// PROFIEL AANPASSEN ///////////// feature 3
   ////////////////////////////////////////////////
@@ -181,15 +181,10 @@ class User
        $statement = $conn->prepare("SELECT * FROM users WHERE id = :user_id LIMIT 1");
        $statement->bindParam(":user_id", $this->userId);
        $statement->execute();
-   
-       $secondStatement = $conn->prepare("SELECT * FROM profile_image WHERE user_id = :userid LIMIT 1");
-       $secondStatement->bindParam(":userid", $this->userId);
-       $secondStatement->execute();
-       //concat 2 db
-       $result = [$statement->fetch(), $secondStatement->fetch()];
+       $result = $statement->fetch();
        return $result;
   }
-
+/*
 
  // ---------------UPLOAD IMAGE ------------
 
@@ -324,7 +319,7 @@ class User
   }
 
 //-------------------GETTERS & SETTERS 
-*/
+
 // getters and setters USERID
   public function getuserId()
   {
@@ -341,7 +336,7 @@ class User
   {
     return $this->getuserId();
   }
-/*
+
 // getters and settters img
 public function getimageName()
 {
