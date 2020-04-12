@@ -14,7 +14,7 @@ $user = new EditProfile();
 
 
 // test data 
-$user->setuserId(5);
+$user->setuserId(1);
 $profile = $user->getUserInfo();
 
   // ---------------UPLOAD PICTURE------------

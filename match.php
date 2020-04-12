@@ -1,21 +1,23 @@
 <?php
 include_once("classes/Db.class.php");
-include_once("classes/User.class.php");
+//include_once("classes/User.class.php");
 include_once("classes/Userdetails.class.php");
-
-//$userId = 1;
-$userId = $_SESSION["user_id"];
+include_once("classes/Match.class.php");
+$userId = 1;
+//$userId = $_SESSION["user_id"];
 
 $user = new User();
 $characteristics = new UserDetails();
 
 // test
-$user->setUserId($userId);
+$user->setuserId($userId);
 $profile = $user->getUserInfo();
 
-$characteristics->setUserId($userId);
-$profileChar = $characteristics->getAllCharacteristics();
+echo $user->getuserId();
 
+$characteristics->setuserId($userId);
+$profileChar = $characteristics->getAllCharacteristics();
+var_dump($profileChar);
 // get characteristics from active user
 $movie = $profileChar['movie'];
 $destination = $profileChar['destination'];
@@ -63,10 +65,10 @@ function getCommonInterest($buddy, $m, $d, $c, $s, $h)
 function getBuddieInfo($buddyId)
 {
     $user = new User();
-    $user->setUserId($buddyId);
+    $user->setuserId($buddyId);
     $profile = $user->getUserInfo();
     $characteristics = new UserDetails();
-    $characteristics->setUserId($buddyId);
+    $characteristics->setuserId($buddyId);
     $profileChar = $characteristics->getAllCharacteristics();
 
     $arr = [$profile, $profileChar];
@@ -143,6 +145,7 @@ function arrayOfUsers($arr)
     }
     return $newArr;
 }
+
 // delete active user from array
 function cleanArray($arr)
 {
@@ -152,6 +155,7 @@ function cleanArray($arr)
     //test userId
     $userId = 1;
     for ($i = 0; $i < sizeof($arr); $i++) {
+
         if ($arr[$i] == $userId) {
             unset($arr[$i]);
         }
@@ -184,7 +188,7 @@ function cleanArray($arr)
     </div>
     <div>
         <h2><?php echo $buddy3[0]['first_name'] . " " . $buddy3[0]['last_name'] ?></h2>
-        <img src="<?php echo "data/profile/" . $buddy[3]['image_name'] ?>" alt="">
+        <img src="<?php echo "data/profile/" . $buddy3[0]['image_name'] ?>" alt="">
         <p>Things you have in common:
             <?php
             foreach ($buddy3Characteristics as $characteristic) {

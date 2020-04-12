@@ -8,7 +8,7 @@ class User
   private $email;
   private $password;
   private $passwordConfirm;
-  // private $userId; // om profiel aan te passen
+  private $userId;
  // private $bio;
 
   //temp voor IMAGE UPLOAD
@@ -171,6 +171,22 @@ class User
   //////////////////////////////////////////////////
   ///////////////// PROFIEL AANPASSEN ///////////// feature 3
   ////////////////////////////////////////////////
+// getters and setters USERID
+public function getuserId()
+{
+  return $this->userId;
+}
+
+public function setuserId($userId)
+{
+  $this->userId = htmlspecialchars($userId);
+  return $this;
+}
+
+function __toString()
+{
+  return $this->getuserId();
+}
 
   public function getUserInfo()
   {

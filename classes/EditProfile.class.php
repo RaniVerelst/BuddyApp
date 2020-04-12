@@ -163,23 +163,6 @@ class EditProfile extends User {
 
 //-------------------GETTERS & SETTERS 
 
-// getters and setters USERID
-  public function getuserId()
-  {
-    return $this->userId;
-  }
-
-  public function setuserId($userId)
-  {
-    $this->userId = htmlspecialchars($userId);
-    return $this;
-  }
-
-  function __toString()
-  {
-    return $this->getuserId();
-  }
-
 // getters and settters img
 public function getimageName()
 {

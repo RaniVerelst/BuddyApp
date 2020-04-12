@@ -136,7 +136,8 @@ class UserDetails extends User
 
         //query
         $statement = $conn->prepare("SELECT * FROM profile_details WHERE user_id = :userId");
-        $statement->bindParam(":userId", $this->userId);
+        $userId = $this->getuserId();
+        $statement->bindParam(":userId", $userId);
         $statement->execute();
         $result = $statement->fetch();
         return $result;
