@@ -1,6 +1,5 @@
 <?php
 include_once("classes/Db.class.php");
-//include_once("classes/User.class.php");
 include_once("classes/Userdetails.class.php");
 include_once("classes/Match.class.php");
 $userId = 1;
@@ -173,7 +172,7 @@ function cleanArray($arr)
 <div>
     <div class="">
         <h2><?php echo $buddy1[0]['first_name'] . " " . $buddy1[0]['last_name'] ?></h2>
-        <img src="<?php echo "data/profile/" . $buddy1[0]['image_name'] ?>" alt="">
+        <img src="<?php echo "data/profile/". $buddy1[0]['id'] . $buddy1[0]['image_name'] ?>" alt="">
         <p>Things you have in common: <?php
                                         foreach ($buddy1Characteristics as $characteristic) {
                                             echo $characteristic . ' ';
@@ -182,7 +181,7 @@ function cleanArray($arr)
     </div>
     <div>
         <h2><?php echo $buddy2[0]['first_name'] . " " . $buddy2[0]['last_name'] ?></h2>
-        <img src="<?php echo "data/profile/" . $buddy2[0]['image_name'] ?>" alt="">
+        <img src="<?php echo "data/profile/" . $buddy2[0]['id'] . $buddy1[0]['image_name'] ?>" alt="">
         <p>Things you have in common:
             <?php
             foreach ($buddy2Characteristics as $characteristic) {
@@ -193,7 +192,7 @@ function cleanArray($arr)
     </div>
     <div>
         <h2><?php echo $buddy3[0]['first_name'] . " " . $buddy3[0]['last_name'] ?></h2>
-        <img src="<?php echo "data/profile/" . $buddy3[0]['image_name'] ?>" alt="">
+        <img src="<?php echo "data/profile/" . $buddy3[0]['id'] . $buddy1[0]['image_name'] ?>" alt="">
         <p>Things you have in common:
             <?php
             foreach ($buddy3Characteristics as $characteristic) {

@@ -221,7 +221,17 @@ public function setimageTmpName($imageTmpName)
   }
 
 
-
+  public function getuserId()
+  {
+    return $this->userId;
+  }
+  
+  public function setuserId($userId)
+  {
+    $this->userId = htmlspecialchars($userId);
+    return $this;
+  }
+  
 }
 
 ?>
