@@ -1,6 +1,6 @@
 <?php
-
-class UserDetails
+require_once "User.class.php";
+class UserDetails extends User
 {
 
     private $movie;
@@ -136,7 +136,8 @@ class UserDetails
 
         //query
         $statement = $conn->prepare("SELECT * FROM profile_details WHERE user_id = :userId");
-        $statement->bindParam(":userId", $this->userId);
+        $userId = $this->getuserId();
+        $statement->bindParam(":userId", $userId);
         $statement->execute();
         $result = $statement->fetch();
         return $result;

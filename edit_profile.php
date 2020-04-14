@@ -5,23 +5,19 @@ error_reporting(E_ALL);
 
 session_start();
 include_once("classes/Db.class.php");
-include_once("classes/User.class.php");
+//include_once("classes/User.class.php");
+include_once("classes/EditProfile.class.php");
 
-$user = new User();
-/*$user->setUser_id($_SESSION["user_id"]);
-$profile = $user->getUserInfo();*/
+//$user = new User();
+$user = new EditProfile();
+//$user->setuserId($_SESSION["user_id"]);
 
-if (!empty($_POST["profiletext"])) {
-    $text = $_POST["profiletext"];
-    echo $text;
-} else {
-}
 
 // test data 
-$user->setuserId(7);
+$user->setuserId(1);
 $profile = $user->getUserInfo();
 
-// UPLOAD PICTURE
+  // ---------------UPLOAD PICTURE------------
 if (!empty($_POST["uploadImg"])) {
     if (!empty($_FILES['profileImg']['name'])) {
 
@@ -55,8 +51,10 @@ if (!empty($_POST["uploadImg"])) {
                 };
                 //add to db
                 $user->SaveProfileImg($insert_img);
+                //give feedback
+                $imgSuccess = "File successful uploaded!";
             } else {
-                $imgError = "Wrong format. Expected: jpeg, jpg, png, gif. <br> Gekregen " .  $imgExtension;
+                $imgError = "Wrong format. Expected: jpeg, jpg, png, gif. <br> Got: " .  $imgExtension;
             };
         } else {
             $imgError = "File is too big.";
@@ -66,18 +64,22 @@ if (!empty($_POST["uploadImg"])) {
     };
 }; // end upload image
 
-//update firstname lastname
+
+  // ---------------UPLOAD FIRSTNAME/LASTNAME/EMAIL------------
 if (!empty($_POST["edit"])) {
 
     //if given update firstname
     if (!empty($_POST["firstname"])) {
         $user->setFirstname($_POST["firstname"]);
+        $user->saveFirstname();
+        $firstnameSucces = "firstname changed";
     };
 
     //if given update lastname
     if (!empty($_POST["lastname"])) {
-        $lastname = $_POST["lastname"];
-        $user->setLastname($lastname);
+        $user->setLastname( $_POST["lastname"]);
+        $user->saveLastname();
+        $lastnameSucces = "lastname changed";
     };
 
     //if given update email
@@ -89,6 +91,8 @@ if (!empty($_POST["edit"])) {
             //check if email was used
             if ($user->emailExists($email) == false) {
                 $user->setEmail($email);
+                $user->saveEmail();
+                $emailSucces = "email changed";
             } else {
                 $emailError = "Add your email";
             }
@@ -96,8 +100,25 @@ if (!empty($_POST["edit"])) {
             $emailError = $email + "This email isn't valid.";
         }
     };
+    // create Successfull message
+        if(isset($firstnameSucces)) { $messageArr[0] =  $firstnameSucces; } 
+        if(isset($lastnameSucces)){ $messageArr[1] = $lastnameSucces; }
+        if(isset($emailSucces)){ $messageArr[2] = $emailSucces; }
 } // end $_POST["edit"]; 
+  // ---------------ADD/CHANGE BIO------------
+if(!empty($_POST["addBio"])){
+    $text = htmlspecialchars($_POST['bioText']);
+    if(strlen($text) < 255){
+        $user->setBio($text);
+        $user->saveBio();
+    } else {
+        $bioError = "Bio can contain up to 255 characters"; 
+        echo $bioError;
+    }
 
+}
+
+  // ---------------CHANGE PASSWORD------------
 if (!empty($_POST["passwordedit"])) {
     //validate current password
     $oldPassword = $_POST['oldPassword'];
@@ -111,13 +132,13 @@ if (!empty($_POST["passwordedit"])) {
                 $user->setPassword($password);
                 echo "New password!";
             } else {
-                $error = "Password needs at least 8 characters.";
+                $passwordError = "Password needs at least 8 characters.";
             }
         } else {
-            $error = "Passwords don't match.";
+            $passwordError = "Passwords don't match.";
         }
     } else {
-        $error = "Wrong password!";
+        $passwordError = "Wrong password!";
     };
 }
 
@@ -137,33 +158,30 @@ if (!empty($_POST["passwordedit"])) {
 
 <body>
     <form action="" method="post">
-       
+
     </form>
 
 
     <form method="post" action="" class="edit_profile" enctype="multipart/form-data">
         <h1>Change Profile</h1>
-
-        <!-- indien inloggegevens fout zijn = error -->
+        <!-- ERROR = inloggegevens fout! -->
         <?php if (isset($error)) : ?>
             <div class="form__error">
                 <p>That password wasn't right. Try Again! <?php echo $error; ?></p>
             </div>
         <?php endif; ?>
-        <!--profieltekst-->
-
         <!-- profielfoto -->
-        <img src="<?php echo "data/profile/" . $profile[1]['image_name'] ?>" alt="Profielfoto">
+        <img src="<?php echo "data/profile/" . $profile[1]['user_id'] ."-". $profile[1]['image_name']; ?>" alt="Profielfoto">
         <input type="file" name="profileImg" id="profileImg" class="new_avatar" accept="image/gif, image/jpeg, image/png, image/jpg">
-        <!-- indien bestaand te groot is = error  -->
+        <!--ERROR = bestand is te groot  -->
         <?php if (isset($imgError)) : ?>
-            <div class="form_error">
+            <div class="form__error">
                 <p><?php echo $imgError; ?></p>
             </div>
         <?php endif; ?>
-        <!-- indien alles goed verliep  -->
-        <?php if (isset($imgSucces)) : ?>
-            <div class="form_success">
+        <!-- SUCCESS = bestand is upgeload  -->
+        <?php if (isset($imgSuccess)) : ?>
+            <div class="form__success">
                 <p><?php echo $imgSuccess; ?></p>
             </div>
         <?php endif; ?>
@@ -172,28 +190,46 @@ if (!empty($_POST["passwordedit"])) {
 
         <!-- gegevens gebruiker -->
         <h2>Change Profile</h2>
+        <!-- SUCCESS fistname lastname email -->
+        
+<?php if(isset($messageArr)): ?>
+            <div class="form__success">
+                <?php foreach($messageArr as $m): ?>
+                <p><?php echo $m ?></p>
+            </div>
+                <?php endforeach; ?>
+<?php endif; ?>
         <input type="text" id="firstname" name="firstname" placeholder="First name">
         <input type="text" id="lastname" name="lastname" value="" placeholder="Last name">
         <?php if (isset($emailError)) : ?>
-            <div class="form_success">
-                <p><?php echo $imgError; ?></p>
+            <div class="form__error">
+                <p><?php echo $emailError; ?></p>
             </div>
         <?php endif; ?>
         <input type="email" id="email" name="email" value="" placeholder="E-mail or username">
-        <input type="text" id="profile_text" name="profiletext" placeholder="Profile Text">
-        <input type="submit" name="profiletext" class="btn" value="Add or change profile text">
         <!-- button -->
         <input type="submit" name="edit" class="btn" value="Change profile">
+
+        <!-- bio toevoegen -->
+        <h2>Bio</h2>
+        <textarea name="bioText" rows="4" cols="44" placeholder="Profile Text"></textarea>
+        <!-- button -->
+        <input type="submit" name="addBio" class="btn" value="Add or change profile text">
 
         <!-- wachtwoord aanpassen -->
         <h2>Change Password</h2>
         <br>
+        <?php if (isset($passwordError)) : ?>
+            <div class="form__error">
+                <p><?php echo $passwordError; ?></p>
+            </div>
+        <?php endif; ?>
         <h4>Old password</h4>
         <input type="password" id="oldPassword" name="oldPassword" placeholder="Old password">
         <h4>New password</h4>
         <input type="password" id="password" name="password" placeholder="New password">
         <input type="password" name="repassword" id="repassword" placeholder="Confirm new password">
-
+        <!-- button -->
         <input type="submit" name="passwordedit" class="btn" value="Change password">
     </form>
 

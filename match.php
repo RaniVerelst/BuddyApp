@@ -1,20 +1,22 @@
 <?php
 include_once("classes/Db.class.php");
-include_once("classes/User.class.php");
-include_once("classes/Userprofile.class.php");
-
+//include_once("classes/User.class.php");
+include_once("classes/Userdetails.class.php");
+include_once("classes/Match.class.php");
 $userId = 1;
-// $userid = $_SESSION["user_id"]);*/
+//$userId = $_SESSION["user_id"];
 
 $user = new User();
 $characteristics = new UserDetails();
 
 // test
-$user->setUserId($userId);
+$user->setuserId($userId);
 $profile = $user->getUserInfo();
 
-$characteristics->setUserId($userId);
+
+$characteristics->setuserId($userId);
 $profileChar = $characteristics->getAllCharacteristics();
+
 
 // get characteristics from active user
 $movie = $profileChar['movie'];
@@ -27,8 +29,9 @@ $hangouts = $profileChar['hangout'];
 
 $matchesArr = createOneArray($movie, $destination, $cookie, $serie, $hangouts);
 
-$idFrequencies = vindUserIdFrequency($matchesArr);
+$idFrequencies = findUserIdFrequency($matchesArr);
 $matched = findBestMatches($idFrequencies);
+
 $buddy1 = getBuddieInfo($matched[0]);
 $buddy2 = getBuddieInfo($matched[1]);
 $buddy3 = getBuddieInfo($matched[2]);
@@ -63,10 +66,10 @@ function getCommonInterest($buddy, $m, $d, $c, $s, $h)
 function getBuddieInfo($buddyId)
 {
     $user = new User();
-    $user->setUserId($buddyId);
+    $user->setuserId($buddyId);
     $profile = $user->getUserInfo();
     $characteristics = new UserDetails();
-    $characteristics->setUserId($buddyId);
+    $characteristics->setuserId($buddyId);
     $profileChar = $characteristics->getAllCharacteristics();
 
     $arr = [$profile, $profileChar];
@@ -98,9 +101,10 @@ function findBestMatches($arr)
     return [$buddyOne, $buddyTwo, $buddyThree];
 };
 //count how much characteristics other users have in common with active user 
-function vindUserIdFrequency($arr)
+function findUserIdFrequency($arr)
 {
     sort($arr);
+    
     $newArr = array_count_values($arr);
     return $newArr;
 }
@@ -122,8 +126,11 @@ function createOneArray($m, $d, $c, $s, $h)
 function createArr($value)
 {
     $arrUsers = setUpArray($value);
+
     $arrUsersId = arrayOfUsers($arrUsers);
+
     $arrCleanedUsersId = cleanArray($arrUsersId);
+
     return $arrCleanedUsersId;
 }
 
@@ -131,6 +138,7 @@ function createArr($value)
 function setUpArray($characteristic)
 {
     $user = new User();
+
     $arr = $user->searchKenmerk($characteristic);
     return $arr;
 }
@@ -139,10 +147,11 @@ function arrayOfUsers($arr)
 {
     $newArr = [];
     foreach ($arr as $value => $key) {
-        array_push($newArr,  $arr[$value]['user_id']);
+        array_push($newArr,  $arr[$value]['ID']);
     }
     return $newArr;
 }
+
 // delete active user from array
 function cleanArray($arr)
 {
@@ -152,13 +161,13 @@ function cleanArray($arr)
     //test userId
     $userId = 1;
     for ($i = 0; $i < sizeof($arr); $i++) {
+
         if ($arr[$i] == $userId) {
             unset($arr[$i]);
         }
     }
     return $arr;
-};
-
+}
 
 ?>
 <div>
@@ -184,7 +193,7 @@ function cleanArray($arr)
     </div>
     <div>
         <h2><?php echo $buddy3[0]['first_name'] . " " . $buddy3[0]['last_name'] ?></h2>
-        <img src="<?php echo "data/profile/" . $buddy[3]['image_name'] ?>" alt="">
+        <img src="<?php echo "data/profile/" . $buddy3[0]['image_name'] ?>" alt="">
         <p>Things you have in common:
             <?php
             foreach ($buddy3Characteristics as $characteristic) {

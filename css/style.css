@@ -98,14 +98,18 @@ color: #1ABC9C;
   padding-left: 10px;
 }
 
-.form__error p {
+.form__error p, .form__success p {
   padding-bottom: 30px;
   text-align: center;
   padding-top: 30px;
-  color: red;
   font-size: 0.9em;
-
   margin-bottom: 30px;
+}
+.form__error p {
+  color: red;
+}
+.form__success p {
+  color: green;
 }
 /* --------------einde edit profile feature 3---------------- */
 

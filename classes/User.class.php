@@ -8,12 +8,13 @@ class User
   private $email;
   private $password;
   private $passwordConfirm;
-  private $userId; // om profiel aan te passen
+  private $userId;
+ // private $bio;
 
   //temp voor IMAGE UPLOAD
-  private $imageName;
+  /*private $imageName;
   private $imageSize;
-  private $imageTmpName;
+  private $imageTmpName;*/
 
 
 
@@ -170,6 +171,172 @@ class User
   //////////////////////////////////////////////////
   ///////////////// PROFIEL AANPASSEN ///////////// feature 3
   ////////////////////////////////////////////////
+// getters and setters USERID
+public function getuserId()
+{
+  return $this->userId;
+}
+
+public function setuserId($userId)
+{
+  $this->userId = htmlspecialchars($userId);
+  return $this;
+}
+
+function __toString()
+{
+  return $this->getuserId();
+}
+
+  public function getUserInfo()
+  {
+       //DB CONNECTIE
+       $conn = Db::getInstance();
+
+       //QUERY WHERE USER = $_SESSION
+       $statement = $conn->prepare("SELECT * FROM users WHERE id = :user_id LIMIT 1");
+       $statement->bindParam(":user_id", $this->userId);
+       $statement->execute();
+       $result = $statement->fetch();
+       return $result;
+  }
+/*
+
+ // ---------------UPLOAD IMAGE ------------
+
+  public function SaveProfileImg($query)
+  {
+    //Connect to db
+    $conn = Db::getInstance();
+    $statement = $conn->prepare($query);
+
+    // get img
+    $imgName = $this->userId . '-' . $this->getImageName();
+    $imgTmp = $this->getImageTmpName();
+    
+      //bind
+      $statement->bindValue(":imgName", $this->getImageName());
+      $statement->bindValue(":imgSize", $this->getImageSize());
+      $statement->bindValue(":imgTmp", $this->getImageTmpName());
+      $statement->bindValue(":userId", $this->userId);
+      $statement->execute();
+      $result = $statement->fetchAll();
+      //save img in directory
+      $dir = "data/profile/";
+      move_uploaded_file($imgTmp, $dir . $imgName);
+      return $result;
+  } // end SaveProfileImg
+
+
+  // ---------------CHANGE FIRSTNAME------------
+
+  public function saveFirstname(){
+    //connect to db
+    $conn = Db::getInstance();
+    //query
+    //
+    $statement = $conn->prepare("UPDATE users SET first_name = :firstname WHERE id = :userId");
+    $statement->bindValue(":firstname",$this->getFirstname() );
+    $statement->bindValue(":userId", $this->userId);
+    $statement->execute();
+    $result = $statement->fetchAll();
+    return $result;
+  }
+  
+
+ // ---------------CHANGE LASTNAME ------------
+
+    //set up First name
+    public function saveLastname(){
+      //connect to db
+      $conn = Db::getInstance();
+      //query
+      $statement = $conn->prepare("UPDATE users SET last_name = :lastname WHERE id = :userId");
+      $statement->bindValue(":lastname",$this->getLastname());
+      $statement->bindValue(":userId", $this->userId);
+      $statement->execute();
+      $result = $statement->fetchAll();
+      return $result;
+    }
+
+
+    // ---------------CHANGE EMAIL------------
+
+    public function saveEmail(){
+      //connect to db
+      $conn = Db::getInstance();
+      //query
+      $statement = $conn->prepare("UPDATE users SET email = :email WHERE id = :userId");
+      $statement->bindValue(":email",$this->getEmail());
+      $statement->bindValue(":userId", $this->userId);
+      $statement->execute();
+      $result = $statement->fetchAll();
+      return $result;
+    }
+  
+    //check if email exists --> for update
+    public function emailExists($email)
+    {
+      $conn = Db::getInstance();
+      $statement = $conn->prepare("select * from users where email = :email");
+      $statement->bindParam(":email", $email);
+      $statement->execute();
+      $count = $statement->rowCount();
+      if ($count > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+
+  // ---------------ADD/CHANGE BIO ------------
+
+  function saveBio(){
+     //connect to db
+     $conn = Db::getInstance();
+     //query
+     $statement = $conn->prepare("UPDATE users SET bio = :bio WHERE id = :userId");
+     $statement->bindValue(":bio", $this->getBio());
+     $statement->bindValue(":userId", $this->userId);
+     $statement->execute();
+     $result = $statement->fetchAll();
+     return $result;
+  }
+
+
+  // ---------------CHANGE PASSWORD ------------
+
+  function savePassword(){
+    $options = [
+      "cost" => 12 // 2^12
+    ];
+    $password = password_hash($this->getPassword(), PASSWORD_DEFAULT, $options);
+    //connect to db
+     $conn = Db::getInstance();
+     //query
+     $statement = $conn->prepare("UPDATE users SET password = :newpassword WHERE id = :userId");
+     $statement->bindValue(":newpassword", $password);
+     $statement->bindValue(":userId", $this->userId);
+     $statement->execute();
+     $result = $statement->fetchAll();
+     return $result;
+  }
+
+  public function passwordExists($password)
+  {
+    $userProfile = $this->getUserInfo();
+    //var_dump($userProfile[0]['password']);
+    if(password_verify($password, $userProfile[0]['password'])){
+  return true;
+    } else {
+  return false;
+    }
+  }
+
+//-------------------GETTERS & SETTERS 
+
+// getters and setters USERID
   public function getuserId()
   {
     return $this->userId;
@@ -186,114 +353,63 @@ class User
     return $this->getuserId();
   }
 
+// getters and settters img
+public function getimageName()
+{
+  return $this->imageName;
+}
 
+public function setimageName($imageName)
+{
+  $this->imageName = $imageName;
 
-  public function getUserInfo()
+  return $this;
+}
+
+public function getimageSize()
+{
+  return $this->imageSize;
+}
+
+public function setimageSize($imageSize)
+{
+  $this->imageSize = $imageSize;
+
+  return $this;
+}
+
+public function getimageTmpName()
+{
+  return $this->imageTmpName;
+}
+
+public function setimageTmpName($imageTmpName)
+{
+  $this->imageTmpName = $imageTmpName;
+
+  return $this;
+}
+// getters & setters bio
+/**
+   * Get the value of bio
+   */ /*
+  public function getBio()
   {
-    //DB CONNECTIE
-    $conn = Db::getInstance();
-
-    //QUERY WHERE USER = $_SESSION
-    $statement = $conn->prepare("SELECT * FROM users WHERE id = :userId LIMIT 1");
-    $statement->bindParam(":userId", $this->userId);
-    $statement->execute();
-    $result = $statement->fetch();
-    return $result;
+    return $this->bio;
   }
 
-
-  public function getimageName()
+  /**
+   * Set the value of bio
+   *
+   * @return  self
+   */ /*
+  public function setBio($bio)
   {
-    return $this->imageName;
-  }
-
-  public function setimageName($imageName)
-  {
-    $this->imageName = $imageName;
+    $this->bio = $bio;
 
     return $this;
-  }
+  }*/
 
-  public function getimageSize()
-  {
-    return $this->imageSize;
-  }
-
-  public function setimageSize($imageSize)
-  {
-    $this->imageSize = $imageSize;
-
-    return $this;
-  }
-
-  public function getimageTmpName()
-  {
-    return $this->imageTmpName;
-  }
-
-  public function setimageTmpName($imageTmpName)
-  {
-    $this->imageTmpName = $imageTmpName;
-
-    return $this;
-  }
-
-  //sla profielafbeelding op in mapprofiel
-
-  public function SaveProfileImg()
-  {
-    $file_name = $_SESSION['userId'] . "-" . time() . "-" . $this->imageName;
-    $file_size = $this->imageSize;
-    $file_tmp = $this->imageTmpName;
-    $tmp = explode('.', $file_name);
-    $file_ext = end($tmp);
-    $expensions = array("jpeg", "jpg", "png", "gif");
-
-    if (in_array($file_ext, $expensions) === false) {
-      throw new Exception("extension not allowed, please choose a JPEG or PNG or GIF file.");
-    }
-
-    if ($file_size > 2097152) {
-      throw new Exception('File size must be excately 2 MB');
-    }
-
-    if (empty($errors) == true) {
-      move_uploaded_file($file_tmp, "data/profile/" . $file_name);
-      return "data/profile/" . $file_name;
-    } else {
-      echo "Error";
-    }
-  }
-
-  //check if email exists --> for update
-  public function emailExists($email)
-  {
-    $conn = Db::getInstance();
-    $statement = $conn->prepare("select * from users where email = :email");
-    $statement->bindParam(":email", $email);
-    $statement->execute();
-    $count = $statement->rowCount();
-    if ($count > 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  //check if email exists --> for update
-  public function passwordExists($email)
-  {
-    $conn = Db::getInstance();
-    $statement = $conn->prepare("select * from users where password = :password");
-    $statement->bindParam(":email", $email);
-    $statement->execute();
-    $count = $statement->rowCount();
-    if ($count > 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   // ---------------zoek een user------------
   public function searchUser($searchkey)
@@ -403,4 +519,6 @@ class User
   // ---------------einde zoek een user of kenmerk------------
 */
 
+
+  
 }
