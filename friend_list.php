@@ -3,7 +3,29 @@
 // Displays user's friend lists
 // 
 //
-include_once("classes/UserFriendlist.class.php");
+include_once("classes/Db.class.php");
+include_once("classes/Friendlist.class.php");
+
+$user = new Friendlist();
+$user->setUserId(1);
+$activeUser = $user->getUserId();
+$connections = $user->getFriendList();
+$friendList = cleanArray($connections, $activeUser);
+
+var_dump($friendList);
+
+
+// remove user
+function cleanArray($arr, $user){
+    $newArr = [];
+    foreach($arr as $friend){
+          if($friend != $user){
+                array_push($newArr, $friend);
+          }
+    }
+    
+    return $newArr;
+}
 
 ?>
 <div>
