@@ -142,6 +142,7 @@ if (!empty($_POST["passwordedit"])) {
     };
 }
 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -160,7 +161,7 @@ if (!empty($_POST["passwordedit"])) {
     <form action="" method="post">
 
     </form>
-
+   
 
     <form method="post" action="" class="edit_profile" enctype="multipart/form-data">
         <h1>Change Profile</h1>
@@ -171,7 +172,7 @@ if (!empty($_POST["passwordedit"])) {
             </div>
         <?php endif; ?>
         <!-- profielfoto -->
-        <img src="<?php echo "data/profile/" . $profile[1]['user_id'] ."-". $profile[1]['image_name']; ?>" alt="Profielfoto">
+        <img src="<?php echo "data/profile/" . $profile[0]['id'] ."-". $profile[1]['image_name']; ?>" alt="Profielfoto">
         <input type="file" name="profileImg" id="profileImg" class="new_avatar" accept="image/gif, image/jpeg, image/png, image/jpg">
         <!--ERROR = bestand is te groot  -->
         <?php if (isset($imgError)) : ?>
