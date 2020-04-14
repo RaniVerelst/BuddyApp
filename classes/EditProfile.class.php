@@ -1,5 +1,8 @@
-<?php require_once('User.class.php');
-// for feature 3
+<?php 
+// FEATURE 3
+
+require_once('User.class.php');
+
 class EditProfile extends User {
   private $userId;
 // img
@@ -153,7 +156,6 @@ class EditProfile extends User {
   public function passwordExists($password)
   {
     $userProfile = $this->getUserInfo();
-    //var_dump($userProfile[0]['password']);
     if(password_verify($password, $userProfile[0]['password'])){
   return true;
     } else {
