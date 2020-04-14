@@ -13,7 +13,7 @@ public function getFriendList(){
       $conn = Db::getInstance();
 
       //QUERY WHERE USER = $_SESSION
-      $statement = $conn->prepare("SELECT * FROM friend_list WHERE user1_id = :user_id OR user2_id = :user_id");
+      $statement = $conn->prepare("SELECT user1_id, user2_id FROM friend_list WHERE user1_id = :user_id OR user2_id = :user_id");
       $user = $this->getUserId();
       $statement->bindParam(":user_id", $user);
       $statement->execute();

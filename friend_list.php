@@ -8,14 +8,22 @@ include_once("classes/Friendlist.class.php");
 
 $user = new Friendlist();
 $user->setUserId(1);
+
 $activeUser = $user->getUserId();
+
+//get list of friends
 $connections = $user->getFriendList();
 $friendList = cleanArray($connections, $activeUser);
 
+echo '<pre>';
+var_dump($connections);
+echo '</pre><hr>';
+echo '<pre>';
 var_dump($friendList);
+echo '</pre>';
+//
 
-
-// remove user
+// remove user from connections
 function cleanArray($arr, $user){
     $newArr = [];
     foreach($arr as $friend){
@@ -23,7 +31,6 @@ function cleanArray($arr, $user){
                 array_push($newArr, $friend);
           }
     }
-    
     return $newArr;
 }
 
