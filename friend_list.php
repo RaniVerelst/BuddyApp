@@ -26,10 +26,17 @@ echo '</pre>';
 // remove user from connections
 function cleanArray($arr, $user){
     $newArr = [];
-    foreach($arr as $friend){
-          if($friend != $user){
-                array_push($newArr, $friend);
-          }
+    //check userid_1
+    for($i = 0; $i < sizeof($arr); $i++){
+        if($arr[$i]["user1_id"] != 1){
+            array_push($newArr, $arr[$i]["user1_id"]);
+        }
+    }
+    //check userid_2
+    for($i = 0; $i < sizeof($arr); $i++){
+        if($arr[$i]["user2_id"] != 1){
+            array_push($newArr, $arr[$i]["user2_id"]);
+        }
     }
     return $newArr;
 }
