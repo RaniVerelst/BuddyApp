@@ -13,11 +13,11 @@ $characteristics = new UserDetails();
 $user->setuserId($userId);
 $profile = $user->getUserInfo();
 
-echo $user->getuserId();
 
 $characteristics->setuserId($userId);
 $profileChar = $characteristics->getAllCharacteristics();
-var_dump($profileChar);
+
+
 // get characteristics from active user
 $movie = $profileChar['movie'];
 $destination = $profileChar['destination'];
@@ -29,8 +29,9 @@ $hangouts = $profileChar['hangout'];
 
 $matchesArr = createOneArray($movie, $destination, $cookie, $serie, $hangouts);
 
-$idFrequencies = vindUserIdFrequency($matchesArr);
+$idFrequencies = findUserIdFrequency($matchesArr);
 $matched = findBestMatches($idFrequencies);
+
 $buddy1 = getBuddieInfo($matched[0]);
 $buddy2 = getBuddieInfo($matched[1]);
 $buddy3 = getBuddieInfo($matched[2]);
@@ -100,9 +101,10 @@ function findBestMatches($arr)
     return [$buddyOne, $buddyTwo, $buddyThree];
 };
 //count how much characteristics other users have in common with active user 
-function vindUserIdFrequency($arr)
+function findUserIdFrequency($arr)
 {
     sort($arr);
+    
     $newArr = array_count_values($arr);
     return $newArr;
 }
@@ -124,8 +126,11 @@ function createOneArray($m, $d, $c, $s, $h)
 function createArr($value)
 {
     $arrUsers = setUpArray($value);
+
     $arrUsersId = arrayOfUsers($arrUsers);
+
     $arrCleanedUsersId = cleanArray($arrUsersId);
+
     return $arrCleanedUsersId;
 }
 
@@ -133,6 +138,7 @@ function createArr($value)
 function setUpArray($characteristic)
 {
     $user = new User();
+
     $arr = $user->searchKenmerk($characteristic);
     return $arr;
 }
@@ -141,7 +147,7 @@ function arrayOfUsers($arr)
 {
     $newArr = [];
     foreach ($arr as $value => $key) {
-        array_push($newArr,  $arr[$value]['user_id']);
+        array_push($newArr,  $arr[$value]['ID']);
     }
     return $newArr;
 }
@@ -161,8 +167,7 @@ function cleanArray($arr)
         }
     }
     return $arr;
-};
-
+}
 
 ?>
 <div>
