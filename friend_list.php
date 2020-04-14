@@ -13,33 +13,47 @@ $activeUser = $user->getUserId();
 
 //get list of friends
 $connections = $user->getFriendList();
-$friendList = cleanArray($connections, $activeUser);
+$friendList = createFriendList($connections, $activeUser);
 
-echo '<pre>';
-var_dump($connections);
-echo '</pre><hr>';
 echo '<pre>';
 var_dump($friendList);
 echo '</pre>';
 //
 
 // remove user from connections
-function cleanArray($arr, $user){
-    $newArr = [];
+function createFriendList($arr, $activeUser){
+    
     //check userid_1
-    for($i = 0; $i < sizeof($arr); $i++){
-        if($arr[$i]["user1_id"] != 1){
+    $column1 = cleanArray($arr, 'user1_id', $activeUser);
+    $column2 = cleanArray($arr, 'user2_id', $activeUser);
+    /*for($i = 0; $i < sizeof($arr); $i++){
+        if($arr[$i]["user1_id"] != $user){
             array_push($newArr, $arr[$i]["user1_id"]);
         }
     }
     //check userid_2
     for($i = 0; $i < sizeof($arr); $i++){
-        if($arr[$i]["user2_id"] != 1){
+        if($arr[$i]["user2_id"] != $user){
             array_push($newArr, $arr[$i]["user2_id"]);
+        }
+    }*/
+    $newArr = array_merge($column1, $column2);
+    return $newArr;
+}
+
+// loop
+function cleanArray($arr, $column, $activeUser){
+    
+    $newArr = [];
+
+    for($i = 0; $i < sizeof($arr); $i++){
+        if($arr[$i][$column] !=  $activeUser){
+            array_push($newArr, $arr[$i][$column]);
         }
     }
     return $newArr;
 }
+
 
 ?>
 <div>
