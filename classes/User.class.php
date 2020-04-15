@@ -265,4 +265,18 @@ function __toString()
 
   // ---------------einde zoek een kenmerk------------
   
+
+  //////////// Feature 13 -> 
+  //// count all users
+  public function countUsers(){
+       //DB CONNECTIE
+       $conn = Db::getInstance();
+
+       //QUERY WHERE USER = $_SESSION
+       $statement = $conn->prepare("SELECT * FROM users ");
+       $statement->execute();
+      $count = $statement->rowCount();
+
+       return $count;
+  }
 }

@@ -20,6 +20,20 @@ public function getFriendList(){
       $result = $statement->fetchAll();
       return $result;
 }
+//---------Count connections
+public function countConnections(){
+       //DB CONNECTIE
+       $conn = Db::getInstance();
+
+       //QUERY WHERE USER = $_SESSION
+       $statement = $conn->prepare("SELECT * FROM friend_list ");
+       $statement->execute();
+       //$result = $statement->fetch();
+      $count = $statement->rowCount();
+
+       return $count;
+}
+
 
 
 //---------Getters & Setters

@@ -87,7 +87,8 @@ include_once("classes/Db.class.php");
 
       <!-- Masthead Subheading -->
       <p class="masthead-subheading font-weight-light mb-0">Find your Buddy!</p>
-
+      <!---- Included feature 13 displays number of all users and connections made ------>
+      <?php include_once("users_counter.php") ?>
     </div>
   </header>
 
