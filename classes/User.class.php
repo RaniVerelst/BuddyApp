@@ -206,22 +206,27 @@ function __toString()
     $statement->execute();
     $result = $statement->fetchAll();
     return $result;
-  }
 
+    $conn2 = Db::getInstance();
+    $statement2 = $conn2->prepare("SELECT * FROM users, profile_details WHERE users.id = profile_details.ID like '$searchkey%");
+    $statement2->bindValue(1, '$searchkey%', PDO::PARAM_STR);
+    $statement2->execute();
+    $result2 = $statement2->fetchAll();
+    return $result2;
+  }
   // details van user
 
   public function showUser($searchkey)
   {
     $conn = Db::getInstance();
     $statement = $conn->prepare("select * from users where first_name like '$searchkey%'
-          union select * from users where last_name like '$searchkey%'
-          union select * from users where user_name like '$searchkey%'"); 
-//    $statement = $conn->prepare("SELECT * FROM users, profile_details WHERE users.id = profile_details.ID");
+         union select * from users where last_name like '$searchkey%'
+         union select * from users where user_name like '$searchkey%'"); 
     $statement->execute();
     $result = $statement->fetch(PDO::FETCH_ASSOC);
     return $result;
   }
-
+  
   // ---------------einde zoek een user------------
   // ---------------zoek een kenmerk------------
 
