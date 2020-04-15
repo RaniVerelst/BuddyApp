@@ -14,10 +14,9 @@ if(isset($_GET['search'])){
   $result_users = $search_users->searchUser($searchkey);
 
   $u = new User();
-  $users = $u->showUser($searchkey);
-  var_dump($users);
+  $users = $u->showUser($searchkey);  
+//  var_dump($users);
 }
-
 
 // _____________KENMERKEN _______________ //
 
