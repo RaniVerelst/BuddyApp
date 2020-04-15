@@ -27,7 +27,7 @@ if(isset($_GET['search'])){
 
   $k = new User();
   $kenmerken = $k->showKenmerk($searchkey);
-  var_dump($kenmerken);
+//  var_dump($kenmerken);
 }
 /*
 // ________________IN 1 ________________ //
