@@ -17,8 +17,10 @@ if (!empty($_POST)) {
 	$user->setEmail($email);
 	$user->setPassword($password);
 
-	if( $user->loginEmail() == true){
-		echo "email knopt";
+	//check if email exists
+	if( $user->login() == true){
+		echo "wordk";
+		header('Location: index.php');
 	} else {
 		$error = "Sorry, we can't log you in with that email address and password. Can you try again?";
 	};

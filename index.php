@@ -7,8 +7,9 @@ include_once("classes/User.class.php");
 include_once("classes/Db.class.php");
 
 session_start();
-if( isset( $_SESSION['username'])){
-  $extram =  'username = ' . $_SESSION['username'];
+
+if( isset( $_SESSION["user_id"])){
+  $extram =  'id = ' . $_SESSION['user_id'];
 } else {
   $extram =  'nope';
 }

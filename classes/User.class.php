@@ -157,27 +157,49 @@ class User
       return false;
     }
   }
+  //////////////////////////////////////////////////
+  ///////////////// INLOGGEN  ///////////// feature 1
+  ////////////////////////////////////////////////
 
- // ---------------inloggen------------ 
-
-public function loginEmail(){
+ // ---------------check email ------------ 
+public function login(){
   //DB CONNECTIE
   $conn = Db::getInstance();
   //check if email correct
 $statement = $conn->prepare("select * from users where email like :email ");
 $statement->bindValue(':email', $this->getEmail());
 $statement->execute();
-$email = $statement->rowCount();
+$emailExist = $statement->rowCount();
+$profile = $statement->fetch();
 
-if($email == 1){
-return true;
+if($emailExist == 1){
+//get password from db
+$password = $profile['password'];
+
+//validate password
+  if($this->loginPassword($password)){
+    //save userId in session
+    session_start();
+    $_SESSION['user_id'] = $profile['id'];
+    return true;
+  } 
+    return false;
 } else {
   return false;
 }
 
 }
+ // ---------------validate password------------ 
+public function loginPassword($password){
 
+//compare hashpassword to given password
+if (password_verify($this->getPassword(), $password)) {
+  return true;
+} else {
+  return false;
+}
 
+}
   //////////////////////////////////////////////////
   ///////////////// PROFIEL AANPASSEN ///////////// feature 3
   ////////////////////////////////////////////////
