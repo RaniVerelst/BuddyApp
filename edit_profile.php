@@ -10,12 +10,16 @@ include_once("classes/EditProfile.class.php");
 
 //$user = new User();
 $user = new EditProfile();
-//$user->setuserId($_SESSION["user_id"]);
 
-
+if( isset( $_SESSION["user_id"])){
+    $user->setuserId($_SESSION["user_id"]);
+  } else {
+    echo 'user not found';
+  }
 // test data 
-$user->setuserId(1);
+
 $profile = $user->getUserInfo();
+
 
   // ---------------UPLOAD PICTURE------------
 if (!empty($_POST["uploadImg"])) {
@@ -105,6 +109,8 @@ if (!empty($_POST["edit"])) {
         if(isset($lastnameSucces)){ $messageArr[1] = $lastnameSucces; }
         if(isset($emailSucces)){ $messageArr[2] = $emailSucces; }
 } // end $_POST["edit"]; 
+
+
   // ---------------ADD/CHANGE BIO------------
 if(!empty($_POST["addBio"])){
     $text = htmlspecialchars($_POST['bioText']);
@@ -117,6 +123,7 @@ if(!empty($_POST["addBio"])){
     }
 
 }
+
 
   // ---------------CHANGE PASSWORD------------
 if (!empty($_POST["passwordedit"])) {
