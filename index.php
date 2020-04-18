@@ -95,7 +95,6 @@ if( isset( $_SESSION["user_id"])){
 
       <!-- Masthead Subheading -->
       <p class="masthead-subheading font-weight-light mb-0">Find your Buddy!</p>
-      <p><?php echo $extram; ?></p>
       <!---- Included feature 13 displays number of all users and connections made ------>
       <?php include_once("users_counter.php") ?>
     </div>
