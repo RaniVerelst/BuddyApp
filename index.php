@@ -9,9 +9,10 @@ include_once("classes/Db.class.php");
 session_start();
 
 if( isset( $_SESSION["user_id"])){
-  $extram =  'id = ' . $_SESSION['user_id'];
+  $sesstionIsSet = true;
 } else {
   $extram =  'nope';
+  $sesstionIsSet = false;
 }
 ?>
 <!DOCTYPE html>
@@ -62,7 +63,7 @@ if( isset( $_SESSION["user_id"])){
             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="edit_profile.php">Edit Profile</a>
           </li>
           <li class="nav-item mx-0 mx-lg-1">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="logout.php">Log out</a>
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="<?php if($sesstionIsSet){ echo "logout.php";} else {echo "login.php";}?>"> Log <?php if($sesstionIsSet){ echo 'out';}  else {echo 'in';}  ?></a>
           </li>
         </ul>
       </div>
