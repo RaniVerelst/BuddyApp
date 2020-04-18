@@ -6,31 +6,42 @@ ini_set('display_errors', '1');
 include_once("classes/Db.class.php");
 include_once("classes/User.class.php");
 
+$user = new User();
 
 if (!empty($_POST)) {
-	$conn = @new mysqli("localhost", "root", "" /*"root"*/, "php2020");
-	$email = $conn->real_escape_string($_POST['email']);
+	
+	//$conn = @new mysqli("localhost", "root", "" /*"root"*/, "php2020");
+	$email = $_POST['email'];
 	$password = $_POST['password'];
+	//set up email & password 
+	$user->setEmail($email);
+	$user->setPassword($password);
+
+	if( $user->loginEmail() == true){
+		echo "email knopt";
+	} else {
+		$error = "Sorry, we can't log you in with that email address and password. Can you try again?";
+	};
 	/* $options = [
 		"cost" => 12 // 2^12
 		];
 	$password_hash = password_hash($password,PASSWORD_DEFAULT,$options);
 	*/
-	$sql =  "SELECT * FROM `users` WHERE `email`= '$email' and `password`= '$password'";
-	$result = $conn->query($sql);
-	if ($result->num_rows == 1 /* && password_verify($password, $password_hash) */) {
-		header('Location: index.php');
-	} else {
-		echo "Sorry, we can't log you in with that email address and password. Can you try again?";;
-	}
-	/*
-	$hash = password_hash($_POST["password"],PASSWORD_DEFAULT);
+	//$sql =  "SELECT * FROM `users` WHERE `email`= '$email' and `password`= '$password'";
+	//$result = $conn->query($sql);
+	//if ($result->num_rows == 1 /* && password_verify($password, $password_hash) */) {
+	//	header('Location: index.php');
+	//} else {
+	//	echo "Sorry, we can't log you in with that email address or password. Can you try again?";;
+	//}
+	
+	/*$hash = password_hash($_POST["password"],PASSWORD_DEFAULT);
 	if (password_verify($password, $hash)) {
 		header('Location: index.php');
 	} else {
 		echo "Sorry, we can't log you in with that email address and password. Can you try again?";
-	}
-	*/
+	}*/
+	
 }
 
 
@@ -54,7 +65,7 @@ if (!empty($_POST)) {
 				<?php if (isset($error)) : ?>
 					<div class="form__error">
 						<p>
-							Sorry, we can't log you in with that email address and password. Can you try again?
+							<?php echo $error; ?>
 						</p>
 					</div>
 				<?php endif; ?>

@@ -68,7 +68,7 @@ class User
 
   public function setEmail($email)
   {
-    $this->email = $email;
+    $this->email = htmlspecialchars($email);
     return $this;
   }
 
@@ -80,7 +80,7 @@ class User
 
   public function setPassword($password)
   {
-    $this->password = $password;
+    $this->password = htmlspecialchars($password);
     return $this;
   }
   // voor register te confirmen
@@ -158,7 +158,24 @@ class User
     }
   }
 
+ // ---------------inloggen------------ 
 
+public function loginEmail(){
+  //DB CONNECTIE
+  $conn = Db::getInstance();
+  //check if email correct
+$statement = $conn->prepare("select * from users where email like :email ");
+$statement->bindValue(':email', $this->getEmail());
+$statement->execute();
+$email = $statement->rowCount();
+
+if($email == 1){
+return true;
+} else {
+  return false;
+}
+
+}
 
 
   //////////////////////////////////////////////////
