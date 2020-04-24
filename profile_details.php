@@ -64,15 +64,15 @@ if (!empty($_POST)) {
             <h3>What class are you in?</h3>
             <div class="form-check">
                 <label class="form-check-label" for="imd1"> IMD1 </label>
-                <input class="form-check-input" type="radio" name="imd1" value="imd1" id="imd1">
+                <input class="form-check-input" type="radio" name="class" value="imd1" id="imd1">
             </div>
             <div class="form-check">
                 <label class="form-check-label" for="imd2"> IMD2 </label>
-                <input class="form-check-input" type="radio" name="imd2" value="imd2" id="imd2">
+                <input class="form-check-input" type="radio" name="class" value="imd2" id="imd2">
             </div>
             <div class="form-check">
                 <label class="form-check-label" for="imd3"> IMD3 </label>
-                <input class="form-check-input" type="radio"  name="imd3" value="imd3" id="imd3">
+                <input class="form-check-input" type="radio"  name="class" value="imd3" id="imd3">
             </div>
         </div>
         <div class="input_signup">

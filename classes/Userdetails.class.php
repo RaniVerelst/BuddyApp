@@ -8,6 +8,7 @@ class UserDetails extends User
     private $serie;
     private $cookie;
     private $hangout;
+    private $class;
     /**
      * Get the value of movie
      */
@@ -108,13 +109,14 @@ class UserDetails extends User
 
         try {
             $conn = Db::getInstance();
-            $statement = $conn->prepare("insert into profile_details(movie, destination, serie, cookie, hangout) values(:movie, :destination, :serie, :cookie, :hangout)");
+            $statement = $conn->prepare("insert into profile_details(movie, destination, serie, cookie, hangout, class) values(:movie, :destination, :serie, :cookie, :hangout, :class)");
 
             $statement->bindValue(':movie', $this->getMovie());
             $statement->bindValue(':destination', $this->getdestination());
             $statement->bindValue(':serie', $this->getSerie());
             $statement->bindValue(':cookie', $this->getCookie());
             $statement->bindValue(':hangout', $this->getHangout());
+            $statement->bindValue(':class', $this->getClass());
             $result = $statement->execute();
 
             header("Location: index.php");
@@ -141,5 +143,25 @@ class UserDetails extends User
         $statement->execute();
         $result = $statement->fetch();
         return $result;
+    }
+
+    /**
+     * Get the value of class
+     */ 
+    public function getClass()
+    {
+        return $this->class;
+    }
+
+    /**
+     * Set the value of class
+     *
+     * @return  self
+     */ 
+    public function setClass($class)
+    {
+        $this->class = $class;
+
+        return $this;
     }
 }
