@@ -2,8 +2,14 @@
 include_once("classes/Db.class.php");
 include_once("classes/Userdetails.class.php");
 include_once("classes/Match.class.php");
-$userId = 1;
-//$userId = $_SESSION["user_id"];
+
+//check session
+if( isset( $_SESSION["user_id"])){
+    $userId = $_SESSION["user_id"];
+  } else {
+      //Test
+    $userId = 1;
+  }
 
 $user = new User();
 $characteristics = new UserDetails();
@@ -103,7 +109,7 @@ function findBestMatches($arr)
 function findUserIdFrequency($arr)
 {
     sort($arr);
-    
+
     $newArr = array_count_values($arr);
     return $newArr;
 }
@@ -172,12 +178,13 @@ function cleanArray($arr)
 <div>
     <div class="">
         <h2><?php echo $buddy1[0]['first_name'] . " " . $buddy1[0]['last_name'] ?></h2>
-        <img src="<?php echo "data/profile/". $buddy1[0]['id'] . $buddy1[0]['image_name'] ?>" alt="">
+        <img src="<?php echo "data/profile/" . $buddy1[0]['id'] . $buddy1[0]['image_name'] ?>" alt="">
         <p>Things you have in common: <?php
                                         foreach ($buddy1Characteristics as $characteristic) {
                                             echo $characteristic . ' ';
                                         };
                                         ?> </p>
+        
     </div>
     <div>
         <h2><?php echo $buddy2[0]['first_name'] . " " . $buddy2[0]['last_name'] ?></h2>

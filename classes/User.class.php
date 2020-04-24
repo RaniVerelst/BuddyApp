@@ -147,15 +147,26 @@ class User
       $statement->bindValue(':email', $this->getEmail());
       $statement->bindValue(':password', $password);
 
-
       $result = $statement->execute();
-      $username = "";
-      $_SESSION['username'] = $username;
+      //Set up session
+      session_start();
+      $currentUser = $this->getUserIdFromDb();
+      $_SESSION['user_id'] = $currentUser;
+      
       header("Location: profile_details.php");
     } catch (Throwable $e) {
       echo "Niet gelukt";
       return false;
     }
+  }
+
+  function getUserIdFromDb(){
+    $conn = Db::getInstance();
+      $statement = $conn->prepare("SELECT id FROM users WHERE user_name like :username");
+      $statement->bindValue(':username', $this->getUsername());
+      $result = $statement->execute();
+
+      return $result;
   }
   //////////////////////////////////////////////////
   ///////////////// INLOGGEN  ///////////// feature 1
