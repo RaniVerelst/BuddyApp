@@ -165,5 +165,14 @@ color: #1ABC9C;
   margin-right: 50px;
   color: #1ABC9C;
 }
+/*-------- profile_details -------*/
 
+/*checkbox*/
+.form-check-input{
+  left:0;
+  right:0;
+}
+.input_signup input[type="checkbox"]{
+  width: 300px;
+}
 /*-------------Einde Search ----------------------*/
