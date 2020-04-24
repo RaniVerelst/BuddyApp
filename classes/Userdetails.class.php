@@ -9,6 +9,7 @@ class UserDetails extends User
     private $cookie;
     private $hangout;
     private $class;
+    private $skills;
     /**
      * Get the value of movie
      */
@@ -98,18 +99,60 @@ class UserDetails extends User
      *
      * @return  self
      */
+
+         /**
+     * Get the value of class
+     */ 
+    public function getClass()
+    {
+        return $this->class;
+    }
+
+    /**
+     * Set the value of class
+     *
+     * @return  self
+     */ 
+
+    public function setClass($class)
+    {
+        $this->class = $class;
+
+        return $this;
+    }
     public function setHangout($hangout)
     {
         $this->hangout = $hangout;
 
         return $this;
     }
+    /**
+     * Get the value of skills
+     */ 
+    public function getSkills()
+    {
+        return $this->skills;
+    }
+
+    /**
+     * Set the value of skills
+     *
+     * @return  self
+     */ 
+    public function setSkills($skills)
+    {
+        $this->skills = $skills;
+
+        return $this;
+    }
+
+
     public function saveUserDetails()
     {
 
         try {
             $conn = Db::getInstance();
-            $statement = $conn->prepare("insert into profile_details(movie, destination, serie, cookie, hangout, class) values(:movie, :destination, :serie, :cookie, :hangout, :class)");
+            $statement = $conn->prepare("insert into profile_details(movie, destination, serie, cookie, hangout, class, skills) values(:movie, :destination, :serie, :cookie, :hangout, :class, :skills)");
 
             $statement->bindValue(':movie', $this->getMovie());
             $statement->bindValue(':destination', $this->getdestination());
@@ -117,6 +160,7 @@ class UserDetails extends User
             $statement->bindValue(':cookie', $this->getCookie());
             $statement->bindValue(':hangout', $this->getHangout());
             $statement->bindValue(':class', $this->getClass());
+            $statement->bindValue(':skills', $this->getSkills());
             $result = $statement->execute();
 
             header("Location: index.php");
@@ -145,23 +189,7 @@ class UserDetails extends User
         return $result;
     }
 
-    /**
-     * Get the value of class
-     */ 
-    public function getClass()
-    {
-        return $this->class;
-    }
 
-    /**
-     * Set the value of class
-     *
-     * @return  self
-     */ 
-    public function setClass($class)
-    {
-        $this->class = $class;
 
-        return $this;
-    }
+
 }

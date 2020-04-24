@@ -22,8 +22,8 @@ if (!empty($_POST)) {
         $hangout = $_POST['hangout'];
 
         $userDetails = new UserDetails();
-        var_dump($_POST['class']);
-        //getting value from radio buttons
+        
+        // get value from radio buttons
         if (isset($_POST['class'])) {
             $userClass = $_POST['class'];
             if ($userClass == "imd1") {
@@ -39,7 +39,24 @@ if (!empty($_POST)) {
         } else {
             $errorClass = "Please choose class!";
         }
-        echo $userDetails->getClass();
+
+        // get skills
+        if (isset($_POST['skills'])) {
+            $userSkills = $_POST['skills'];
+            if ($userSkills == "design") {
+                $skills = "design";
+            } else if ($userSkills == "imd2") {
+                $skills = "imd2";
+            } else if ($userSkills == "imd3") {
+                $skills = "imd3";
+            }
+            //setting up class
+            $userDetails->setSkills($skills);
+            $userDetails->getSkills();
+        } else {
+            $errorSkills = "Please choose one!";
+        }
+        
         //characteristics
         $userDetails->setMovie($movie);
         $userDetails->getMovie();
@@ -100,7 +117,25 @@ if (!empty($_POST)) {
                 <input class="form-check-input" type="radio" name="class" value="imd3" id="imd3">
             </div>
         </div>
-
+        <div class="input_signup ">
+            <h3>What is your super power?</h3>
+            <h5>How can you help others?</h5>
+            <?php if (isset($errorSkills)) : ?>
+                <p class="form__error"><?php echo $errorSkills ?></p>
+            <?php endif; ?>
+            <div class="form-check ">
+                <label class="form-check-label" for="design"> DESIGN </label>
+                <input class="form-check-input" type="radio" name="skills" value="design" id="design">
+            </div>
+            <div class="form-check">
+                <label class="form-check-label" for="dev"> DEVELOPMENT </label>
+                <input class="form-check-input" type="radio" name="skills" value="development" id="development">
+            </div>
+            <div class="form-check">
+                <label class="form-check-label" for="both"> BOTH </label>
+                <input class="form-check-input" type="radio" name="skills" value="both" id="both">
+            </div>
+            </div>
         <div class="input_signup">
             <h3>What do you like?</h3>
             <div class="input_signup dropdown">
