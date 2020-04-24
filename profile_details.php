@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', '1');
 require_once("classes/Userdetails.class.php");
 require_once("classes/Db.class.php");
-require_once("classes/User.class.php");
+//require_once("classes/User.class.php");
 
 // valideren of alle velden zijn ingevuld
 if (!empty($_POST)) {
@@ -14,46 +14,49 @@ if (!empty($_POST)) {
 
     try {
         session_start();
+
         $movie = $_POST['movie'];
         $destination = $_POST['destination'];
         $serie = $_POST['serie'];
         $cookie = $_POST['cookie'];
         $hangout = $_POST['hangout'];
-        
-        $UserDetails = new UserDetails();
 
+        $userDetails = new UserDetails();
+        var_dump($_POST['class']);
         //getting value from radio buttons
-        if(isset($_POST['class'])){
+        if (isset($_POST['class'])) {
             $userClass = $_POST['class'];
-            if($userClass == "imd1"){
+            if ($userClass == "imd1") {
                 $class = "imd1";
-            } else if ($userClass == "imd2"){
+            } else if ($userClass == "imd2") {
                 $class = "imd2";
-            } else{
+            } else if ($userClass == "imd3") {
                 $class = "imd3";
             }
             //setting up class
-            $UserDetails->setClass($class);
-            $UserDetails->getClass()();
+            $userDetails->setClass($class);
+            $userDetails->getClass();
         } else {
             $errorClass = "Please choose class!";
-        }    
-
+        }
+        echo $userDetails->getClass();
         //characteristics
-        $UserDetails->setMovie($movie);
-        $UserDetails->getMovie();
-        $UserDetails->setDestination($destination);
-        $UserDetails->getDestination();
-        $UserDetails->setSerie($serie);
-        $UserDetails->getSerie();
-        $UserDetails->setcookie($cookie);
-        $UserDetails->getCookie();
-        $UserDetails->setHangout($hangout);
-        $UserDetails->getHangout();
+        $userDetails->setMovie($movie);
+        $userDetails->getMovie();
+        $userDetails->setDestination($destination);
+        $userDetails->getDestination();
+        $userDetails->setSerie($serie);
+        $userDetails->getSerie();
+        $userDetails->setcookie($cookie);
+        $userDetails->getCookie();
+        $userDetails->setHangout($hangout);
+        $u->getHangout();
 
+        //prevent empty radio box
+        if (isset($class)) {
+            $userDetails->saveUserDetails();
+        }
 
-
-        $UserDetails->saveUserDetails();
     } catch (\Throwable $th) {
         $error = $th->getMessage();
     }
@@ -70,7 +73,7 @@ if (!empty($_POST)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Complete profile</title>
-    <link rel="stylesheet" href="css/reset.css"  rel="stylesheet">
+    <link rel="stylesheet" href="css/reset.css" rel="stylesheet">
     <link rel="stylesheet" href="startbootstrap/css/freelancer.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css" rel="stylesheet">
 </head>
@@ -81,6 +84,9 @@ if (!empty($_POST)) {
         <h2>so we can match you with the perfect buddy.</h2>
         <div class="input_signup">
             <h3>What class are you in?</h3>
+            <?php if (isset($errorClass)) : ?>
+                <p class="form__error"><?php echo $errorClass ?></p>
+            <?php endif; ?>
             <div class="form-check">
                 <label class="form-check-label" for="imd1"> IMD1 </label>
                 <input class="form-check-input" type="radio" name="class" value="imd1" id="imd1">
@@ -91,9 +97,10 @@ if (!empty($_POST)) {
             </div>
             <div class="form-check">
                 <label class="form-check-label" for="imd3"> IMD3 </label>
-                <input class="form-check-input" type="radio"  name="class" value="imd3" id="imd3">
+                <input class="form-check-input" type="radio" name="class" value="imd3" id="imd3">
             </div>
         </div>
+
         <div class="input_signup">
             <h3>What do you like?</h3>
             <div class="input_signup dropdown">
@@ -156,7 +163,6 @@ if (!empty($_POST)) {
                 </select>
             </div>
         </div>
-
 
         <!-- submit button -->
         <input class="submit_signup" type="submit" value="Complete profile">
