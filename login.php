@@ -19,7 +19,7 @@ if (!empty($_POST)) {
 
 	//check if email exists
 	if( $user->login() == true){
-		echo "wordk";
+		echo "You are in! :)";
 		header('Location: index.php');
 	} else {
 		$error = "Sorry, we can't log you in with that email address and password. Can you try again?";

@@ -180,7 +180,8 @@ $password = $profile['password'];
   if($this->loginPassword($password)){
     //save userId in session
     session_start();
-    $_SESSION['user_id'] = $profile['id'];
+
+    $_SESSION["user_id"] = $profile['id'];
     return true;
   } 
     return false;
