@@ -139,7 +139,7 @@ class User
 
     try {
       $conn = Db::getInstance();
-      $statement = $conn->prepare("insert into users(first_name, last_name, user_name, email, password) values(:firstname, :lastname, :username, :email, :password)");
+      $statement = $conn->prepare("insert into users(first_name, last_name, user_name, email, password, bio) values(:firstname, :lastname, :username, :email, :password, 'Your bio is empty')");
 
       $statement->bindValue(':firstname', $this->getFirstname());
       $statement->bindValue(':lastname', $this->getLastname());

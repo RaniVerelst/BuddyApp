@@ -19,9 +19,27 @@ if (!empty($_POST)) {
         $serie = $_POST['serie'];
         $cookie = $_POST['cookie'];
         $hangout = $_POST['hangout'];
-
+        
         $UserDetails = new UserDetails();
 
+        //getting value from radio buttons
+        if(isset($_POST['class'])){
+            $userClass = $_POST['class'];
+            if($userClass == "imd1"){
+                $class = "imd1";
+            } else if ($userClass == "imd2"){
+                $class = "imd2";
+            } else{
+                $class = "imd3";
+            }
+            //setting up class
+            $UserDetails->setClass($class);
+            $UserDetails->getClass()();
+        } else {
+            $errorClass = "Please choose class!";
+        }    
+
+        //characteristics
         $UserDetails->setMovie($movie);
         $UserDetails->getMovie();
         $UserDetails->setDestination($destination);
@@ -32,6 +50,7 @@ if (!empty($_POST)) {
         $UserDetails->getCookie();
         $UserDetails->setHangout($hangout);
         $UserDetails->getHangout();
+
 
 
         $UserDetails->saveUserDetails();
