@@ -67,7 +67,7 @@ if (!empty($_POST)) {
         $userDetails->setcookie($cookie);
         $userDetails->getCookie();
         $userDetails->setHangout($hangout);
-        $u->getHangout();
+        $userDetails->getHangout();
 
         //prevent empty radio box
         if (isset($class)) {
