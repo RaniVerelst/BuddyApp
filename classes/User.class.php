@@ -258,13 +258,15 @@ function __toString()
     $result = $statement->fetchAll();
     return $result;
 
-    $conn2 = Db::getInstance();
-    $statement2 = $conn2->prepare("SELECT * FROM users, profile_details WHERE users.id = profile_details.ID like '$searchkey%");
-    $statement2->bindValue(1, '$searchkey%', PDO::PARAM_STR);
-    $statement2->execute();
-    $result2 = $statement2->fetchAll();
-    return $result2;
+    if( $result !== false ) { 
+      $conn = Db::getInstance();
+      $statement = $conn->prepare("select * from users,profile_details where users.id = profile_details.ID");
+      $statement->execute();
+      $result = $statement->fetchAll();
+      return $result;
+      echo "ok";
   }
+}
   // details van user
 
   public function showUser($searchkey)
@@ -276,7 +278,19 @@ function __toString()
     $statement->execute();
     $result = $statement->fetch(PDO::FETCH_ASSOC);
     return $result;
+
+    if( $result !== false ) { 
+      $conn = Db::getInstance();
+      $statement = $conn->prepare("select * from users,profile_details where users.id = profile_details.ID");
+      $statement->execute();
+      $result = $statement->fetch(PDO::FETCH_ASSOC);
+      return $result;
+      echo "ok";
   }
+  } 
+  
+
+   
   
   // ---------------einde zoek een user------------
   // ---------------zoek een kenmerk------------
