@@ -10,6 +10,9 @@ class UserDetails extends User
     private $hangout;
     private $class;
     private $skills;
+    private $currentUser;
+    private $userid;
+
     /**
      * Get the value of movie
      */
@@ -100,9 +103,9 @@ class UserDetails extends User
      * @return  self
      */
 
-         /**
+    /**
      * Get the value of class
-     */ 
+     */
     public function getClass()
     {
         return $this->class;
@@ -112,7 +115,7 @@ class UserDetails extends User
      * Set the value of class
      *
      * @return  self
-     */ 
+     */
 
     public function setClass($class)
     {
@@ -128,7 +131,7 @@ class UserDetails extends User
     }
     /**
      * Get the value of skills
-     */ 
+     */
     public function getSkills()
     {
         return $this->skills;
@@ -138,7 +141,7 @@ class UserDetails extends User
      * Set the value of skills
      *
      * @return  self
-     */ 
+     */
     public function setSkills($skills)
     {
         $this->skills = $skills;
@@ -146,14 +149,36 @@ class UserDetails extends User
         return $this;
     }
 
+    public function getUserid()
+    {
+        return $this->userid;
+    }
+
+    /**
+     * Set the value of userid
+     *
+     * @return  self
+     */
+    public function setUserid($userid)
+    {
+        $conn = Db::getInstance();
+        $statementUser = $conn->prepare("select id from users where email = :email");
+        $statementUser->bindValue(":email", $_SESSION['email']);
+        $statementUser->execute();
+        $userid = $statementUser->fetchColumn();
+        $this->userid = $userid;
+    }
+
 
     public function saveUserDetails()
     {
 
+
         try {
             $conn = Db::getInstance();
-            $statement = $conn->prepare("insert into profile_details(movie, destination, serie, cookie, hangout, class, skills) values(:movie, :destination, :serie, :cookie, :hangout, :class, :skills)");
+            $statement = $conn->prepare("insert into profile_details(user_id_details, movie, destination, serie, cookie, hangout, class, skills) values(:id, :movie, :destination, :serie, :cookie, :hangout, :class, :skills)");
 
+            $statement->bindValue(':id', $this->getUserid());
             $statement->bindValue(':movie', $this->getMovie());
             $statement->bindValue(':destination', $this->getdestination());
             $statement->bindValue(':serie', $this->getSerie());
@@ -161,7 +186,7 @@ class UserDetails extends User
             $statement->bindValue(':hangout', $this->getHangout());
             $statement->bindValue(':class', $this->getClass());
             $statement->bindValue(':skills', $this->getSkills());
-            $result = $statement->execute();
+            $statement->execute();
 
             header("Location: index.php");
         } catch (Throwable $e) {
@@ -189,7 +214,11 @@ class UserDetails extends User
         return $result;
     }
 
+    /**
+     * Get the value of currentUser
+     */
 
-
-
+    /**
+     * Get the value of userid
+     */
 }

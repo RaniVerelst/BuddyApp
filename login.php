@@ -4,21 +4,21 @@ error_reporting(-1);
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 include_once("classes/Db.class.php");
-include_once("classes/User.class.php");
+include_once("classes/Login.class.php");
 
-$user = new User();
 
 if (!empty($_POST)) {
-	
+
 	//$conn = @new mysqli("localhost", "root", "" /*"root"*/, "php2020");
 	$email = $_POST['email'];
 	$password = $_POST['password'];
 	//set up email & password 
-	$user->setEmail($email);
-	$user->setPassword($password);
+	$login = new Login();
+	$login->setEmail($email);
+	$login->setPassword($password);
 
 	//check if email exists
-	if( $user->login() == true){
+	if ($login->login() == true) {
 		echo "You are in! :)";
 		header('Location: index.php');
 	} else {
@@ -36,14 +36,13 @@ if (!empty($_POST)) {
 	//} else {
 	//	echo "Sorry, we can't log you in with that email address or password. Can you try again?";;
 	//}
-	
+
 	/*$hash = password_hash($_POST["password"],PASSWORD_DEFAULT);
 	if (password_verify($password, $hash)) {
 		header('Location: index.php');
 	} else {
 		echo "Sorry, we can't log you in with that email address and password. Can you try again?";
 	}*/
-	
 }
 
 

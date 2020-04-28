@@ -9,7 +9,7 @@ class User
   private $password;
   private $passwordConfirm;
   private $userId;
- // private $bio;
+  // private $bio;
 
   // ontvang de firstname
   public function getFirstname()
@@ -152,7 +152,9 @@ class User
       session_start();
       $currentUser = $this->getUserIdFromDb();
       $_SESSION['user_id'] = $currentUser;
-      
+      $_SESSION['email'] = $this->email;
+
+
       header("Location: profile_details.php");
     } catch (Throwable $e) {
       echo "Niet gelukt";
@@ -160,91 +162,54 @@ class User
     }
   }
 
-  function getUserIdFromDb(){
+  function getUserIdFromDb()
+  {
     $conn = Db::getInstance();
-      $statement = $conn->prepare("SELECT id FROM users WHERE user_name like :username");
-      $statement->bindValue(':username', $this->getUsername());
-      $result = $statement->execute();
+    $statement = $conn->prepare("SELECT id FROM users WHERE user_name like :username");
+    $statement->bindValue(':username', $this->getUsername());
+    $result = $statement->execute();
 
-      return $result;
+    return $result;
   }
   //////////////////////////////////////////////////
   ///////////////// INLOGGEN  ///////////// feature 1
   ////////////////////////////////////////////////
 
- // ---------------check email ------------ 
-public function login(){
-  //DB CONNECTIE
-  $conn = Db::getInstance();
-  //check if email correct
-$statement = $conn->prepare("select * from users where email like :email ");
-$statement->bindValue(':email', $this->getEmail());
-$statement->execute();
-$emailExist = $statement->rowCount();
-$profile = $statement->fetch();
+  // ---------------check email ------------ 
 
-if($emailExist == 1){
-//get password from db
-$password = $profile['password'];
-
-//validate password
-  if($this->loginPassword($password)){
-    //save userId in session
-    session_start();
-
-    $_SESSION["user_id"] = $profile['id'];
-    return true;
-  } 
-    return false;
-} else {
-  return false;
-}
-
-}
- // ---------------validate password------------ 
-public function loginPassword($password){
-
-//compare hashpassword to given password
-if (password_verify($this->getPassword(), $password)) {
-  return true;
-} else {
-  return false;
-}
-
-}
   //////////////////////////////////////////////////
   ///////////////// PROFIEL AANPASSEN ///////////// feature 3
   ////////////////////////////////////////////////
-// getters and setters USERID
-public function getuserId()
-{
-  return $this->userId;
-}
+  // getters and setters USERID
+  public function getuserId()
+  {
+    return $this->userId;
+  }
 
-public function setuserId($userId)
-{
-  $this->userId = htmlspecialchars($userId);
-  return $this;
-}
+  public function setuserId($userId)
+  {
+    $this->userId = htmlspecialchars($userId);
+    return $this;
+  }
 
-function __toString()
-{
-  return $this->getuserId();
-}
+  function __toString()
+  {
+    return $this->getuserId();
+  }
 
   public function getUserInfo()
   {
-       //DB CONNECTIE
-       $conn = Db::getInstance();
+    //DB CONNECTIE
+    $conn = Db::getInstance();
 
-       //QUERY WHERE USER = $_SESSION
-       $statement = $conn->prepare("SELECT * FROM users WHERE id = :user_id LIMIT 1");
-       $statement->bindParam(":user_id", $this->userId);
-       $statement->execute();
-       $result = $statement->fetch();
-       return $result;
+    //QUERY WHERE USER = $_SESSION
+    $statement = $conn->prepare("SELECT * FROM users WHERE id = :user_id LIMIT 1");
+    $statement->bindParam(":user_id", $this->userId);
+    $statement->execute();
+    $result = $statement->fetch();
+    return $result;
   }
- 
+
 
   // ---------------zoek een user------------
   public function searchUser($searchkey)
@@ -257,7 +222,7 @@ function __toString()
     $statement->execute();
     $result = $statement->fetchAll();
     return $result;
-}
+  }
   // details van user
 
   public function showUser($searchkey)
@@ -271,11 +236,11 @@ function __toString()
     return $result;
     $result2 = $statement2->fetch(PDO::FETCH_ASSOC);
     return $result2;
-  } 
-  
+  }
 
-   
-  
+
+
+
   // ---------------einde zoek een user------------
   // ---------------zoek een kenmerk------------
 
@@ -306,26 +271,27 @@ function __toString()
           union select * from profile_details where cookie like '$searchkey%'
           union select * from profile_details where serie like '$searchkey%'
           union select * from profile_details where hangout like '$searchkey%'"
-    );    
+    );
     $statement->execute();
     $result = $statement->fetch(PDO::FETCH_ASSOC);
     return $result;
   }
 
   // ---------------einde zoek een kenmerk------------
-  
+
 
   //////////// Feature 13 -> 
   //// count all users
-  public function countUsers(){
-       //DB CONNECTIE
-       $conn = Db::getInstance();
+  public function countUsers()
+  {
+    //DB CONNECTIE
+    $conn = Db::getInstance();
 
-       //QUERY WHERE USER = $_SESSION
-       $statement = $conn->prepare("SELECT * FROM users ");
-       $statement->execute();
-      $count = $statement->rowCount();
+    //QUERY WHERE USER = $_SESSION
+    $statement = $conn->prepare("SELECT * FROM users ");
+    $statement->execute();
+    $count = $statement->rowCount();
 
-       return $count;
+    return $count;
   }
 }
