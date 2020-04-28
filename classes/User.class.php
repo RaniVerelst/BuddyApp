@@ -257,36 +257,20 @@ function __toString()
     $statement->execute();
     $result = $statement->fetchAll();
     return $result;
-
-    if( $result !== false ) { 
-      $conn = Db::getInstance();
-      $statement = $conn->prepare("select * from users,profile_details where users.id = profile_details.ID");
-      $statement->execute();
-      $result = $statement->fetchAll();
-      return $result;
-      echo "ok";
-  }
 }
   // details van user
 
   public function showUser($searchkey)
   {
     $conn = Db::getInstance();
-    $statement = $conn->prepare("select * from users where first_name like '$searchkey%'
-         union select * from users where last_name like '$searchkey%'
-         union select * from users where user_name like '$searchkey%'"); 
+    $statement = $conn->prepare("select * from users where first_name like '$searchkey%'");
+    $statement2 = $conn->prepare("select * from users, profile_details where users.id = profile_details.ID like '$searchkey%'");
     $statement->execute();
+    $statement2->execute();
     $result = $statement->fetch(PDO::FETCH_ASSOC);
     return $result;
-
-    if( $result !== false ) { 
-      $conn = Db::getInstance();
-      $statement = $conn->prepare("select * from users,profile_details where users.id = profile_details.ID");
-      $statement->execute();
-      $result = $statement->fetch(PDO::FETCH_ASSOC);
-      return $result;
-      echo "ok";
-  }
+    $result2 = $statement2->fetch(PDO::FETCH_ASSOC);
+    return $result2;
   } 
   
 
