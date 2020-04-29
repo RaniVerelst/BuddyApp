@@ -215,9 +215,9 @@ class User
   public function searchUser($searchkey)
   {
     $conn = Db::getInstance();
-    $statement = $conn->prepare("select * from users where first_name like '$searchkey%'
-          union select * from users where last_name like '$searchkey%'
-          union select * from users where user_name like '$searchkey%'");
+    $statement = $conn->prepare("select * from users, profile_details where first_name like '$searchkey%' AND users.id = profile_details.ID
+      union select * from users, profile_details where last_name like '$searchkey%' AND users.id = profile_details.ID
+      union select * from users, profile_details where user_name like '$searchkey%' AND users.id = profile_details.ID");
     $statement->bindValue(1, '$searchkey%', PDO::PARAM_STR);
     $statement->execute();
     $result = $statement->fetchAll();
@@ -228,17 +228,13 @@ class User
   public function showUser($searchkey)
   {
     $conn = Db::getInstance();
-    $statement = $conn->prepare("select * from users where first_name like '$searchkey%'");
-    $statement2 = $conn->prepare("select * from users, profile_details where users.id = profile_details.ID like '$searchkey%'");
+    $statement = $conn->prepare("select * from users, profile_details where first_name like '$searchkey%' AND users.id = profile_details.ID
+    union select * from users, profile_details where last_name like '$searchkey%' AND users.id = profile_details.ID
+    union select * from users, profile_details where user_name like '$searchkey%' AND users.id = profile_details.ID");    
     $statement->execute();
-    $statement2->execute();
     $result = $statement->fetch(PDO::FETCH_ASSOC);
     return $result;
-    $result2 = $statement2->fetch(PDO::FETCH_ASSOC);
-    return $result2;
   }
-
-
 
 
   // ---------------einde zoek een user------------
@@ -248,12 +244,11 @@ class User
   {
     $conn = Db::getInstance();
     $statement = $conn->prepare(
-      "select * from profile_details where movie like '$searchkey%'
-          union select * from profile_details where destination like '$searchkey%'
-          union select * from profile_details where cookie like '$searchkey%'
-          union select * from profile_details where serie like '$searchkey%'
-          union select * from profile_details where hangout like '$searchkey%'"
-    );
+      "select * from profile_details, users where movie like '$searchkey%' AND profile_details.ID = users.id
+          union select * from profile_details, users where destination like '$searchkey%' AND profile_details.ID = users.id
+          union select * from profile_details, users where cookie like '$searchkey%' AND profile_details.ID = users.id
+          union select * from profile_details, users where serie like '$searchkey%' AND profile_details.ID = users.id
+          union select * from profile_details, users where hangout like '$searchkey%' AND profile_details.ID = users.id");
     $statement->bindValue(1, '$searchkey%', PDO::PARAM_STR);
     $statement->execute();
     $result = $statement->fetchAll();
@@ -266,12 +261,11 @@ class User
   {
     $conn = Db::getInstance();
     $statement = $conn->prepare(
-      "select * from profile_details where movie like '$searchkey%'
-          union select * from profile_details where destination like '$searchkey%'
-          union select * from profile_details where cookie like '$searchkey%'
-          union select * from profile_details where serie like '$searchkey%'
-          union select * from profile_details where hangout like '$searchkey%'"
-    );
+        "select * from profile_details, users where movie like '$searchkey%' AND profile_details.ID = users.id
+            union select * from profile_details, users where destination like '$searchkey%' AND profile_details.ID = users.id
+            union select * from profile_details, users where cookie like '$searchkey%' AND profile_details.ID = users.id
+            union select * from profile_details, users where serie like '$searchkey%' AND profile_details.ID = users.id
+            union select * from profile_details, users where hangout like '$searchkey%' AND profile_details.ID = users.id");
     $statement->execute();
     $result = $statement->fetch(PDO::FETCH_ASSOC);
     return $result;
