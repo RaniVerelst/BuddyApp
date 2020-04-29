@@ -186,7 +186,15 @@ class UserDetails extends User
         header("Location: index.php");
     }
 
-
+    //find user_id
+    public function findUserId(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT id FROM users WHERE email = :email");
+        $statement->bindValue(':email', $this->getCurrentUser());
+        $statement->execute();
+        $result = $statement->fetch();
+        return $result;
+    }
 
 
     //Get all characteristics
@@ -205,11 +213,25 @@ class UserDetails extends User
         return $result;
     }
 
-    /**
-     * Get the value of currentUser
-     */
+    
 
     /**
-     * Get the value of userid
-     */
+     * Get the value of currentUser
+     */ 
+    public function getCurrentUser()
+    {
+        return $this->currentUser;
+    }
+
+    /**
+     * Set the value of currentUser
+     *
+     * @return  self
+     */ 
+    public function setCurrentUser($currentUser)
+    {
+        $this->currentUser = $currentUser;
+
+        return $this;
+    }
 }

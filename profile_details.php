@@ -8,94 +8,106 @@ require_once("classes/Userdetails.class.php");
 require_once("classes/Db.class.php");
 //require_once("classes/User.class.php");
 
-if(isset($_SESSION['user_id'])){
-    $currentUser = $_SESSION['user_id'];
+$userDetails = new UserDetails();
+
+//get user_id
+session_start();
+
+if (isset($_SESSION['email'])) {
+    $userEmail = $_SESSION['email'];
+    //find user id
+    $findUser = $userDetails->findUserId($userEmail);
+    $currentUser = $findUser[0];
 } else {
     $currentUser = 15;
 }
-
-$userDetails = new UserDetails();
+echo $_SESSION['email'];
 // valideren of alle velden zijn ingevuld
-if (!empty($_POST)) {
+if (!empty($_POST['submit'])) {
+   
+    //set up 
+    $userDetails->setUserid($currentUser);
+
+    session_start();
+    //var_dump($_SESSION['user_id']);
 
 
-        session_start();
-       //var_dump($_SESSION['user_id']);
-        
-
-        $movie = $_POST['movie'];
-        $destination = $_POST['destination'];
-        $serie = $_POST['serie'];
-        $cookie = $_POST['cookie'];
-        $hangout = $_POST['hangout'];
-
-        
+    $movie = $_POST['movie'];
+    $destination = $_POST['destination'];
+    $serie = $_POST['serie'];
+    $cookie = $_POST['cookie'];
+    $hangout = $_POST['hangout'];
 
 
-        // get value from radio buttons
-        if (isset($_POST['class'])) {
-            $userClass = $_POST['class'];
-            if ($userClass == "imd1") {
-                $class = "imd1";
-            } else if ($userClass == "imd2") {
-                $class = "imd2";
-            } else if ($userClass == "imd3") {
-                $class = "imd3";
-            }
-            //setting up class
-            $userDetails->setClass($class);
-            $userDetails->getClass();
-        } else {
-            $errorClass = "Please choose class!";
+
+
+    // get value from radio buttons
+    if (isset($_POST['class'])) {
+        $userClass = $_POST['class'];
+        if ($userClass == "imd1") {
+            $class = "imd1";
+        } else if ($userClass == "imd2") {
+            $class = "imd2";
+        } else if ($userClass == "imd3") {
+            $class = "imd3";
         }
+        //setting up class
+        $userDetails->setClass($class);
+        $userDetails->getClass();
+    } else {
+        $errorClass = "Please choose class!";
+    }
 
-        // get skills
-        if (isset($_POST['skills'])) {
-            $userSkills = $_POST['skills'];
-            if ($userSkills == "design") {
-                $skills = "design";
-            } else if ($userSkills == "development") {
-                $skills = "development";
-            } else if ($userSkills == "both") {
-                $skills = "both";
-            }
-            //setting up class
-            $userDetails->setSkills($skills);
-            $userDetails->getSkills();
-        } else {
-            $errorSkills = "Please choose one!";
+    // get skills
+    if (isset($_POST['skills'])) {
+        $userSkills = $_POST['skills'];
+        if ($userSkills == "design") {
+            $skills = "design";
+        } else if ($userSkills == "development") {
+            $skills = "development";
+        } else if ($userSkills == "both") {
+            $skills = "both";
         }
+        //setting up class
+        $userDetails->setSkills($skills);
+        $userDetails->getSkills();
+    } else {
+        $errorSkills = "Please choose one!";
+    }
 
-        //user_id
-        $userDetails->setUserid($currentUser);
 
-        //characteristics
-        $userDetails->setMovie($movie);
-        $userDetails->getMovie();
-        $userDetails->setDestination($destination);
-        $userDetails->getDestination();
-        $userDetails->setSerie($serie);
-        $userDetails->getSerie();
-        $userDetails->setcookie($cookie);
-        $userDetails->getCookie();
-        $userDetails->setHangout($hangout);
-        $userDetails->getHangout();
-        $userDetails->setUserid($currentUser);
-        $userDetails->getUserid();
-       
 
-        //prevent empty radio box
-        if (isset($class) && isset($skills)) {
+    //characteristics
+    $userDetails->setMovie($movie);
+    $userDetails->getMovie();
+    $userDetails->setDestination($destination);
+    $userDetails->getDestination();
+    $userDetails->setSerie($serie);
+    $userDetails->getSerie();
+    $userDetails->setcookie($cookie);
+    $userDetails->getCookie();
+    $userDetails->setHangout($hangout);
+    $userDetails->getHangout();
+    $userDetails->setUserid($currentUser);
+    $userDetails->getUserid();
 
-            $userDetails->saveUserDetails();
-        } else {
-            $errorSkills = "Please choose one!";
-            $errorClass = "Please choose class!";
-        }
 
+    //prevent empty radio box
+    if (isset($class) && isset($skills)) {
+
+        $userDetails->saveUserDetails();
+    } else {
+        $errorSkills = "Please choose one!";
+        $errorClass = "Please choose class!";
+    }
 }
 // alles in orde? dan zullen we werken met getters en setters binnen UserDetails.class.php
 
+// wanneer gebruiker wil hun profil niet invullen
+if (!empty($_POST['skip'])) {
+
+    header("Location: index.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -216,8 +228,9 @@ if (!empty($_POST)) {
         </div>
 
         <!-- submit button -->
-        <input class="submit_signup" type="submit" value="Complete profile">
-        <input class="submit_signup" type="submit" name ="skip" value="Skip">
+        <input class="submit_signup" type="submit" name="submit" value="Complete profile">
+        <!--- skip process -->
+        <input class="submit_signup" type="submit" name="skip" value="Skip">
     </form>
 </body>
 
