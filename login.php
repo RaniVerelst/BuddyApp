@@ -18,31 +18,12 @@ if (!empty($_POST)) {
 	$login->setPassword($password);
 
 	//check if email exists
-	if ($login->login() == true) {
+	if ($login->userLogin() == true) {
 		echo "You are in! :)";
 		header('Location: index.php');
 	} else {
 		$error = "Sorry, we can't log you in with that email address and password. Can you try again?";
 	};
-	/* $options = [
-		"cost" => 12 // 2^12
-		];
-	$password_hash = password_hash($password,PASSWORD_DEFAULT,$options);
-	*/
-	//$sql =  "SELECT * FROM `users` WHERE `email`= '$email' and `password`= '$password'";
-	//$result = $conn->query($sql);
-	//if ($result->num_rows == 1 /* && password_verify($password, $password_hash) */) {
-	//	header('Location: index.php');
-	//} else {
-	//	echo "Sorry, we can't log you in with that email address or password. Can you try again?";;
-	//}
-
-	/*$hash = password_hash($_POST["password"],PASSWORD_DEFAULT);
-	if (password_verify($password, $hash)) {
-		header('Location: index.php');
-	} else {
-		echo "Sorry, we can't log you in with that email address and password. Can you try again?";
-	}*/
 }
 
 

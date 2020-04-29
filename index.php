@@ -1,5 +1,7 @@
 <?php
-ini_set('display_errors',1); ini_set('display_startup_errors',1); error_reporting(-1);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(-1);
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
@@ -8,7 +10,8 @@ include_once("classes/Db.class.php");
 
 session_start();
 
-if( isset( $_SESSION["user_id"])){
+
+if (isset($_SESSION["user_id"])) {
   $sesstionIsSet = true;
 } else {
   $extram =  'nope';
@@ -41,7 +44,7 @@ if( isset( $_SESSION["user_id"])){
 <body id="page-top">
 
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+  <nav class="navbar navbar-expand-lg bg-secondary text-uppercase" id="mainNav">
     <div class="container">
       <a class="navbar-brand js-scroll-trigger" href="#page-top">Buddy App</a>
       <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,21 +60,30 @@ if( isset( $_SESSION["user_id"])){
             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="">Q&A-Forum</a>
           </li>
           <li class="nav-item mx-0 mx-lg-1">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href=""><!-- Lokaal- & Campus-wegwijzer--> Find Your Way </a>
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="">
+              <!-- Lokaal- & Campus-wegwijzer--> Find Your Way </a>
           </li>
           <li class="nav-item mx-0 mx-lg-1">
             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="edit_profile.php">Edit Profile</a>
           </li>
           <li class="nav-item mx-0 mx-lg-1">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="<?php if($sesstionIsSet){ echo "logout.php";} else {echo "login.php";}?>"> Log <?php if($sesstionIsSet){ echo 'out';}  else {echo 'in';}  ?></a>
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="<?php if ($sesstionIsSet) {
+                                                                                    echo "logout.php";
+                                                                                  } else {
+                                                                                    echo "login.php";
+                                                                                  } ?>"> Log <?php if ($sesstionIsSet) {
+                                                                                                echo 'out';
+                                                                                              } else {
+                                                                                                echo 'in';
+                                                                                              }  ?></a>
           </li>
         </ul>
       </div>
     </div>
     <form class="search" method="get" action="search.php">
-      <input class="input_search" type="text" name="search" placeholder ="Search a user">
+      <input class="input_search" type="text" name="search" placeholder="Search a user">
       <input class="btn_search" type="submit" value="">
-  </form>
+    </form>
   </nav>
 
   <!-- Masthead -->
@@ -122,4 +134,5 @@ if( isset( $_SESSION["user_id"])){
   <script src="startbootstrap/js/freelancer.min.js"></script>
 
 </body>
+
 </html>
