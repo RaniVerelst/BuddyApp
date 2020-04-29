@@ -45,6 +45,7 @@ if (!empty($_POST)) {
 
 // alles in orde? dan zullen we werken met getters en setters binnen User.class.php
 
+
 ?>
 
 <!DOCTYPE html>

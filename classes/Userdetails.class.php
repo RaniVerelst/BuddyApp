@@ -161,7 +161,7 @@ class UserDetails extends User
      */
     public function setUserid($userid)
     {
-        $userid = $_SESSION['user_id'];
+        //$userid = $_SESSION['user_id'];
         $this->userid = $userid;
     }
 
