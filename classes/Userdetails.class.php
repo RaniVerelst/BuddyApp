@@ -11,7 +11,7 @@ class UserDetails extends User
     private $class;
     private $skills;
     private $currentUser;
-    private $userid;
+    private $userId;
 
     /**
      * Get the value of movie

@@ -14,6 +14,8 @@ if (!empty($_POST)) {
 
     try {
         session_start();
+        var_dump($_SESSION);
+
 
         $movie = $_POST['movie'];
         $destination = $_POST['destination'];
@@ -22,7 +24,7 @@ if (!empty($_POST)) {
         $hangout = $_POST['hangout'];
 
         $userDetails = new UserDetails();
-        
+
         // get value from radio buttons
         if (isset($_POST['class'])) {
             $userClass = $_POST['class'];
@@ -56,7 +58,7 @@ if (!empty($_POST)) {
         } else {
             $errorSkills = "Please choose one!";
         }
-        
+
         //characteristics
         $userDetails->setMovie($movie);
         $userDetails->getMovie();
@@ -73,7 +75,6 @@ if (!empty($_POST)) {
         if (isset($class)) {
             $userDetails->saveUserDetails();
         }
-
     } catch (\Throwable $th) {
         $error = $th->getMessage();
     }
@@ -135,7 +136,7 @@ if (!empty($_POST)) {
                 <label class="form-check-label" for="both"> BOTH </label>
                 <input class="form-check-input" type="radio" name="skills" value="both" id="both">
             </div>
-            </div>
+        </div>
         <div class="input_signup">
             <h3>What do you like?</h3>
             <div class="input_signup dropdown">
