@@ -16,12 +16,13 @@ session_start();
 if (isset($_SESSION['email'])) {
     $userEmail = $_SESSION['email'];
     //find user id
-    $findUser = $userDetails->findUserId($userEmail);
+    $userDetails->setCurrentUser($userEmail);
+    $findUser = $userDetails->findUserId();
     $currentUser = $findUser[0];
 } else {
     $currentUser = 15;
 }
-echo $_SESSION['email'];
+
 // valideren of alle velden zijn ingevuld
 if (!empty($_POST['submit'])) {
    
