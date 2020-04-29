@@ -161,11 +161,7 @@ class UserDetails extends User
      */
     public function setUserid($userid)
     {
-        $conn = Db::getInstance();
-        $statementUser = $conn->prepare("select id from users where email = :email");
-        $statementUser->bindValue(":email", $_SESSION['email']);
-        $statementUser->execute();
-        $userid = $statementUser->fetchColumn();
+        $userid = $_SESSION['user_id'];
         $this->userid = $userid;
     }
 
@@ -176,16 +172,14 @@ class UserDetails extends User
 
         try {
             $conn = Db::getInstance();
-            $statement = $conn->prepare("insert into profile_details(user_id_details, movie, destination, serie, cookie, hangout, class, skills) values(:id, :movie, :destination, :serie, :cookie, :hangout, :class, :skills)");
+            $statement = $conn->prepare("insert into profile_details( movie, destination, serie, cookie, hangout) values(:movie, :destination, :serie, :cookie, :hangout)");
 
-            $statement->bindValue(':id', $this->getUserid());
             $statement->bindValue(':movie', $this->getMovie());
             $statement->bindValue(':destination', $this->getdestination());
             $statement->bindValue(':serie', $this->getSerie());
             $statement->bindValue(':cookie', $this->getCookie());
             $statement->bindValue(':hangout', $this->getHangout());
-            $statement->bindValue(':class', $this->getClass());
-            $statement->bindValue(':skills', $this->getSkills());
+
             $statement->execute();
 
             header("Location: index.php");
