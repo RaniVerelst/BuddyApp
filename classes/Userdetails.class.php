@@ -123,6 +123,7 @@ class UserDetails extends User
 
         return $this;
     }
+
     public function setHangout($hangout)
     {
         $this->hangout = $hangout;
@@ -168,25 +169,21 @@ class UserDetails extends User
 
     public function saveUserDetails()
     {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("insert into profile_details(user_id, movie, destination, serie, cookie, hangout, class, skills) values(:user, :movie, :destination, :serie, :cookie, :hangout, :class, :skills)");
 
+        $statement->bindValue(':user', $this->getUserid());
+        $statement->bindValue(':movie', $this->getMovie());
+        $statement->bindValue(':destination', $this->getDestination());
+        $statement->bindValue(':serie', $this->getSerie());
+        $statement->bindValue(':cookie', $this->getCookie());
+        $statement->bindValue(':hangout', $this->getHangout());
+        $statement->bindValue(':class', $this->getClass());
+        $statement->bindValue(':skills', $this->getSkills());
 
-        try {
-            $conn = Db::getInstance();
-            $statement = $conn->prepare("insert into profile_details( movie, destination, serie, cookie, hangout) values(:movie, :destination, :serie, :cookie, :hangout)");
+        $statement->execute();
 
-            $statement->bindValue(':movie', $this->getMovie());
-            $statement->bindValue(':destination', $this->getdestination());
-            $statement->bindValue(':serie', $this->getSerie());
-            $statement->bindValue(':cookie', $this->getCookie());
-            $statement->bindValue(':hangout', $this->getHangout());
-
-            $statement->execute();
-
-            header("Location: index.php");
-        } catch (Throwable $e) {
-            echo "Niet gelukt";
-            return false;
-        }
+        header("Location: index.php");
     }
 
 

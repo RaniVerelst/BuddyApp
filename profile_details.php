@@ -8,14 +8,20 @@ require_once("classes/Userdetails.class.php");
 require_once("classes/Db.class.php");
 //require_once("classes/User.class.php");
 
+if(isset($_SESSION['user_id'])){
+    $currentUser = $_SESSION['user_id'];
+} else {
+    $currentUser = 15;
+}
+
+$userDetails = new UserDetails();
 // valideren of alle velden zijn ingevuld
 if (!empty($_POST)) {
 
 
-    try {
         session_start();
-        var_dump($_SESSION);
-
+       //var_dump($_SESSION['user_id']);
+        
 
         $movie = $_POST['movie'];
         $destination = $_POST['destination'];
@@ -23,7 +29,8 @@ if (!empty($_POST)) {
         $cookie = $_POST['cookie'];
         $hangout = $_POST['hangout'];
 
-        $userDetails = new UserDetails();
+        
+
 
         // get value from radio buttons
         if (isset($_POST['class'])) {
@@ -47,10 +54,10 @@ if (!empty($_POST)) {
             $userSkills = $_POST['skills'];
             if ($userSkills == "design") {
                 $skills = "design";
-            } else if ($userSkills == "imd2") {
-                $skills = "imd2";
-            } else if ($userSkills == "imd3") {
-                $skills = "imd3";
+            } else if ($userSkills == "development") {
+                $skills = "development";
+            } else if ($userSkills == "both") {
+                $skills = "both";
             }
             //setting up class
             $userDetails->setSkills($skills);
@@ -58,6 +65,9 @@ if (!empty($_POST)) {
         } else {
             $errorSkills = "Please choose one!";
         }
+
+        //user_id
+        $userDetails->setUserid($currentUser);
 
         //characteristics
         $userDetails->setMovie($movie);
@@ -70,14 +80,19 @@ if (!empty($_POST)) {
         $userDetails->getCookie();
         $userDetails->setHangout($hangout);
         $userDetails->getHangout();
+        $userDetails->setUserid($currentUser);
+        $userDetails->getUserid();
+       
 
         //prevent empty radio box
-        if (isset($class)) {
+        if (isset($class) && isset($skills)) {
+
             $userDetails->saveUserDetails();
+        } else {
+            $errorSkills = "Please choose one!";
+            $errorClass = "Please choose class!";
         }
-    } catch (\Throwable $th) {
-        $error = $th->getMessage();
-    }
+
 }
 // alles in orde? dan zullen we werken met getters en setters binnen UserDetails.class.php
 
