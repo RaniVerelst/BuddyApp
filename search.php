@@ -34,7 +34,10 @@ if(isset($_GET['search'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/style.css">
+    <!-- Theme CSS -->
+    <link href="startbootstrap/css/freelancer.min.css" type="text/css" rel="stylesheet">
+    <link href="css/style.css" type="text/css" rel="stylesheet">
+
     <title>Search</title>
 </head>
 <body>
