@@ -85,7 +85,11 @@ if (isset($_SESSION["user_id"])) {
       <input class="btn_search" type="submit" value="">
     </form>
   </nav>
-
+<?php 
+//if user is active display other header
+if($sesstionIsSet){
+include_once('activeUser.php');
+} else { ?>
   <!-- Masthead -->
   <header class="masthead bg-primary text-white text-center">
     <div class="container d-flex align-items-center flex-column">
@@ -111,7 +115,7 @@ if (isset($_SESSION["user_id"])) {
       <?php include_once("users_counter.php") ?>
     </div>
   </header>
-
+<?php } ?>
   <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
   <div class="scroll-to-top d-lg-none position-fixed ">
     <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">

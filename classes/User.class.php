@@ -151,7 +151,6 @@ class User
       //Set up session
       session_start();
       $currentUser = $this->getUserIdFromDb();
-      echo $currentUser;
       $_SESSION['user_id'] = $currentUser;
       $_SESSION['email'] = $this->email;
 

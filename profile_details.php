@@ -147,6 +147,7 @@ if (!empty($_POST['skip'])) {
             </div>
         </div>
         <div class="input_signup ">
+            <!-- feature 5 -->
             <h3>What is your super power?</h3>
             <h5>How can you help others?</h5>
             <?php if (isset($errorSkills)) : ?>
