@@ -217,8 +217,8 @@ if (!empty($_POST)) {
 
         <!-- submit button -->
         <input class="submit_signup" type="submit" value="Complete profile">
+        <input class="submit_signup" type="submit" name ="skip" value="Skip">
     </form>
-
 </body>
 
 
