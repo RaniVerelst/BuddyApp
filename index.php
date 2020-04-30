@@ -13,9 +13,11 @@ session_start();
 
 if (isset($_SESSION["user_id"])) {
   $sesstionIsSet = true;
+  $currentUser = $_SESSION["user_id"];
 } else {
   $extram =  'nope';
   $sesstionIsSet = false;
+  $currentUser = 15;
 }
 ?>
 <!DOCTYPE html>
