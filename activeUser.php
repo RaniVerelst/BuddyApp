@@ -7,37 +7,40 @@ include_once("classes/Db.class.php");
 include_once("classes/BuddySuggestion.class.php");
 // FEATURE 5 / 8
 
-
-
+echo time();
+if(isset($_POST['buddySuggestion'])){
 
 // set up buddy-suggestie
-
-if(isset($_POST['buddySuggestion'])){
+if(isset($_POST['skills'])){
 
     $buddySuggestion = new BuddySuggestion();
 
-    $skillsInNeed = $_POST['buddySuggestion'];
+    $skillsInNeed = $_POST['skills'];
 
     if ($skillsInNeed == "design") {
         $buddySkills = "design";
-        echo "clicked on design";
     } else if ($skillsInNeed == "development") {
         $buddySkills = "development";
     }
 
-    //$buddySuggestion->setTopic($buddySkills);
+    $buddySuggestion->setTopic($buddySkills);
     //save and open BuddySuggestion.class
-    //$buddySuggestion->setUser1($currentUser);
-    //$buddySuggestion->setDate(getTime());
+    $buddySuggestion->setUser1($currentUser);
+    $buddySuggestion->setDate(getTime());
 
-    //$buddySuggestion->requestConversation();
+    $buddySuggestion->requestConversation();
 
-    //header("buddy_suggestion.php");
+    header("buddy_suggestion.php");
 }
-
+}
 function getTime(){
-    $timeLine = time() . "-" . date("d-m-y");
+    date_default_timezone_set('Europe/Brussels');
+    date_default_timezone_get();
+
+    $timeLine = date("Y-m-d H:i:s"); 
+    
     return $timeLine;
+
 }
 
 ?>
