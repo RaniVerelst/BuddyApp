@@ -15,23 +15,31 @@ if(isset($_POST['skills'])){
 
     $buddySuggestion = new BuddySuggestion();
 
-    $skillsInNeed = $_POST['skills'];
+    $buddySkills =checkSkills($_POST['skills']);
 
-    if ($skillsInNeed == "design") {
+    /*if ($skillsInNeed == "design") {
         $buddySkills = "design";
     } else if ($skillsInNeed == "development") {
         $buddySkills = "development";
-    }
+    }*/
 
     $buddySuggestion->setTopic($buddySkills);
-    //save and open BuddySuggestion.class
     $buddySuggestion->setUser1($currentUser);
     $buddySuggestion->setDate(getTime());
 
     $buddySuggestion->requestConversation();
 
-    header("buddy_suggestion.php");
 }
+
+}
+function checkSkills($skills){
+    
+    if ($skills == "design") {
+       return "design";
+    } else if ($skills == "development") {
+      return  "development";
+    }
+
 }
 function getTime(){
     date_default_timezone_set('Europe/Brussels');
