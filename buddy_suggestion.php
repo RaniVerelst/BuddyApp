@@ -1,6 +1,6 @@
 <?php
 //find potentiele match
-
+// start conversation
 ?>
 <div>
 <img src="" alt="profil photo">

@@ -15,31 +15,23 @@ if(isset($_POST['skills'])){
 
     $buddySuggestion = new BuddySuggestion();
 
-    $buddySkills =checkSkills($_POST['skills']);
-
-    /*if ($skillsInNeed == "design") {
-        $buddySkills = "design";
-    } else if ($skillsInNeed == "development") {
-        $buddySkills = "development";
-    }*/
+    $buddySkills = checkSkills($_POST['skills']);
 
     $buddySuggestion->setTopic($buddySkills);
     $buddySuggestion->setUser1($currentUser);
     $buddySuggestion->setDate(getTime());
 
     $buddySuggestion->requestConversation();
-
+    $beginTalk = true;
 }
 
 }
 function checkSkills($skills){
-    
     if ($skills == "design") {
        return "design";
     } else if ($skills == "development") {
       return  "development";
     }
-
 }
 function getTime(){
     date_default_timezone_set('Europe/Brussels');
@@ -68,3 +60,5 @@ function getTime(){
         <input class="submit_signup" type="submit" name="buddySuggestion" value="Talk to buddy">
     </form>
 </div>
+
+<?php if(isset($beginTalk)){ include_once('buddy_suggestion.php'); } ?>
