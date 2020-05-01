@@ -69,6 +69,7 @@ class Login
                 //save userId in session
                 session_start();
                 $_SESSION["user_id"] = $profile['id'];
+                $_SESSION["email"] = $this->email;
                 header('location:index.php');
 
 
