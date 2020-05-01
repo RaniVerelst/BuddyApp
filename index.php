@@ -7,18 +7,12 @@ ini_set('display_errors', '1');
 
 include_once("classes/User.class.php");
 include_once("classes/Db.class.php");
+include_once("header.php");
 
-session_start();
-
-
-if (isset($_SESSION["user_id"])) {
-  $sesstionIsSet = true;
-  $currentUser = $_SESSION["user_id"];
-} else {
-  $extram =  'nope';
-  $sesstionIsSet = false;
-  $currentUser = 15;
-}
+//if user is active display other header
+if($sesstionIsSet){
+    include_once('activeUser.php');
+    } else { 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,52 +40,7 @@ if (isset($_SESSION["user_id"])) {
 <body id="page-top">
 
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg bg-secondary text-uppercase" id="mainNav">
-    <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">Buddy App</a>
-      <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        Menu
-        <i class="fas fa-bars"></i>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item mx-0 mx-lg-1">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="">Home</a>
-          </li>
-          <li class="nav-item mx-0 mx-lg-1">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="">Q&A-Forum</a>
-          </li>
-          <li class="nav-item mx-0 mx-lg-1">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="">
-              <!-- Lokaal- & Campus-wegwijzer--> Find Your Way </a>
-          </li>
-          <li class="nav-item mx-0 mx-lg-1">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="edit_profile.php">Edit Profile</a>
-          </li>
-          <li class="nav-item mx-0 mx-lg-1">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="<?php if ($sesstionIsSet) {
-                                                                                    echo "logout.php";
-                                                                                  } else {
-                                                                                    echo "login.php";
-                                                                                  } ?>"> Log <?php if ($sesstionIsSet) {
-                                                                                                echo 'out';
-                                                                                              } else {
-                                                                                                echo 'in';
-                                                                                              }  ?></a>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <form class="search" method="get" action="search.php">
-      <input class="input_search" type="text" name="search" placeholder="Search a user">
-      <input class="btn_search" type="submit" value="">
-    </form>
-  </nav>
-<?php 
-//if user is active display other header
-if($sesstionIsSet){
-include_once('activeUser.php');
-} else { ?>
+
   <!-- Masthead -->
   <header class="masthead bg-primary text-white text-center">
     <div class="container d-flex align-items-center flex-column">
@@ -110,14 +59,13 @@ include_once('activeUser.php');
         </div>
         <div class="divider-custom-line"></div>
       </div>
-
+      <?php } ?>
       <!-- Masthead Subheading -->
       <p class="masthead-subheading font-weight-light mb-0">Find your Buddy!</p>
       <!---- Included feature 13 displays number of all users and connections made ------>
       <?php include_once("users_counter.php") ?>
     </div>
   </header>
-<?php } ?>
   <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
   <div class="scroll-to-top d-lg-none position-fixed ">
     <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
@@ -138,7 +86,5 @@ include_once('activeUser.php');
 
   <!-- Custom scripts for this template -->
   <script src="startbootstrap/js/freelancer.min.js"></script>
-
 </body>
-
 </html>
