@@ -39,7 +39,7 @@ function findUserName($id){
         <p>Project type: <?php echo $user[3]; ?></p>
         <a href="<?php echo $user[1];?>" alt="link to project">Link to project</a>
         <br>
-        <a href="">Give feedback</a>
+        <a href="/give_feedback">Give feedback</a>
         <a href="">Ignore</a>
     </li>
         <?php endforeach;

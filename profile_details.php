@@ -166,6 +166,7 @@ if (!empty($_POST['skip'])) {
                 <input class="form-check-input" type="radio" name="skills" value="both" id="both">
             </div>
         </div>
+
         <div class="input_signup">
             <h3>What do you like?</h3>
             <div class="input_signup dropdown">

@@ -46,6 +46,12 @@ class Feedback extends UserDetails{
         $result = $statement->fetchAll();
         return $result;
     }
+
+    public function answerFeedback(){
+        $conn = Db::getInstance();
+        
+
+    }
     //---------getters & setters
     /**
      * Get the value of topic

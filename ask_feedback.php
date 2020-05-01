@@ -78,7 +78,7 @@ function getTime()
 ?>
 <div>
     <!-- feature 22 ask feedback -->
-    <form name="buddy_suggestion" class="form_signup" method="post" action="">
+    <form name="requestFeedback" class="form_signup" method="post" action="">
         <h2>Project feedback</h2>
         <h4>I need some help in: </h4>
         <div class="form-check ">

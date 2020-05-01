@@ -13,8 +13,10 @@ $mentor->setDestination($currentUserCharacteristics['destination']);
 $mentor->setSerie($currentUserCharacteristics['serie']);
 $mentor->setCookie($currentUserCharacteristics['cookie']);
 $mentor->setHangout($currentUserCharacteristics['hangout']);
-$mentor->setSkills($buddySkills); 
 
+$newBuddy = $mentor->findBuddyMentor();
+
+var_dump($newBuddy);
 
 // start conversation
 ?>

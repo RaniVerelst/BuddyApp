@@ -3,14 +3,35 @@ require_once('Userdetails.class.php');
 
 class BuddySuggestion extends UserDetails{
 //find 
-private $topic;
 private $date;
 private $user1;
 private $user2;
+private $buddyMentorMode;
+
+public function becomeBuddyMentor(){
+    $conn = Db::getInstance();
+    $statement = $conn->prepare("UPDATE profile_details SET buddy_mentor = :buddyState WHERE id= :currentUser");
+    $statement->bindValue(':currentUser', $this->getCurrentUser());
+    $statement->bindValue(':buddyState', $this->getBuddyMentorMode());
+    $result = $statement->execute();
+}
+
+public function findBuddyMentor(){
+    $conn = Db::getInstance();
+    $statement = $conn->prepare("SELECT * FROM profile_details WHERE buddy_mentor = 1 AND (movie = :movie OR  destination = :destination  OR  cookie = :cookie OR  serie = :serie OR hangout = :hangout) ORDER BY rand()");
+    $statement->bindValue(':movie', $this->getMovie());
+    $statement->bindValue(':destination', $this->getDestination());
+    $statement->bindValue(':cookie', $this->getCookie());
+    $statement->bindValue(':serie', $this->getSerie());
+    $statement->bindValue(':hangout', $this->getHangout());
+    $statement->execute();
+    $result = $statement->fetch();
+    return $result;
+}
 
 public function requestConversation(){
     $conn = Db::getInstance();
-    $statement = $conn->prepare("insert into buddy_suggestion(topic, user1_id, started) values(:topic, :user1, :date)");
+    $statement = $conn->prepare("insert into buddy_suggestion");
 
     $statement->bindValue(':topic', $this->getTopic());
     $statement->bindValue(':user1', $this->getUser1());
@@ -102,5 +123,25 @@ $this->user2 = $user2;
 return $this;
 }
 
+
+/**
+ * Get the value of buddyMentorMode
+ */ 
+public function getBuddyMentorMode()
+{
+return $this->buddyMentorMode;
+}
+
+/**
+ * Set the value of buddyMentorMode
+ *
+ * @return  self
+ */ 
+public function setBuddyMentorMode($buddyMentorMode)
+{
+$this->buddyMentorMode = $buddyMentorMode;
+
+return $this;
+}
 } //end class
 ?>

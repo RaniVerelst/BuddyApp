@@ -12,7 +12,7 @@ include_once("header.php");
 //if user is active display other header
 if($sesstionIsSet){
     include_once('activeUser.php');
-    } else { 
+    } else {
 ?>
 <!DOCTYPE html>
 <html lang="en">
