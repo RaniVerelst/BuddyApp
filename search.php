@@ -4,6 +4,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', '1');
 require_once("classes/Db.class.php");
 include_once("classes/User.class.php");
+include_once("header.php");
+
 
 // _____________Naam_______________ //
 
