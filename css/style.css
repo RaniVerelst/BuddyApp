@@ -177,3 +177,35 @@ color: #1ABC9C;
 }
 
 /*-------------Einde Search ----------------------*/
+.form_profile{
+  display: grid;
+  grid-template-rows: 1fr 2;
+  width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+}
+
+.post__bio__form{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  justify-content: center;
+  
+}
+
+.input_signup input{
+  display: flex;
+  align-items: center;
+  
+}
+
+
+.post__bio #bioText{
+  
+  grid-column: 1/3;
+  padding: 50px;
+  
+}
+
+ 
