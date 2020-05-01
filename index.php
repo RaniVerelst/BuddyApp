@@ -11,7 +11,7 @@ include_once("header.php");
 
 //if user is active display other header
 if($sesstionIsSet){
-    include_once('ask_feedback.php');
+    include_once('activeUser.php');
     } else { 
 ?>
 <!DOCTYPE html>

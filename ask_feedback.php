@@ -12,7 +12,7 @@ if (isset($_POST['requestFeedback'])) {
 
     $feedback = new Feedback();
 
-    $feedback->setSender($currentUser);
+    $feedback->setCurrentUser($currentUser);
     //get needed skills 
     if (isset($_POST['skills'])) {
         $project = checkSkills($_POST['skills']);
@@ -79,7 +79,7 @@ function getTime()
 <div>
     <!-- feature 22 ask feedback -->
     <form name="buddy_suggestion" class="form_signup" method="post" action="">
-        <h2>Buddy suggestion</h2>
+        <h2>Project feedback</h2>
         <h4>I need some help in: </h4>
         <div class="form-check ">
             <label class="form-check-label" for="design"> DESIGN </label>
