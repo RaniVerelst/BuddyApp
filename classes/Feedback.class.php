@@ -4,7 +4,7 @@ require_once('Userdetails.class.php');
 class Feedback extends UserDetails{
     private $topic;
     private $date;
-    private $sender;
+    private $currentUser;
     private $link;
     private $user1;
     private $user2;
@@ -14,10 +14,10 @@ class Feedback extends UserDetails{
 
     public function requestFeedback(){
         $conn = Db::getInstance();
-        $statement = $conn->prepare("insert into feedback(topic, sender_id, link, datetime, user1_id, user2_id, user3_id) values(:topic, :sender, :link, :date, :user1, :user2, :user3)");
+        $statement = $conn->prepare("insert into feedback(topic, sender_id, link, send_on, user1_id, user2_id, user3_id) values(:topic, :sender, :link, :date, :user1, :user2, :user3)");
     
         $statement->bindValue(':topic', $this->getTopic());
-        $statement->bindValue(':sender', $this->getSender());
+        $statement->bindValue(':sender', $this->getCurrentUser());
         $statement->bindValue(':link', $this->getLink());
         $statement->bindValue(':date', $this->getDate());
         $statement->bindValue(':user1', $this->getUser1());
@@ -31,15 +31,20 @@ class Feedback extends UserDetails{
         $conn = Db::getInstance();
         $statement= $conn->prepare("SELECT user_id, class FROM profile_details WHERE skills = :skills OR skills = 'both' AND NOT user_id = :sender LIMIT 3");
         $statement->bindValue(':skills', $this->getTopic());
-        $statement->bindValue(':sender', $this->getSender());
+        $statement->bindValue(':sender', $this->getCurrentUser());
         $statement->execute();
         $result = $statement->fetchAll();
         return $result;
     }
     
-    public function alertFeedback(){
+    public function getAllActiveFeedbacksRequests(){
         $conn = Db::getInstance();
-        $statement= $conn->prepare("SELECT user_id, class FROM profile_details WHERE skills = :skills OR skills = 'both' AND NOT user_id = :sender LIMIT 3");
+
+        $statement= $conn->prepare("SELECT sender_id, link, send_on, topic FROM feedback WHERE closed = 0 AND (user1_id = :currentUser OR user2_id = :currentUser or user3_id = :currentUser)");
+        $statement->bindValue(':currentUser', $this->getCurrentUser());
+        $statement->execute();
+        $result = $statement->fetchAll();
+        return $result;
     }
     //---------getters & setters
     /**
@@ -123,25 +128,6 @@ class Feedback extends UserDetails{
     return $this;
     }
 
-    /**
-     * Get the value of sender
-     */ 
-    public function getSender()
-    {
-        return $this->sender;
-    }
-
-    /**
-     * Set the value of sender
-     *
-     * @return  self
-     */ 
-    public function setSender($sender)
-    {
-        $this->sender = $sender;
-
-        return $this;
-    }
 
     /**
      * Get the value of user3
@@ -179,6 +165,26 @@ class Feedback extends UserDetails{
     public function setLink($link)
     {
         $this->link = $link;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of currentUser
+     */ 
+    public function getCurrentUser()
+    {
+        return $this->currentUser;
+    }
+
+    /**
+     * Set the value of currentUser
+     *
+     * @return  self
+     */ 
+    public function setCurrentUser($currentUser)
+    {
+        $this->currentUser = $currentUser;
 
         return $this;
     }
