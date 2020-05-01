@@ -16,8 +16,9 @@ public function requestConversation(){
     $statement->bindValue(':user1', $this->getUser1());
     $statement->bindValue(':date', $this->getDate());
     $result = $statement->execute();
-
 }
+
+
 
 //---------getters & setters
 /**
