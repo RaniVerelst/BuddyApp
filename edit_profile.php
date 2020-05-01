@@ -3,10 +3,11 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-session_start();
 include_once("classes/Db.class.php");
 //include_once("classes/User.class.php");
 include_once("classes/EditProfile.class.php");
+include_once("header.php");
+
 
 //$user = new User();
 $user = new EditProfile();
