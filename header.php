@@ -25,7 +25,7 @@ if (isset($_SESSION["user_id"])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Header</title>
+  <title>Buddy App</title>
   <link href="startbootstrap/css/freelancer.min.css" type="text/css" rel="stylesheet">
   <link href="css/style.css" type="text/css" rel="stylesheet">
 
@@ -75,7 +75,7 @@ if (isset($_SESSION["user_id"])) {
     </div>
   </div>
   <form class="search" method="get" action="search.php">
-    <input class="input_search" type="text" name="search" placeholder="Search a user">
+    <input class="input_search" type="text" name="search" placeholder="Search a user or characteristic">
     <input class="btn_search" type="submit" value="">
   </form>
 </nav>
