@@ -288,4 +288,32 @@ class User
 
     return $count;
   }
+
+
+// ---------------zoek een room------------
+  public function searchRoom($searchkey)
+  {
+    $conn = Db::getInstance();
+    $statement = $conn->prepare("select * from room where room_number like '$searchkey%'
+    union select * from room where floor like '$searchkey%' 
+    union select * from room where capacity like '$searchkey%' 
+    union select * from room where campus like '$searchkey%'");
+    $statement->bindValue(1, '$searchkey%', PDO::PARAM_STR);
+    $statement->execute();
+    $result = $statement->fetchAll();
+    return $result;
+  }
+
+  // ---------------details van een room------------
+  public function showRoom($searchkey)
+  {
+    $conn = Db::getInstance();
+    $statement = $conn->prepare("select * from room where room_number like '$searchkey%'
+      union select * from room where floor like '$searchkey%' 
+      union select * from room where capacity like '$searchkey%' 
+      union select * from room where campus like '$searchkey%'");
+    $statement->execute();
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
+    return $result;
+  }
 }
