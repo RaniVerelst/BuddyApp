@@ -120,8 +120,23 @@ color: #1ABC9C;
   margin-top: 10px;
 }
 
+.searchline {
+  margin-top: 25px; 
+  margin-left: 77px; 
+}
+
 .input_search {
-  width: 200px;
+  width: 250px;
+  height: 30px;
+}
+
+.input_search2 {
+  width: 220px;
+  height: 30px;
+}
+
+.input_search3 {
+  width: 360px;
   height: 30px;
 }
 
@@ -139,7 +154,7 @@ color: #1ABC9C;
 }
 
 .search_results{
-  margin-top: 100px;
+  margin-top: 50px;
   margin-bottom: 50px;
   display: block;
   margin-left: auto;
