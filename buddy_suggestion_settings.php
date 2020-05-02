@@ -43,7 +43,6 @@ function checkBuddyMaster($b){
 
 if(isset($_POST['findBuddy'])){
 $searchForBuddy = true;
-echo 'lolc';
 }
 ?>
 <div>

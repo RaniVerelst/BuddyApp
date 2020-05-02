@@ -22,7 +22,10 @@ function findUserName($id){
     $userName = $userInfo['first_name'] . " " . $userInfo['last_name'];
     return $userName;
 }
-
+// check if was clicked on give feedback
+if(isset($_POST['giveFeedback'])){
+    $beginPrivateChat = true;
+}
 ?>
 <div>
 <h2>Notifications:</h2>
@@ -39,7 +42,7 @@ function findUserName($id){
         <p>Project type: <?php echo $user[3]; ?></p>
         <a href="<?php echo $user[1];?>" alt="link to project">Link to project</a>
         <br>
-        <a href="/give_feedback">Give feedback</a>
+        <a href="/give_feedback" name="giveFeedback">Give feedback</a>
         <a href="">Ignore</a>
     </li>
         <?php endforeach;

@@ -1,13 +1,17 @@
 <?php
+require_once('classes/ChatPrivate.class.php');
 
-//find potentiele match
+//don't start chat yet
+$beginPrivateChat = false;
+
+//find match
 $mentor = new BuddySuggestion();
 
-//characteristics of current user for beter match
+//get characteristics of current user for beter match
 $mentor->setUserid($currentUser);
 $currentUserCharacteristics = $mentor->getAllCharacteristics();
 
-//set up characteristics to beter compare
+//set up characteristics for beter match
 $mentor->setMovie($currentUserCharacteristics['movie']);
 $mentor->setDestination($currentUserCharacteristics['destination']);
 $mentor->setSerie($currentUserCharacteristics['serie']);
@@ -16,15 +20,26 @@ $mentor->setHangout($currentUserCharacteristics['hangout']);
 
 $newBuddy = $mentor->findBuddyMentor();
 
-var_dump($newBuddy);
+//if success set up conversation
+if(sizeof($newBuddy) > 0){
+    $beginPrivateChat = true;
+    $chatUser2 = $newBuddy[0];
+//set up conversation
+ createConversation($currentUser, $chatUser2);
+}
 
+function createConversation($cU, $b){
+    $newBuddyChat = new ChatPrivate();
+
+    $newBuddyChat->setUser1($cU);
+    $newBuddyChat->setUser2($b);
+    $newBuddyChat->setTopic("buddyTalk");
+    $newBuddyChat->setDate(getTime());
+
+    $newBuddyChat->requestChat();
+
+}
 // start conversation
 ?>
-<div>
-<img src="" alt="profil photo">
-<h2>Naam</h2>
-<p>Matching text</p>
-</div>
-<!-- Begin gesrpek -->
 
-<div></div>
+
