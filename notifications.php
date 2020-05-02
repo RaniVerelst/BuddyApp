@@ -25,15 +25,18 @@ function findUserName($id){
 
 // check if was clicked on give feedback
 if(isset($_GET['feedback_id'])){
-    echo 'you in';
-    $beginPrivateChat = true;
+    
     $targetFeedback = $_GET['feedback_id'];
     $userFeedbackInfo = $allFeedbacksReguests[$targetFeedback];
+
     $chatTopic = $userFeedbackInfo[3];
     $chatUser2 = $userFeedbackInfo[0];
+    $keyChat = createChatKey($currentUser, $chatUser2);
+    $accepted = 1;
     
-    createConversation($currentUser, $chatUser2, $chatTopic);
+    createConversation($currentUser, $chatUser2, $chatTopic, $keyChat, $accepted);
 } 
+
 
 
 ?>
