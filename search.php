@@ -35,6 +35,17 @@ if(!empty($_GET['search'])){
   $kenmerken = null;
   $searchkey = null;
 }
+
+// _____________Ajax_______________ //
+$conn = Db::getInstance();
+$stmt = $conn->prepare('select * from users, profile_details where first_name, last_name, user_name, movie, destination, cookie, serie, hangout like :keyword');
+$stmt->bindValue('keyword', '%');
+$stmt->execute();
+$result = array();
+while($name = $stmt->fetch(PDO::FETCH_OBJ)) {
+	array_push($result, $name->first_name, $name->last_name, $name->user_name, $name->movie, $name->destination, $name->cookie, $name->serie, $name->hangout);
+}
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,6 +58,15 @@ if(!empty($_GET['search'])){
     <link href="css/style.css" type="text/css" rel="stylesheet">
 
     <title>Search</title>
+    <script type="text/javascript">
+
+$(document).ready(function(){
+  $('#itemfinder').autocomplete({
+    source: 'search.php'
+  });
+});
+
+</script>
 </head>
 <body>
   <section class="searchline">
@@ -54,7 +74,7 @@ if(!empty($_GET['search'])){
         <h1>Find your buddy!</h1>
     </div>
         <form class="search" method="get" action="">
-            <input class="input_search2" type="text" name="search" placeholder="Search on names, characterics">
+            <input class="input_search2" type="text" name="search" id="itemfinder" placeholder="Search on names, characterics">
             <input class="btn_search" type="submit" value="">
         </form>
     </section>
