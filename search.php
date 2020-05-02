@@ -9,26 +9,32 @@ include_once("header.php");
 
 // _____________Naam_______________ //
 
-if(isset($_GET['search'])){
+if(!empty($_GET['search'])){
   $searchkey = $_GET['search'];
   $search_users = new User();
   $result_users = $search_users->searchUser($searchkey);
 
   $u = new User();
   $users = $u->showUser($searchkey);  
+} else {
+  $result_users = null;
+  $users = null;
+  $searchkey = null;
 }
-
 // _____________KENMERKEN _______________ //
 
-if(isset($_GET['search'])){
+if(!empty($_GET['search'])){
   $searchkey = $_GET['search'];
   $search_kenmerken = new User();
   $result_kenmerken = $search_kenmerken->searchKenmerk($searchkey);
 
   $k = new User();
   $kenmerken = $k->showKenmerk($searchkey);
+} else {
+  $result_kenmerken = null;
+  $kenmerken = null;
+  $searchkey = null;
 }
-
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,6 +49,15 @@ if(isset($_GET['search'])){
     <title>Search</title>
 </head>
 <body>
+  <section class="searchline">
+    <div>
+        <h1>Find your buddy!</h1>
+    </div>
+        <form class="search" method="get" action="">
+            <input class="input_search2" type="text" name="search" placeholder="Search on names, characterics">
+            <input class="btn_search" type="submit" value="">
+        </form>
+    </section>
     <div class="search_results">
       <?php if(count($result_users) || ($result_kenmerken)  > 0 ): ?>
         <h1> <?php echo count($result_users) + count($result_kenmerken) . " Search Result(s) found for " . "<span style = 'font-weight: bold'> &quot" . $searchkey . "&quot </span>"; ?></h1>
