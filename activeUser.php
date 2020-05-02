@@ -2,7 +2,9 @@
  BEVAT:
 * feature 22 ask feedback on project
 -->
-<?php include_once("header.php"); ?>
+<?php 
+include_once("chat_private_setup.php");
+include_once("header.php"); ?>
 
 <div class="container">
     <div class="header-activeuser">
@@ -19,8 +21,8 @@
     </div>
     <div class="centerContent-activeUser">
    <!-- Display chat is needed -->
-    <?php if($beginPrivateChat == true){ include_once('chat_private.php'); }?>
-
+    <?php if(isset($beginPrivateChat)){
+        if($beginPrivateChat == true){ include_once('chat_private.php'); }}?>
     </div>
 </div>
 </div>

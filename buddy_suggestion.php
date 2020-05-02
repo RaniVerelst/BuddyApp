@@ -1,5 +1,5 @@
 <?php
-require_once('classes/ChatPrivate.class.php');
+//require_once('classes/ChatPrivate.class.php');
 
 //don't start chat yet
 $beginPrivateChat = false;
@@ -24,22 +24,23 @@ $newBuddy = $mentor->findBuddyMentor();
 if(sizeof($newBuddy) > 0){
     $beginPrivateChat = true;
     $chatUser2 = $newBuddy[0];
+    $chatTopic = "buddyTalk";
 //set up conversation
- createConversation($currentUser, $chatUser2);
+ createConversation($currentUser, $chatUser2, $chatTopic);
+ 
 }
 
-function createConversation($cU, $b){
+/*function createConversation($cU, $b, $t){
+
     $newBuddyChat = new ChatPrivate();
 
     $newBuddyChat->setUser1($cU);
     $newBuddyChat->setUser2($b);
-    $newBuddyChat->setTopic("buddyTalk");
+    $newBuddyChat->setTopic($t);
     $newBuddyChat->setDate(getTime());
 
     $newBuddyChat->requestChat();
-
-}
-// start conversation
+}*/
 ?>
 
 

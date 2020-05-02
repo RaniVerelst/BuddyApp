@@ -13,6 +13,7 @@ if (isset($_POST['requestFeedback'])) {
     $feedback = new Feedback();
 
     $feedback->setCurrentUser($currentUser);
+    
     //get needed skills 
     if (isset($_POST['skills'])) {
         $project = checkSkills($_POST['skills']);
@@ -64,16 +65,6 @@ function checkSkills($skills)
     }
 }
 
-function getTime()
-{
-    date_default_timezone_set('Europe/Brussels');
-    date_default_timezone_get();
-
-    $timeLine = date("Y-m-d H:i:s");
-
-    return $timeLine;
-}
-
 
 ?>
 <div>
@@ -94,7 +85,3 @@ function getTime()
         <input class="submit_signup" type="submit" name="requestFeedback" value="Ask for feedback">
     </form>
 </div>
-
-<?php if (isset($beginTalk)) {
-    include_once('buddy_suggestion.php');
-} ?>
