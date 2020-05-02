@@ -5,6 +5,23 @@ error_reporting(E_ALL);
 ini_set('display_errors', '1');
 include_once("classes/Db.class.php");
 include_once("classes/Login.class.php");
+include_once("classes/User.class.php");
+include_once("header.php");
+
+// _____________Room_______________ //
+
+if(!empty($_GET['search'])){
+  $searchkey = $_GET['search'];
+  $search_room = new User();
+  $result_room = $search_room->searchRoom($searchkey);
+  
+    $r = new User();
+    $room = $r->showRoom($searchkey); 
+} else {
+     $room = null;
+     $result_room = null;
+     $searchkey = null;
+}
 
 ?>
 <!DOCTYPE html>
@@ -19,17 +36,29 @@ include_once("classes/Login.class.php");
 </head>
 
 <body>
+  <section class="searchline">
     <div>
-        <?php include("header.php") ?>
-        <h1>find a room</h1>
+        <h1>Find a room</h1>
     </div>
-
-    <section>
         <form class="search" method="get" action="">
-            <input class="input_search" type="text" name="search" placeholder="find a room">
+            <input class="input_search3" type="text" name="search" placeholder="Search on room-number, floor, capacity or campus">
             <input class="btn_search" type="submit" value="">
         </form>
     </section>
+    <div class="search_results">
+      <?php if(count($result_room) > 0 ): ?>
+        <h1> <?php echo count($result_room) . " Search Result(s) found for " . "<span style = 'font-weight: bold'> &quot" . $searchkey . "&quot </span>"; ?></h1>
+    <?php else: ?>
+      <h1>No results found </h1>
+      <?php endif; ?>
+      <nav>
+      <br>
+     <p><span style="font-weight: bold">Room-name/number :</span> <?php echo $room['room_number']; ?></p>
+     <p><span style="font-weight: bold">Floor:</span> <?php echo $room['floor']; ?></p>
+     <p><span style="font-weight: bold">Capacity:</span> <?php echo $room['capacity']; ?></p>
+     <p><span style="font-weight: bold">Campus:</span> <?php echo $room['campus']; ?></p>
+     </nav>
+</div>
 
 </body>
 
