@@ -23,6 +23,17 @@ if(!empty($_GET['search'])){
      $searchkey = null;
 }
 
+// _____________Ajax_______________ //
+$conn = Db::getInstance();
+$stmt = $conn->prepare('select * from room where room_number, floor, capacity, campus like :keyword');
+$stmt->bindValue('keyword', '%');
+$stmt->execute();
+$result = array();
+while($name = $stmt->fetch(PDO::FETCH_OBJ)) {
+	array_push($result, $name->room_number, $name->floor, $name->capacity, $name->campus);
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,6 +44,15 @@ if(!empty($_GET['search'])){
     <link rel="stylesheet" href="startbootstrap/css/freelancer.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <title>Local</title>
+    <script type="text/javascript">
+
+$(document).ready(function(){
+  $('#itemfinder').autocomplete({
+    source: 'room.php'
+  });
+});
+
+</script>
 </head>
 
 <body>
@@ -41,7 +61,7 @@ if(!empty($_GET['search'])){
         <h1>Find a room</h1>
     </div>
         <form class="search" method="get" action="">
-            <input class="input_search3" type="text" name="search" placeholder="Search on room-number, floor, capacity or campus">
+            <input class="input_search3" type="text" name="search" id="itemfinder" placeholder="Search on room-number, floor, capacity or campus">
             <input class="btn_search" type="submit" value="">
         </form>
     </section>
