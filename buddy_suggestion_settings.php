@@ -43,7 +43,9 @@ function checkBuddyMaster($b){
 
 if(isset($_POST['findBuddy'])){
 $searchForBuddy = true;
+
 }
+
 ?>
 <div>
     <h2>Buddy settings:</h2>

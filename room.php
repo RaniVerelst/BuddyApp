@@ -23,16 +23,6 @@ if(!empty($_GET['search'])){
      $searchkey = null;
 }
 
-// _____________Ajax_______________ //
-$conn = Db::getInstance();
-$stmt = $conn->prepare('select * from room where room_number, floor, capacity, campus like :keyword');
-$stmt->bindValue('keyword', '%');
-$stmt->execute();
-$result = array();
-while($name = $stmt->fetch(PDO::FETCH_OBJ)) {
-	array_push($result, $name->room_number, $name->floor, $name->capacity, $name->campus);
-}
-
 
 ?>
 <!DOCTYPE html>
@@ -43,25 +33,30 @@ while($name = $stmt->fetch(PDO::FETCH_OBJ)) {
     <meta name="viewport" content="width=, initial-scale=1.0">
     <link rel="stylesheet" href="startbootstrap/css/freelancer.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" /> 
     <title>Local</title>
-    <script type="text/javascript">
-
-$(document).ready(function(){
-  $('#itemfinder').autocomplete({
-    source: 'room.php'
-  });
-});
-
-</script>
 </head>
 
 <body>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>	
+    <script type="text/javascript">
+      $(function() {
+        
+        //autocomplete
+        $("#auto").autocomplete({
+          source: "room-ajax.php",
+          minLength: 1
+        });				
+
+      });
+    </script>
   <section class="searchline">
     <div>
         <h1>Find a room</h1>
     </div>
         <form class="search" method="get" action="">
-            <input class="input_search3" type="text" name="search" id="itemfinder" placeholder="Search on room-number, floor, capacity or campus">
+            <input class="input_search3" type="text" name="search" id="auto" placeholder="Search on room-number, floor, capacity or campus" value="">
             <input class="btn_search" type="submit" value="">
         </form>
     </section>
@@ -81,5 +76,4 @@ $(document).ready(function(){
 </div>
 
 </body>
-
 </html>
