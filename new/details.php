@@ -23,9 +23,9 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row details">
         <div class="col-sm-12">
-            <div class="main-content">
+            <div class="details">
                 <div class="header">
                     <h3>Vervolledig je profiel</h3>
                     <p>Zo kunnen we je matchen met je ideale buddy</p>

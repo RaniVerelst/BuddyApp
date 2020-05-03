@@ -1,4 +1,40 @@
 <?php include_once(__DIR__ . "/classes/Db.class.php");
+include_once(__DIR__ . "/classes/User.class.php");
+if (!empty($_POST)) {
+    try {
+        session_start();
+        $firstname = $_POST['firstname'];
+        $lastname = $_POST['lastname'];
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $password_confirm = $_POST['password_confirm'];
+
+        $user = new User();
+        $user->setFirstname($firstname);
+        $user->getFirstname();
+        $user->setLastname($lastname);
+        $user->getLastname();
+        $user->setUsername($username);
+        $user->getUsername();
+        $user->setEmail($email);
+        $user->getEmail();
+        $user->setPassword($password);
+        $user->getPassword();
+        $user->setPasswordconfirm($password_confirm);
+        $user->getPasswordconfirm();
+
+        $result = $user->register();
+        var_dump($_SESSION);
+    } catch (Exception $t) {
+        $error =  $t->getMessage();
+    }
+} else {
+    // foutboodschap tonen
+    $empty_field_error = "Please, fill in all the fields";
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -41,17 +77,17 @@
                     <?php endif; ?>
                     <!-- firstname -->
                     <div class="input_signup">
-                        <input class="form-control input-md" type="text" name="firstname" value="" placeholder="First name">
+                        <input class="form-control input-md" type="text" name="firstname" value="" placeholder="Voornaam">
                     </div>
 
                     <!-- lastname -->
                     <div class="input_signup">
-                        <input class="form-control input-md" type="text" name="lastname" value="" placeholder="Last name">
+                        <input class="form-control input-md" type="text" name="lastname" value="" placeholder="Achternaam">
                     </div>
 
                     <!-- username -->
                     <div class="input_signup">
-                        <input class="form-control input-md" type="text" name="username" value="" placeholder="User name">
+                        <input class="form-control input-md" type="text" name="username" value="" placeholder="Gebruikersnaam">
                     </div>
 
                     <!-- e-mail -->
@@ -61,13 +97,13 @@
 
                     <!-- password -->
                     <div class="input_signup">
-                        <input class="form-control input-md" type="password" name="password" value="" placeholder="Password">
-                        <p>Your password need at least 8 characters</p>
+                        <input class="form-control input-md" type="password" name="password" value="" placeholder="Passwoord">
+                        <p>Passwoord moet minstens 8 karakters lang zijn.</p>
                     </div>
 
                     <!-- confirm password -->
                     <div class="input_signup">
-                        <input class="form-control input-md" type="password" name="password_confirm" value="" placeholder="Confirm Password">
+                        <input class="form-control input-md" type="password" name="password_confirm" value="" placeholder="Bevestig Passwoord">
                     </div>
 
 
