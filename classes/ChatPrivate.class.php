@@ -33,7 +33,7 @@ class ChatPrivate {
     public function getChatInfoByKey(){
         $conn = DB::getInstance();
 
-        $statement = $conn->prepare("SELECT * from chat_private WHERE  unique_key = :uniqueKey ");
+        $statement = $conn->prepare("SELECT * from chat_private WHERE unique_key = :uniqueKey ");
         $statement->bindValue(':uniqueKey', $this->getUniqueKey());
         $statement->execute();
         $result = $statement->fetch();

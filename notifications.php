@@ -24,9 +24,9 @@ function findUserName($id){
 }
 
 // check if was clicked on give feedback
-if(isset($_GET['feedback_id'])){
+if(isset($_GET['feedbackId'])){
     
-    $targetFeedback = $_GET['feedback_id'];
+    $targetFeedback = $_GET['feedbackId'];
     $userFeedbackInfo = $allFeedbacksReguests[$targetFeedback];
 
     $chatTopic = $userFeedbackInfo[3];
@@ -57,7 +57,7 @@ if(isset($_GET['feedback_id'])){
         <p>Project type: <?php echo $user[3]; ?></p>
         <a href="<?php echo $user[1];?>" alt="link to project">Link to project</a>
         <br>
-        <a href="?feedback_id=<?php echo $counter;?>" name="giveFeedback">Give feedback</a>
+        <a href="?feedbackId=<?php echo $counter;?>" name="giveFeedback">Give feedback</a>
         <a href="">Ignore</a>
 
     </li>
