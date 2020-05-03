@@ -1,5 +1,5 @@
 <?php
-require_once('classes/ChatPrivate.class.php');
+//require_once('classes/ChatPrivate.class.php');
 
 //don't start chat yet
 $beginPrivateChat = false;
@@ -20,26 +20,23 @@ $mentor->setHangout($currentUserCharacteristics['hangout']);
 
 $newBuddy = $mentor->findBuddyMentor();
 
+
+
 //if success set up conversation
 if(sizeof($newBuddy) > 0){
-    $beginPrivateChat = true;
     $chatUser2 = $newBuddy[0];
+    $chatTopic = "buddyTalk";
+    $keyChat = createChatKey($currentUser, $chatUser2);
+    $accepted = 0;
 //set up conversation
- createConversation($currentUser, $chatUser2);
-}
+ createConversation($currentUser, $chatUser2, $chatTopic, $keyChat, $accepted);
 
-function createConversation($cU, $b){
-    $newBuddyChat = new ChatPrivate();
-
-    $newBuddyChat->setUser1($cU);
-    $newBuddyChat->setUser2($b);
-    $newBuddyChat->setTopic("buddyTalk");
-    $newBuddyChat->setDate(getTime());
-
-    $newBuddyChat->requestChat();
+ //get common characteristics to display - from match.php
+ $buddyChat = getBuddieInfo($chatUser2);
+ $buddyChatCharacteristics = getCommonInterest($buddyChat, $movie, $destination, $cookie, $serie, $hangouts);
 
 }
-// start conversation
+
 ?>
 
 

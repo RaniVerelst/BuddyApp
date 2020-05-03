@@ -1,0 +1,45 @@
+body{
+    font-family: 'Muli', sans-serif;
+
+
+}
+/*-----------------HEADER START----------*/
+ul {
+    list-style-type: none;
+    margin: 0;
+    margin-top: 40px;
+    overflow: hidden;
+    font-weight: 900;
+    font-size: 1.5em;
+
+  }
+  
+  li {
+    display: inline;
+    
+  }
+  
+  li a {
+    color: red;
+    text-align: center;
+    text-decoration: none;
+    padding: 15px 15px;
+  }
+
+.log {
+    padding-left: 70px;
+  }
+
+  /*-----------------HEADER END----------*/
+  /*-----------------INDEX START----------*/
+  .index{
+      margin-top: 50px;
+  }
+  
+  .index p{
+
+      font-size: 1.5em;
+  }
+    /*-----------------INDEX END----------*/
+
+

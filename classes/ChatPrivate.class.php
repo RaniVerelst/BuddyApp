@@ -7,17 +7,38 @@ class ChatPrivate {
     private $accepted;
     private $active;
     private $date;
+    private $uniqueKey;
+    private $chatId;
 
     public function requestChat(){
         $conn = Db::getInstance();
-        $statement = $conn->prepare("INSERT into chat_private(topic, user1_id, user2_id, active, accepted, created) values(:topic, :user1, :user2, :active, :accepted, :created)");
+        $statement = $conn->prepare("INSERT into chat_private(topic, user1_id, user2_id, active, accepted, created, unique_key) values(:topic, :user1, :user2, :active, :accepted, :created, :uniqueKey)");
         $statement->bindValue(':topic', $this->getTopic());
         $statement->bindValue(':user1', $this->getUser1());
         $statement->bindValue(':user2', $this->getUser2());
         $statement->bindValue(':active', 0);
-        $statement->bindValue(':accepted', 0);
+        $statement->bindValue(':accepted', $this->getAccepted());
         $statement->bindValue(':created', $this->getDate());
-        $result = $statement->execute();
+        $statement->bindValue(':uniqueKey', $this->getUniqueKey());
+        $statement->execute();
+    }
+
+    public function startChat(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("UPDATE chat_private SET active = 1 WHERE unique_key = :uniqueKey");
+        $statement->bindValue(':uniqueKey', $this->getUniqueKey());
+        $statement->execute();
+    }
+
+    public function getChatInfoByKey(){
+        $conn = DB::getInstance();
+
+        $statement = $conn->prepare("SELECT * from chat_private WHERE unique_key = :uniqueKey ");
+        $statement->bindValue(':uniqueKey', $this->getUniqueKey());
+        $statement->execute();
+        $result = $statement->fetch();
+
+        return $result;
     }
     /**
      * Get the value of user1
@@ -135,6 +156,46 @@ class ChatPrivate {
     public function setDate($date)
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of uniqueKey
+     */ 
+    public function getUniqueKey()
+    {
+        return $this->uniqueKey;
+    }
+
+    /**
+     * Set the value of uniqueKey
+     *
+     * @return  self
+     */ 
+    public function setUniqueKey($uniqueKey)
+    {
+        $this->uniqueKey = $uniqueKey;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of chatId
+     */ 
+    public function getChatId()
+    {
+        return $this->chatId;
+    }
+
+    /**
+     * Set the value of chatId
+     *
+     * @return  self
+     */ 
+    public function setChatId($chatId)
+    {
+        $this->chatId = $chatId;
 
         return $this;
     }

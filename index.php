@@ -86,5 +86,7 @@ if($sesstionIsSet){
 
   <!-- Custom scripts for this template -->
   <script src="startbootstrap/js/freelancer.min.js"></script>
+  <!-- add ajax -->
+<script type ="text/javascript" src="ajax_private_chat.js"></script>
 </body>
 </html>

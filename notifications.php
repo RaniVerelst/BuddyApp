@@ -22,17 +22,32 @@ function findUserName($id){
     $userName = $userInfo['first_name'] . " " . $userInfo['last_name'];
     return $userName;
 }
+
 // check if was clicked on give feedback
-if(isset($_POST['giveFeedback'])){
-    $beginPrivateChat = true;
-}
+if(isset($_GET['feedbackId'])){
+    
+    $targetFeedback = $_GET['feedbackId'];
+    $userFeedbackInfo = $allFeedbacksReguests[$targetFeedback];
+
+    $chatTopic = $userFeedbackInfo[3];
+    $chatUser2 = $userFeedbackInfo[0];
+    $keyChat = createChatKey($currentUser, $chatUser2);
+    $accepted = 1;
+    
+    createConversation($currentUser, $chatUser2, $chatTopic, $keyChat, $accepted);
+} 
+
+
+
 ?>
 <div>
 <h2>Notifications:</h2>
 
 <h4>Feedbacks requests:</h4>
 <ul>
-    <?php if(sizeOf($allFeedbacksReguests) > 0): 
+    <?php 
+    $counter = 0;
+    if(sizeOf($allFeedbacksReguests) > 0): 
         foreach($allFeedbacksReguests as $user):
        
         ?>
@@ -42,10 +57,13 @@ if(isset($_POST['giveFeedback'])){
         <p>Project type: <?php echo $user[3]; ?></p>
         <a href="<?php echo $user[1];?>" alt="link to project">Link to project</a>
         <br>
-        <a href="/give_feedback" name="giveFeedback">Give feedback</a>
+        <a href="?feedbackId=<?php echo $counter;?>" name="giveFeedback">Give feedback</a>
         <a href="">Ignore</a>
+
     </li>
-        <?php endforeach;
-endif; ?>
+        <?php
+        $counter++; 
+        endforeach;
+        endif; ?>
 </ul>
 </div>
