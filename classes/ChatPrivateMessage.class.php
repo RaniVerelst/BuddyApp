@@ -5,7 +5,7 @@ class ChatPrivateMessage extends ChatPrivate{
 
    public function saveMessage(){
     $conn = Db::getInstance();
-    $statement = $conn->prepare("INSERT into chat_private_messages(chat_id, user_id, send_on, text_message) values(:chatId, :user1, :created, :textMessage)");
+    $statement = $conn->prepare("INSERT into chat_private_message(chat_id, user_id, send_on, text_message) values(:chatId, :user1, :created, :textMessage)");
     $statement->bindValue(':chatId', $this->getChatId());
     $statement->bindValue(':user1', $this->getUser1());
     $statement->bindValue(':created', $this->getDate());

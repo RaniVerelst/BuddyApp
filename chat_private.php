@@ -6,7 +6,7 @@ $privateChat = new ChatPrivate();
 $privateChat->setUniqueKey($keyChat);
 $chatInfo = $privateChat->getChatInfoByKey();
 $chatTopic = $chatInfo[1];
-
+$privateChat->setUser1($_SESSION['user_id']);
 /*
 Set up header & encourage message 
 */

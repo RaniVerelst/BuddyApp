@@ -1,9 +1,11 @@
 <?php 
-require("classes/ChatPrivateMessage.class.php");
-require("datetime.php");
+require("../classes/Db.class.php");
+require("../classes/ChatPrivateMessage.class.php");
+require("../datetime.php");
+session_start();  
 
 if(!empty($_POST)){
-
+    
     header("Content-type: application/json");
 
     // new message
@@ -15,23 +17,23 @@ if(!empty($_POST)){
     $m->setDate(getTime());
 
     $textM = $m->getText();
-    echo 'you are here';
+
+    echo $textM;
 
     $m->saveMessage();
 
     $response = [
-        'status' => 'success',
-        'body' => $textM
+        "status" => "success",
+        "body" => "something",
+        "message" => "something"
     ];
-    $json = json_encode($response);
 
-    header("Content-type: application/json");
+    header('Content-type:application/json'); 
 
+    echo json_encode($response);
 
-    echo $json;
    
 };
 
 
 ?>
-

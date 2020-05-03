@@ -4,10 +4,6 @@ document.getElementById("btnSendPrivateMessage").addEventListener("click", funct
     let chatId = this.dataset.chatid;
     let text = document.querySelector('#privateMessageText').value;
     
-    console.log(chatId);
-    console.log(text);
-
-
     //sent to DB
     let formData = new FormData();
 
