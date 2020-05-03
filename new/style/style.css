@@ -1,7 +1,5 @@
 body{
     font-family: 'Muli', sans-serif;
-
-
 }
 /*-----------------HEADER START----------*/
 ul {
@@ -31,6 +29,81 @@ ul {
   }
 
   /*-----------------HEADER END----------*/
+
+ /*-----------------MAIN START----------*/
+ 
+ .headermain{
+    margin: 0 auto;
+    text-align: center;
+}
+
+.main{
+    background-color: red;
+    padding-bottom: 150px;
+    padding-top: 150px;
+
+}
+
+.main h3{
+    color: white;
+    font-weight: 600;
+    font-size: 25px;
+    margin-left: 5em;
+    margin-top: 2.5em;
+}
+
+.main2{
+    padding-left: 280px;
+    padding-top: 170px;  
+}
+
+.main2 h2{
+    font-weight: 600;
+    font-size: 25px ;
+}
+
+#register{
+    margin-top: 20px;
+    font-weight: 600;
+    width: 60%;
+    height: 60px;
+    border-radius: 30px;
+    background-color: red;
+    border: none;
+}
+
+#login{
+    font-weight: 600;
+    width: 60%;
+    height: 60px;
+    border-radius: 30px;
+    background-color: white;
+    border: solid red 2px;
+    color: red;
+}
+
+#register:hover{
+    margin-top: 20px;
+    font-weight: 600;
+    width: 60%;
+    height: 60px;
+    border-radius: 30px;
+    background-color: white;
+    border: solid red 2px;
+    color: red;
+}
+
+#login:hover{
+    font-weight: 600;
+    width: 60%;
+    height: 60px;
+    border-radius: 30px;
+    background-color: white;
+    border: solid red 3px;
+    color: red;
+}
+  /*-----------------MAIN END----------*/
+
   /*-----------------INDEX START----------*/
   .index{
       margin-top: 50px;
