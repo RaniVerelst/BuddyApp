@@ -1,5 +1,4 @@
 <?php
-
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 require_once("classes/Db.class.php");
@@ -56,25 +55,30 @@ while($name = $stmt->fetch(PDO::FETCH_OBJ)) {
     <!-- Theme CSS -->
     <link href="startbootstrap/css/freelancer.min.css" type="text/css" rel="stylesheet">
     <link href="css/style.css" type="text/css" rel="stylesheet">
-
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" /> 
     <title>Search</title>
-    <script type="text/javascript">
-
-$(document).ready(function(){
-  $('#itemfinder').autocomplete({
-    source: 'search.php'
-  });
-});
-
-</script>
 </head>
+
 <body>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>	
+    <script type="text/javascript">
+      $(function() {
+        
+        //autocomplete
+        $("#auto").autocomplete({
+          source: "search-ajax.php",
+          minLength: 1
+        });				
+
+      });
+    </script>
   <section class="searchline">
     <div>
         <h1>Find your buddy!</h1>
     </div>
         <form class="search" method="get" action="">
-            <input class="input_search2" type="text" name="search" id="itemfinder" placeholder="Search on names, characterics">
+            <input class="input_search2" type="text" name="search" id="auto" placeholder="Search on names, characterics">
             <input class="btn_search" type="submit" value="">
         </form>
     </section>
@@ -96,7 +100,5 @@ $(document).ready(function(){
      <p><span style="font-weight: bold">Hangout:</span> <?php echo $kenmerken['hangout']. $users['hangout']; ?></p>
      </nav>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="js/script.js"></script>
 </body>
 </html>
