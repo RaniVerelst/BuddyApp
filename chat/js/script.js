@@ -20,7 +20,7 @@ var chat = {
 		
 		// Using the defaultText jQuery plugin, included at the bottom:
 		$('#name').defaultText('Username');
-		$('#email').defaultText('r-number@thomasmore.be');
+		$('#email').defaultText('r-number@student.thomasmore.be');
 		
 		// Converting the #chatLineHolder div into a jScrollPane,
 		// and saving the plugin's API in chat.data:
