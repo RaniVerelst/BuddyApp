@@ -172,11 +172,23 @@ ul {
     /*-----------------INDEX END----------*/
 
 
-    .details{
-        width: 25%;
-        height: 40%;
-        margin: 10px auto;
-       
-        padding: 10px 50px;
-        text-align: center;
+.details{
+    width: 50%;
+    height: 40%;
+    margin: 10px auto;
+    padding: 10px 50px;
+    text-align: center;
     }  
+
+
+.skip{
+    background-color: unset; 
+    color: red;   
+}
+
+.skip:hover{
+ background-color: unset;    
+ color: red;   
+ border: none;
+ text-decoration: underline;
+}

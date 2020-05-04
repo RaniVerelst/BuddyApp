@@ -20,7 +20,7 @@ class User
     public function setFirstname($firstname)
     {
         if (empty($firstname)) {
-            throw new Exception("Firstname can't be empty");
+            throw new Exception("Oops, voornaam is nog niet ingevuld.");
         } else {
             $this->firstname = htmlspecialchars($firstname);
             return $this;
@@ -38,7 +38,7 @@ class User
     public function setLastname($lastname)
     {
         if (empty($lastname)) {
-            throw new Exception("Lastname can't be empty");
+            throw new Exception("Oops, achternaam is nog niet ingevuld.");
         } else {
             $this->lastname = htmlspecialchars($lastname);
             return $this;
@@ -117,19 +117,19 @@ class User
         //prepare statement
         $endemail = "student.thomasmore.be";
         if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-            throw new Exception("Invalid Email!");
+            throw new Exception("Dit email adres is niet geldig.");
         }
         if (strlen($this->password) < 8) {
-            throw new Exception("Your password needs to be 8 characters long.");
+            throw new Exception("Je passwoord moet minstens 8 karakters lang zijn");
         }
         if ($this->password != $this->passwordConfirm) {
-            throw new Exception("Oops, passwords don't match.");
+            throw new Exception("Oops, passwoorden komen niet overeen.");
         }
         if (!stristr($this->email, $endemail)) {
-            throw new Exception("Email must end on @student.thomasmore.be");
+            throw new Exception("Email moet eindigen op @student.thomasmore.be");
         }
         if ($exist == true) {
-            throw new Exception("Email already exist");
+            throw new Exception("Email adres is al in gebruik.");
         }
         // voor register te confirmen
         $options = [
