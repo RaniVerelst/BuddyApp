@@ -35,15 +35,7 @@ if(!empty($_GET['search'])){
   $searchkey = null;
 }
 
-// _____________Ajax_______________ //
-$conn = Db::getInstance();
-$stmt = $conn->prepare('select * from users, profile_details where first_name, last_name, user_name, movie, destination, cookie, serie, hangout like :keyword');
-$stmt->bindValue('keyword', '%');
-$stmt->execute();
-$result = array();
-while($name = $stmt->fetch(PDO::FETCH_OBJ)) {
-	array_push($result, $name->first_name, $name->last_name, $name->user_name, $name->movie, $name->destination, $name->cookie, $name->serie, $name->hangout);
-}
+
 
 ?><!DOCTYPE html>
 <html lang="en">
