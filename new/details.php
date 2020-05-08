@@ -79,6 +79,7 @@ if (!empty($_POST['submit'])) {
             </div>
         </div>
     </div>
+
     <form name="register_form" class="form_signup" method="post" action="">
 
         <div class="row details">
@@ -92,6 +93,14 @@ if (!empty($_POST['submit'])) {
                         <?php endif; ?>
                     </div>
                     <div class="input_signup">
+                        <div class="radio">
+                            <label class="radio-inline">
+                                <input type="radio" name="optradio">Buddy
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="optradio">Bud
+                            </label>
+                        </div>
                         <div class="input_signup dropdown">
                             <select class="form-control input-md" name="class" required="required">
                                 <option selected disabled hidden>IMD jaar</option>

@@ -1,5 +1,6 @@
 body{
     font-family: 'Muli', sans-serif;
+    font-size: 0.5em;
 }
 /*-----------------HEADER START----------*/
 ul {
@@ -35,6 +36,7 @@ ul {
  .headermain{
     margin: 0 auto;
     text-align: center;
+    height: 20px;
 }
 
 .main{
@@ -169,11 +171,12 @@ ul {
 
       font-size: 1.5em;
   }
-    /*-----------------INDEX END----------*/
+/*-----------------INDEX END----------*/
 
+/*-----------------DETAILS START----------*/
 
 .details{
-    width: 50%;
+    width: 80%;
     height: 40%;
     margin: 10px auto;
     padding: 10px 50px;
@@ -183,7 +186,7 @@ ul {
 
 .skip{
     background-color: unset; 
-    color: red;   
+    color: black;   
 }
 
 .skip:hover{
@@ -192,3 +195,8 @@ ul {
  border: none;
  text-decoration: underline;
 }
+
+.input-signup{
+font-size: 6em;
+}
+/*-----------------DETAILS END----------*/
