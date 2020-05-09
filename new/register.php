@@ -87,7 +87,8 @@ if (!empty($_POST)) {
 
                     <!-- username -->
                     <div class="input_signup">
-                        <input class="form-control input-md" type="text" name="username" value="" placeholder="Gebruikersnaam">
+                        <input class="form-control input-md" type="text" id="username" name="username" value="" placeholder="Gebruikersnaam">
+                        <span id="availability"></span>
                     </div>
 
                     <!-- e-mail -->
@@ -123,3 +124,24 @@ if (!empty($_POST)) {
 </body>
 
 </html>
+
+<script>
+    $(document).ready(function() {
+        $('username').blur(function() {
+            //define username
+            let username = $(this).val();
+            $.ajax({
+                url: "check.php",
+                method: "POST",
+                data: {
+                    user_name: username
+                },
+                dataType: "text",
+                success: function(html) {
+                    $('#availability').html(html);
+                }
+            });
+
+        });
+    });
+</script>

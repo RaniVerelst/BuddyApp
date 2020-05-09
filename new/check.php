@@ -1,0 +1,3 @@
+<?php
+
+$conn = Db::getInstance();
