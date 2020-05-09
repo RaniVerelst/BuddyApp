@@ -169,11 +169,40 @@ ul {
   .index{
       margin-top: 50px;
   }
-  
-  .index p{
 
-      font-size: 1em;
+  .index h1{
+      padding-bottom: 20px;
   }
+  .count{
+      color: red;
+      font-weight: 600;
+      font-size: 5em;
+  }
+
+  
+   p{
+
+      font-size: 1.2em;
+  }
+
+  .strong{
+font-weight: 600;
+  }
+
+  .maybefriends{
+      margin-top: 50px;
+      padding-top: 20px;
+      padding-left: 40px;
+      background-color: red;
+      color: white;
+  }
+
+  .maybefriends h4{
+    font-weight: 600;
+
+  }
+
+  
 /*-----------------INDEX END----------*/
 
 /*-----------------DETAILS START----------*/
