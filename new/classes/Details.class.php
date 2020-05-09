@@ -11,8 +11,25 @@ class UserDetails extends User
     private $class;
     private $skills;
     private $currentUser;
+    private $position;
     private $userId;
 
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * Set the value of movie
+     *
+     * @return  self
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
     /**
      * Get the value of movie
      */
@@ -170,7 +187,7 @@ class UserDetails extends User
     public function saveUserDetails()
     {
         $conn = Db::getInstance();
-        $statement = $conn->prepare("insert into profile_details(user_id, movie, destination, serie, cookie, hangout, class, skills) values(:user, :movie, :destination, :serie, :cookie, :hangout, :class, :skills)");
+        $statement = $conn->prepare("insert into newprofile_details(user_id, movie, destination, serie, cookie, hangout, class, skills, position) values(:user, :movie, :destination, :serie, :cookie, :hangout, :class, :skills, :position)");
 
         $statement->bindValue(':user', $this->getUserid());
         $statement->bindValue(':movie', $this->getMovie());
@@ -180,6 +197,7 @@ class UserDetails extends User
         $statement->bindValue(':hangout', $this->getHangout());
         $statement->bindValue(':class', $this->getClass());
         $statement->bindValue(':skills', $this->getSkills());
+        $statement->bindValue(':position', $this->getPosition());
 
         $statement->execute();
 

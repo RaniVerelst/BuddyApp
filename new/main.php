@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-lg-12  ">
             <div class="well headermain">
-                <h1> <img src="images/logo.png" width="200px" alt=""></h1>
+                <h1> <img src="images/logo.png" width="140px" alt=""></h1>
             </div>
         </div>
     </div>

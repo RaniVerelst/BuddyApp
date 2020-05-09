@@ -1,6 +1,6 @@
 body{
     font-family: 'Muli', sans-serif;
-    font-size: 0.5em;
+    font-size: 1.2em;
 }
 /*-----------------HEADER START----------*/
 ul {
@@ -8,8 +8,7 @@ ul {
     margin: 0;
     margin-top: 40px;
     overflow: hidden;
-    font-weight: 900;
-    font-size: 1.5em;
+    font-size: 1.2em;
 
   }
   
@@ -23,6 +22,7 @@ ul {
     text-align: center;
     text-decoration: none;
     padding: 15px 15px;
+    font-weight: 600;
   }
 
 .log {
@@ -36,7 +36,8 @@ ul {
  .headermain{
     margin: 0 auto;
     text-align: center;
-    height: 20px;
+    height: 20%;
+    color: green;
 }
 
 .main{
@@ -49,26 +50,27 @@ ul {
 .main h3{
     color: white;
     font-weight: 600;
-    font-size: 25px;
+    font-size: 1.5em;
     margin-left: 5em;
     margin-top: 2.5em;
 }
 
 .main2{
-    padding-left: 280px;
-    padding-top: 170px;  
+    padding-left: 260px;
+    padding-top: 120px;  
 }
 
 .main2 h2{
     font-weight: 600;
-    font-size: 25px ;
+    font-size: 2em ;
 }
 
 #register{
     margin-top: 20px;
+    font-size: 1.5em;
     font-weight: 600;
     width: 60%;
-    height: 60px;
+    height: 40px;
     border-radius: 30px;
     background-color: red;
     border: none;
@@ -76,8 +78,9 @@ ul {
 
 #login{
     font-weight: 600;
+    font-size: 1.5em;
     width: 60%;
-    height: 60px;
+    height: 40px;
     border-radius: 30px;
     background-color: white;
     border: solid red 2px;
@@ -88,7 +91,7 @@ ul {
     margin-top: 20px;
     font-weight: 600;
     width: 60%;
-    height: 60px;
+    height: 40px;
     border-radius: 30px;
     background-color: white;
     border: solid red 2px;
@@ -98,7 +101,7 @@ ul {
 #login:hover{
     font-weight: 600;
     width: 60%;
-    height: 60px;
+    height: 40px;
     border-radius: 30px;
     background-color: white;
     border: solid red 3px;
@@ -107,7 +110,7 @@ ul {
   /*-----------------MAIN END----------*/
   /*-----------------REGISTER START----------*/
 .register{
-    width: 25%;
+    width: 40%;
     height: 40%;
     margin: 10px auto;
    
@@ -169,19 +172,23 @@ ul {
   
   .index p{
 
-      font-size: 1.5em;
+      font-size: 1em;
   }
 /*-----------------INDEX END----------*/
 
 /*-----------------DETAILS START----------*/
 
 .details{
-    width: 80%;
+    width: 60%;
     height: 40%;
     margin: 10px auto;
     padding: 10px 50px;
     text-align: center;
     }  
+
+ .header h3{
+font-size: 1.2em;
+}
 
 
 .skip{
@@ -196,7 +203,8 @@ ul {
  text-decoration: underline;
 }
 
-.input-signup{
-font-size: 6em;
+.radio p{
+    text-align: left;
+    color: rgb(155, 155, 155);
 }
 /*-----------------DETAILS END----------*/

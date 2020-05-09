@@ -22,9 +22,18 @@
         <div class="cole-sm-6 text-center">
             <h1>WELKOM BIJ BUDS </h1>
             <p>Vind een leuke buddy om je wegwijs te maken in het IMD leven.</p>
-            <p> Heb je het IMD leven al helemaal onder de knie? Word dan een Buddy voor de
+            <p> Heb je het IMD leven al helemaal onder de knie?</br>Word dan als Buddy het aanspreekpunt voor de
                 nieuwelingen in het vak.
             </p>
+        </div>
+    </div>
+
+    <div>
+        <div>
+
+        </div>
+        <div>
+
         </div>
     </div>
 

@@ -20,8 +20,6 @@ if (!empty($_POST['submit'])) {
 
     try {
         $userDetails->setUserid($currentUser);
-        var_dump($_SESSION['user_id']);
-
 
         $movie = $_POST['movie'];
         $destination = $_POST['destination'];
@@ -30,6 +28,21 @@ if (!empty($_POST['submit'])) {
         $hangout = $_POST['hangout'];
         $class = $_POST['class'];
         $skills = $_POST['skills'];
+
+        // get value from radio buttons
+        if (isset($_POST['position'])) {
+            $userPosition = $_POST['position'];
+            if ($userPosition == "buddy") {
+                $position = "buddy";
+            } else if ($userPosition == "new") {
+                $position = "new";
+            }
+            //setting up class
+            $userDetails->setPosition($position);
+            $userDetails->getPosition();
+        } else {
+            $errorClass = "Please choose class!";
+        }
 
         //characteristics
         $userDetails->setMovie($movie);
@@ -53,7 +66,12 @@ if (!empty($_POST['submit'])) {
     } catch (Exception $t) {
         $error =  $t->getMessage();
     }
+} else {
+    // foutboodschap tonen
+    $empty_field_error = "Please, fill in all the fields";
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,7 +93,7 @@ if (!empty($_POST['submit'])) {
     <div class="row">
         <div class="col-lg-12  ">
             <div class="well headermain">
-                <h1> <img src="images/logo.png" width="200px" alt=""></h1>
+                <h1> <img src="images/logo.png" width="140px" alt=""></h1>
             </div>
         </div>
     </div>
@@ -86,20 +104,23 @@ if (!empty($_POST['submit'])) {
             <div class="col-sm-12">
                 <div class="details">
                     <div class="header">
-                        <h3>Vervolledig je profiel</h3>
-                        <p>Zo kunnen we je matchen met je ideale buddy</p>
+                        <h1>WELKOM BIJ BUDS </h1>
+
+                        <h3>Vervolledig je profiel en dan kunnen we je matchen met je ideale buddy</h3>
                         <?php if (isset($errorClass)) : ?>
                             <p class="form__error"><?php echo $errorClass ?></p>
                         <?php endif; ?>
                     </div>
                     <div class="input_signup">
-                        <div class="radio">
-                            <label class="radio-inline">
-                                <input type="radio" name="optradio">Buddy
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="optradio">Bud
-                            </label>
+                        <div class="radio row">
+                            <div class="form-check">
+                                <input type="radio" name="position" id="new" value="new">
+                                Vind een leuke buddy om je wegwijs te maken in het echte IMD leven.</br>
+                            </div>
+                            <div class="form-check">
+                                <input type="radio" name="position" id="buddy" value="buddy">
+                                Word een Buddy voor de nieuwelingen in IMD.
+                            </div>
                         </div>
                         <div class="input_signup dropdown">
                             <select class="form-control input-md" name="class" required="required">
@@ -181,7 +202,7 @@ if (!empty($_POST['submit'])) {
                     </div>
 
                     <!-- submit button -->
-                    <input class="submit_signup" type="submit" name="submit" value="Complete profile">
+                    <input class="submit_signup" type="submit" name="submit" value="Vervolledig mijn profiel">
                     <!--- skip process --></br>
                     <a class="skip" href="index.php">Andere keer</a>
                 </div>
