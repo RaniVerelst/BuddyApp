@@ -4,7 +4,6 @@ error_reporting(-1);
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 include_once("classes/Db.class.php");
-include_once("classes/Login.class.php");
 include_once("classes/User.class.php");
 include_once("header.php");
 
