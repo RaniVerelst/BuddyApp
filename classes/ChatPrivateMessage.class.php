@@ -16,11 +16,12 @@ class ChatPrivateMessage extends ChatPrivate{
 
    public function getMessages(){
       $conn = Db::getInstance();
-      $statement = $conn->prepare("SELECT * FROM chat_private_message WHERE chat_id = :chatId");
+
+      $statement = $conn->prepare("SELECT * FROM chat_private_message WHERE chat_id = :chatId AND  user_id NOT LIKE :userId ORDER BY send_on LIMIT 1");
       $statement->bindValue(':chatId', $this->getChatId());
-      $statement->bindValue(':user1', $this->getUser1());
+      $statement->bindValue(':userId', 2);
       $statement->execute();
-      $result = $statement->fetchAll();
+      $result = $statement->fetch();
 
       return $result;
 
