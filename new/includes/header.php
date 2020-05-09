@@ -45,10 +45,10 @@ if (isset($_SESSION["user_id"])) {
           <div>
 
             <li><a href="#">HOME</a></li>
-            <li><a href="#">FAQ</a></li>
-            <li><a href="#">BUDDIES</a></li>
-            <li><a href="#">BERICHTEN</a></li>
-            <li><a href="#">LOKALEN</a></li>
+            <li><a href="faq.php">FAQ</a></li>
+            <li><a href="buddies.php">BUDDIES</a></li>
+            <li><a href="messages.php">BERICHTEN</a></li>
+            <li><a href="rooms.php">LOKALEN</a></li>
             <li><a href="#">PROFIEL</a></li>
             <li class="log"><a href="<?php if ($sesstionIsSet) {
                                         echo "logout.php";

@@ -44,12 +44,12 @@ $users = new Friendlist();
         </div>
         <div class=" countr col-lg-3 text-center">
             <p class="count"><?php echo $users->countUsers(); ?> </p>
-            <p class="strong">actieve buddys</p>
+            <p class="strong">actieve buddies</p>
         </div>
         <div class=" countr col-lg-3 text-center">
             <p class="count"><?php echo $users->countConnections(); ?> </p>
 
-            <p>buddy connecties 4 life gemaakt</p>
+            <p class="strong">buddy connecties 4 life gemaakt</p>
 
         </div>
         <div class="col-lg-3 text-center">
