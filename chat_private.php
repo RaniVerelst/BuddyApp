@@ -1,12 +1,20 @@
 <?php
 require('classes/ChatPrivateMessage.class.php');
+require_once('classes/User.class.php');
 //get info over conversations
 $privateChat = new ChatPrivate();
+$user = new User();
+
+$user->setuserId($_SESSION['user_id']);
+$u = $user->getUser();
+$nick = $u[2];
 
 $privateChat->setUniqueKey($keyChat);
 $chatInfo = $privateChat->getChatInfoByKey();
 $chatTopic = $chatInfo[1];
 $privateChat->setUser1($_SESSION['user_id']);
+
+
 /*
 Set up header & encourage message 
 */
@@ -38,7 +46,6 @@ if(isset($buddyChatCharacteristics)){
 
 $chatId = $chatInfo[0];
 
-var_dump($chatInfo[0]);
 ?>
 
 <!-- chat container -->
@@ -48,21 +55,15 @@ var_dump($chatInfo[0]);
         <h4><?php echo $chatHeader[0] ?></h4>
         <p><?php echo $chatHeader[1] ?></p>
     </div>
-    <div>
+    <div class="messages-container">
         <!-- Messages -->
-        <div>
-            <div>
+        <div class="messages">
+        <div class="message-container">
                 <p>User <span>time</span></p>
                 <p>
-                    First message
+                    message
                 </p>
-            </div>
-            <div>
-                <p>User <span>time</span></p>
-                <p>
-                    Answer message
-                </p>
-            </div>
+        </div>
         </div>
         <!-- end messages 
     write message-->
@@ -71,7 +72,7 @@ var_dump($chatInfo[0]);
         </div>
         <!-- add message -->
         <div>
-            <a href="" id="btnSendPrivateMessage" data-chatid="<?php echo htmlspecialchars($chatId);?>"> Send </a>
+            <a href="" id="btnSendPrivateMessage" data-chatid="<?php echo htmlspecialchars($chatId);?>" data-userName="<?php echo $nick?>"> Send </a>
         </div>
     </div>
 </div>

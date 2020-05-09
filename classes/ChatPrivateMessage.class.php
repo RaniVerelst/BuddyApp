@@ -10,8 +10,20 @@ class ChatPrivateMessage extends ChatPrivate{
     $statement->bindValue(':user1', $this->getUser1());
     $statement->bindValue(':created', $this->getDate());
     $statement->bindValue(':textMessage', $this->getText());
-    echo 'you inside';
+
     $statement->execute();
+   }
+
+   public function getMessages(){
+      $conn = Db::getInstance();
+      $statement = $conn->prepare("SELECT * FROM chat_private_message WHERE chat_id = :chatId");
+      $statement->bindValue(':chatId', $this->getChatId());
+      $statement->bindValue(':user1', $this->getUser1());
+      $statement->execute();
+      $result = $statement->fetchAll();
+
+      return $result;
+
    }
    /**
     * Get the value of text

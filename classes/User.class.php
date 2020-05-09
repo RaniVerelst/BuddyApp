@@ -171,6 +171,16 @@ class User
 
     return $result;
   }
+
+  function getUser(){
+    $conn = Db::getInstance();
+    $statement = $conn->prepare("SELECT first_name, last_name, user_name FROM users WHERE id = :userId");
+    $statement->bindValue(':userId', $this->getuserId());
+    $statement->execute();
+    $result = $statement->fetch();
+    return $result;
+
+  }
   //////////////////////////////////////////////////
   ///////////////// INLOGGEN  ///////////// feature 1
   ////////////////////////////////////////////////
