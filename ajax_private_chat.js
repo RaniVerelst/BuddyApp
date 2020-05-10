@@ -1,5 +1,4 @@
-//let chatId = document.getElementById("btnSendPrivateMessage").dataset.chatid;
-let chatId = "521";
+let chatId = document.getElementById("btnSendPrivateMessage").dataset.chatid;
 let messageContainer = document.querySelector(".messages");
 
 window.setTimeout(getNewMessages,500);
@@ -45,7 +44,7 @@ function getNewMessages(){
 
     let messagesData = new FormData();
 
-    messagesData.append("chat_id", 521);
+    messagesData.append("chat_id", chatId);
     //get new messages
     
     fetch("ajax/getMessages.php", {
