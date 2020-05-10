@@ -1,5 +1,5 @@
 body{
-    font-family: 'Muli', sans-serif;
+    font-family: "Muli", sans-serif;
     font-size: 1.2em;
 }
 /*-----------------HEADER START----------*/
@@ -8,7 +8,7 @@ ul {
     margin: 0;
     margin-top: 40px;
     overflow: hidden;
-    font-size: 1.2em;
+    font-size: 1.3em;
 
   }
   
@@ -169,11 +169,40 @@ ul {
   .index{
       margin-top: 50px;
   }
-  
-  .index p{
 
-      font-size: 1em;
+  .index h1{
+      padding-bottom: 20px;
   }
+  .count{
+      color: red;
+      font-weight: 600;
+      font-size: 5em;
+  }
+
+  
+   p{
+
+      font-size: 1.2em;
+  }
+
+  .strong{
+font-weight: 600;
+  }
+
+  .maybefriends{
+      margin-top: 50px;
+      padding-top: 20px;
+      padding-left: 40px;
+      background-color: red;
+      color: white;
+  }
+
+  .maybefriends h4{
+    font-weight: 600;
+
+  }
+
+  
 /*-----------------INDEX END----------*/
 
 /*-----------------DETAILS START----------*/
@@ -208,3 +237,17 @@ font-size: 1.2em;
     color: rgb(155, 155, 155);
 }
 /*-----------------DETAILS END----------*/
+
+/*-----------------FAQ START----------*/
+.faq h1{
+    font-weight: 900;
+}
+
+.faq{
+    margin-top: 50px;
+    margin-left: 20px;
+}
+
+/*-----------------FAQ END----------*/
+
+

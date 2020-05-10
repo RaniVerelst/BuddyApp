@@ -1,6 +1,6 @@
 <?php
 
-/* Database Configuration. Add your details below */
+/* Database Configuration*/
 
 $dbOptions = array(
 	 /*
