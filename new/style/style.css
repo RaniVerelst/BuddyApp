@@ -250,4 +250,38 @@ font-size: 1.2em;
 
 /*-----------------FAQ END----------*/
 
+/*-----------------BUDDIES START----------*/
+
+
+.user_list ul li{
+    padding: 15px;
+}
+.user_list li{
+margin-top: 9px;
+margin-left: 60px;
+}
+
+.user_list .submit_signup{
+    height: 30px;
+    border-radius: 30px;
+    width: 15%;
+    margin-left: -250px;
+    
+}
+
+.user_list .submit_signup:hover{
+    height: 30px;
+    border-radius: 30px;
+    width: 15%;
+    margin-left: -250px;
+    border: 1px solid red;
+    
+}
+
+.friend_list{
+    margin-left: 20px;
+}
+
+/*-----------------BUDDIES END----------*/
+
 
