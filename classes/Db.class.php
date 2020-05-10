@@ -11,7 +11,7 @@ abstract class Db
         include_once(__DIR__ . "/../settings/settings.php");
 
         if (self::$conn == null) {
-            self::$conn = new PDO('mysql:host=' . SETTINGS['db']['host'] . ';dbname=' . SETTINGS['db']['db'], SETTINGS['db']['user'], SETTINGS['db']['password']);
+            self::$conn = new PDO('mysql:host=' . SETTINGS2['db']['host'] . ';dbname=' . SETTINGS2['db']['db'], SETTINGS2['db']['user'], SETTINGS2['db']['password']);
             return self::$conn;
         } else {
             return self::$conn;
