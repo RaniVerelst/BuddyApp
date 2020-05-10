@@ -87,8 +87,8 @@ if (!empty($_POST)) {
 
                     <!-- username -->
                     <div class="input_signup">
-                        <input class="form-control input-md" type="text" id="username" name="username" value="" placeholder="Gebruikersnaam">
-                        <span id="availability"></span>
+                        <input class="form-control input-md" type="text" id="username" name="username" value="" placeholder="Gebruikersnaam" onkeyup="checkname();">
+                        <p id="name_status"></p>
                     </div>
 
                     <!-- e-mail -->
@@ -125,23 +125,26 @@ if (!empty($_POST)) {
 
 </html>
 
-<script>
-    $(document).ready(function() {
-        $('username').blur(function() {
-            //define username
-            let username = $(this).val();
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+    function checkname() {
+        var name = document.getElementById("username").value;
+
+        if (name) {
             $.ajax({
-                url: "check.php",
-                method: "POST",
+                type: 'post',
+                url: 'check.php',
                 data: {
-                    user_name: username
+                    user_name: name,
                 },
-                dataType: "text",
-                success: function(html) {
-                    $('#availability').html(html);
+                success: function(response) {
+                    $('#name_status').html(response);
+
                 }
             });
-
-        });
-    });
+        } else {
+            $('#name_status').html("");
+            return false;
+        }
+    }
 </script>
