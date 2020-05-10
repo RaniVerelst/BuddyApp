@@ -4,6 +4,18 @@
 include_once("classes/Db.class.php");
 include_once("classes/Friendlist.class.php");
 
+if (!empty($_GET['search'])) {
+    $searchkey = $_GET['search'];
+    $search_room = new User();
+    $result_room = $search_room->searchRoom($searchkey);
+
+    $r = new User();
+    $room = $r->showRoom($searchkey);
+} else {
+    $room = null;
+    $result_room = null;
+    $searchkey = null;
+}
 
 
 ?>
@@ -53,7 +65,7 @@ include_once("classes/Friendlist.class.php");
         </form>
     </section>
     <div class="search_results">
-        <?php if (count($result_room) > 0) : ?>
+        <?php if (is_countable($result_room) > 0) : ?>
             <h1> <?php echo count($result_room) . " Search Result(s) found for " . "<span style = 'font-weight: bold'> &quot" . $searchkey . "&quot </span>"; ?></h1>
         <?php else : ?>
             <h1>No results found </h1>
