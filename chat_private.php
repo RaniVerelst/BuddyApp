@@ -58,12 +58,6 @@ $chatId = $chatInfo[0];
     <div class="messages-container">
         <!-- Messages -->
         <div class="messages">
-        <div class="message-container">
-                <p>User <span>time</span></p>
-                <p>
-                    message
-                </p>
-        </div>
         </div>
         <!-- end messages 
     write message-->
