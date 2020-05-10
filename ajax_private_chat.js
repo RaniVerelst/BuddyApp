@@ -2,7 +2,7 @@
 let chatId = "521";
 let messageContainer = document.querySelector(".messages");
 
-setInterval(getNewMessages(),500);
+window.setTimeout(getNewMessages,500);
 
 
 // send messages
@@ -30,7 +30,6 @@ document.getElementById("btnSendPrivateMessage").addEventListener("click", funct
                 newDiv = document.createElement("div");
                 newDiv.setAttribute("class", "message-container");
                 newDiv.innerHTML = "<p>" + userName + " <span>" + date + "</span></p><p>" + text + "</p>";
-
                 messageContainer.appendChild(newDiv);
             } catch {
                 throw Error("Error :(");
@@ -43,9 +42,8 @@ document.getElementById("btnSendPrivateMessage").addEventListener("click", funct
 
 //get all comming messages
 function getNewMessages(){
-    let messagesData = new FormData();
 
-    console.log('hello');
+    let messagesData = new FormData();
 
     messagesData.append("chat_id", 521);
     //get new messages
@@ -57,18 +55,24 @@ function getNewMessages(){
     })
         .then(res => res.text())
         .then(data => {
+            console.log(data);
             let cutBeginning = data.slice(50);
-            console.log(JSON.parse(cutBeginning));
             let messages = JSON.parse(cutBeginning);
+
+           if(messages.status == "faild"){
+            return false;
+           }
+
             let date = messages.send_on;
             let text = messages.text_message;
             let userName = messages.user_id;
-    
+
             newDiv = document.createElement("div");
             newDiv.setAttribute("class", "message-container");
             newDiv.innerHTML = "<p>" + userName + " <span>" + date + "</span></p><p>" + text + "</p>";
     
             messageContainer.appendChild(newDiv);
+        
         })
         .catch(error => {
             console.error("Error:", error);

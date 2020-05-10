@@ -12,14 +12,13 @@ if(!empty($_POST)){
     $m->setChatId($_POST['chat_id']);
     $m->setUser1($_SESSION["user_id"]);
 
-
     $message = $m->getMessages();
-
     
     header('Content-type: application/json'); 
-    
-    echo json_encode($message, true);
+    if($message == false ){
+        echo json_encode(['status' => 'faild'], true);
+    } else {
+        echo json_encode($message, true);
+    }
 
 };
-
-?>
