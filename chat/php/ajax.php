@@ -3,16 +3,11 @@
 /* Database Configuration*/
 
 $dbOptions = array(
-	 /*
 	'db_host' => 'localhost',
 	'db_user' => 'root',
-	'db_pass' => ''/*'root',
+	'db_pass' => 'root'/*'root'*/,
 	'db_name' => 'php2020'
-	*/
-	'db_host' => '.182.57.51854',
-	'db_user' => 'raniveq332',
-	'db_pass' => '5o2zdnjh',
-	'db_name' => 'raniveq332_buds'
+	
 );
 
 /* Database Config End */
