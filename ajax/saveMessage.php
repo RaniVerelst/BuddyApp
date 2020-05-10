@@ -6,7 +6,7 @@ session_start();
 
 if(!empty($_POST)){
     
-    header("Content-type: application/json");
+
 
     // new message
     $m = new ChatPrivateMessage();
@@ -18,21 +18,18 @@ if(!empty($_POST)){
 
     $textM = $m->getText();
 
-    echo $textM;
-
     $m->saveMessage();
+
+    header('Content-type: application/json'); 
 
     $response = [
         "status" => "success",
-        "body" => "something",
+        "body" => $m->getDate(),
         "message" => "something"
     ];
-
-    header('Content-type:application/json'); 
-
+    
     echo json_encode($response);
 
-   
 };
 
 

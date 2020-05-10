@@ -4,12 +4,12 @@ include_once("classes/Userdetails.class.php");
 include_once("classes/Match.class.php");
 
 //check session
-if( isset( $_SESSION["user_id"])){
+if (isset($_SESSION["user_id"])) {
     $userId = $_SESSION["user_id"];
-  } else {
-      //Test
+} else {
+    //Test
     $userId = 1;
-  }
+}
 
 $user = new User();
 $characteristics = new UserDetails();
@@ -186,7 +186,7 @@ function cleanArray($arr)
                                             echo $characteristic . ' ';
                                         };
                                         ?> </p>
-        
+
     </div>
     <div>
         <h2><?php echo $buddy2[0]['first_name'] . " " . $buddy2[0]['last_name'] ?></h2>

@@ -16,7 +16,7 @@ if (isset($_GET['term'])){
 	try {
 	    $conn = new PDO("mysql:host=".DB_SERVER.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
 	    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	    
+		
 		$stmt = $conn->prepare('SELECT * FROM profile_details WHERE destination LIKE :term
         union select * from profile_details where serie like :term
         union select * from profile_details where cookie like :term

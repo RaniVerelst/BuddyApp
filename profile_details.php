@@ -39,9 +39,6 @@ if (!empty($_POST['submit'])) {
     $cookie = $_POST['cookie'];
     $hangout = $_POST['hangout'];
 
-
-
-
     // get value from radio buttons
     if (isset($_POST['class'])) {
         $userClass = $_POST['class'];
